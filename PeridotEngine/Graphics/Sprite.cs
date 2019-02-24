@@ -29,8 +29,6 @@ namespace PeridotEngine.Graphics
         /// <param name="sb">The SpriteBatch which is used to draw the sprite</param>
         public virtual void Draw(SpriteBatch sb)
         {
-            Debug.Assert(sb != null);
-
             if (Texture != null)
             {
                 if (Size != null)
