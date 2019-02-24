@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LuTr.PeridotEngine
+namespace PeridotEngine
 {
 #if WINDOWS || LINUX
     /// <summary>
