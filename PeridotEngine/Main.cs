@@ -2,19 +2,18 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace PeridotEngine
+namespace LuTr.PeridotEngine
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
     public class Main : Game
-    {
-        GraphicsDeviceManager graphics;
+    { 
         SpriteBatch spriteBatch;
 
         public Main()
         {
-            graphics = new GraphicsDeviceManager(this);
+            Globals.graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
