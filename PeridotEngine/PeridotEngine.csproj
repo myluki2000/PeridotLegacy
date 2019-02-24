@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Globals.cs" />
     <Compile Include="Graphics\Camera.cs" />
+    <Compile Include="Graphics\Particles\Particle.cs" />
+    <Compile Include="Graphics\Particles\ParticleSystem.cs" />
     <Compile Include="Graphics\Sprite.cs" />
     <Compile Include="Graphics\Utility.cs" />
     <Compile Include="Main.cs" />
