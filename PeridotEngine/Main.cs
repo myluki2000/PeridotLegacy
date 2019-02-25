@@ -13,7 +13,7 @@ namespace PeridotEngine
 
         public Main()
         {
-            Globals.graphics = new GraphicsDeviceManager(this);
+            Globals.Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 

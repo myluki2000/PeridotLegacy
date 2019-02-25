@@ -39,8 +39,8 @@ namespace PeridotEngine.Graphics
             return Matrix.CreateTranslation(Translation) *
                 Matrix.CreateTranslation(new Vector3(0, 150, 0)) *
                 Matrix.CreateScale(Scale) *
-                Matrix.CreateScale((float)(Globals.graphics.PreferredBackBufferHeight / 1080)) *
-                Matrix.CreateTranslation(new Vector3((float)(Globals.graphics.GraphicsDevice.Viewport.Width / 2), (float)(Globals.graphics.GraphicsDevice.Viewport.Height / 2), 0));
+                Matrix.CreateScale((float)(Globals.Graphics.PreferredBackBufferHeight / 1080)) *
+                Matrix.CreateTranslation(new Vector3((float)(Globals.Graphics.GraphicsDevice.Viewport.Width / 2), (float)(Globals.Graphics.GraphicsDevice.Viewport.Height / 2), 0));
         }
 
         /// <summary>
@@ -53,8 +53,8 @@ namespace PeridotEngine.Graphics
             return Matrix.CreateTranslation(Translation * new Vector3(1 / parallax.X, 1, 1)) *
                 Matrix.CreateTranslation(new Vector3(0, 150, 0)) *
                 Matrix.CreateScale(Scale) *
-                Matrix.CreateScale((float)(Globals.graphics.PreferredBackBufferHeight / 1080)) *
-                Matrix.CreateTranslation(new Vector3((float)(Globals.graphics.GraphicsDevice.Viewport.Width / 2), (float)(Globals.graphics.GraphicsDevice.Viewport.Height / 2), 0));
+                Matrix.CreateScale((float)(Globals.Graphics.PreferredBackBufferHeight / 1080)) *
+                Matrix.CreateTranslation(new Vector3((float)(Globals.Graphics.GraphicsDevice.Viewport.Width / 2), (float)(Globals.Graphics.GraphicsDevice.Viewport.Height / 2), 0));
         }
 
         /// <summary>

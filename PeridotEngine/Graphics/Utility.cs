@@ -5,7 +5,7 @@ namespace PeridotEngine.Graphics
 {
     class Utility
     {
-        private static Texture2D DummyTexture = new Texture2D(Globals.graphics.GraphicsDevice, 1, 1);
+        private static Texture2D DummyTexture = new Texture2D(Globals.Graphics.GraphicsDevice, 1, 1);
 
         static Utility()
         {

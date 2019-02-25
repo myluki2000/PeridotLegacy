@@ -1,4 +1,7 @@
-﻿static class Globals
+﻿using System;
+
+static class Globals
 {
-    public static Microsoft.Xna.Framework.GraphicsDeviceManager graphics;
+    public static Microsoft.Xna.Framework.GraphicsDeviceManager Graphics;
+    public static Random Random;
 }

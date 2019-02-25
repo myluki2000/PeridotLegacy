@@ -49,9 +49,7 @@ namespace PeridotEngine.Graphics.Particles
         /// Contains all currently existing particles emitted from the system.
         /// </summary>
         private readonly List<Particle> particles = new List<Particle>();
-
-        private readonly Random random = new Random();
-
+        
         /// <summary>
         /// Create a new particle system without specific spawn area. Will spawn particles exactly at 
         /// the position of the particle system.
@@ -78,13 +76,13 @@ namespace PeridotEngine.Graphics.Particles
             for (int i = 0; i < amount; i++)
             {
                 Vector2 randPos;
-                randPos.X = random.Next((int)Position.X, Size.X + 1);
-                randPos.Y = random.Next((int)Position.Y, Size.Y + 1);
+                randPos.X = Globals.Random.Next((int)Position.X, Size.X + 1);
+                randPos.Y = Globals.Random.Next((int)Position.Y, Size.Y + 1);
 
                 Vector2 randVelocity;
-                randVelocity.X = random.Next(ParticleVelocityLowest.X, ParticleVelocityHighest.X + 1);
-                randVelocity.Y = random.Next(ParticleVelocityLowest.Y, ParticleVelocityHighest.Y + 1);
-                int randomTextureIndex = random.Next(0, PossibleTextures.Length);
+                randVelocity.X = Globals.Random.Next(ParticleVelocityLowest.X, ParticleVelocityHighest.X + 1);
+                randVelocity.Y = Globals.Random.Next(ParticleVelocityLowest.Y, ParticleVelocityHighest.Y + 1);
+                int randomTextureIndex = Globals.Random.Next(0, PossibleTextures.Length);
                 particles.Add(new Particle(PossibleTextures[randomTextureIndex], Position, randVelocity, ParticleLifeTime, ParticleFadeTime));
             }
         }

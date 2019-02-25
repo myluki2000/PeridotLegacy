@@ -9,7 +9,7 @@ namespace PeridotEngine.Resources
         {
             string path = contentPath + ".png";
             FileStream fs = new FileStream(path, FileMode.Open);
-            Texture2D tex = Texture2D.FromStream(Globals.graphics.GraphicsDevice, fs);
+            Texture2D tex = Texture2D.FromStream(Globals.Graphics.GraphicsDevice, fs);
             fs.Dispose();
             return tex;
         }

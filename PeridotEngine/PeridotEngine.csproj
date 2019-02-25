@@ -55,6 +55,9 @@
     <Compile Include="UI\UIElements\UIElement.cs" />
     <Compile Include="UI\Screen.cs" />
     <Compile Include="UI\ScreenHandler.cs" />
+    <Compile Include="World\Entity.cs" />
+    <Compile Include="World\Level.cs" />
+    <Compile Include="World\WorldObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
