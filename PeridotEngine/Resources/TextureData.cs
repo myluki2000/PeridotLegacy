@@ -2,14 +2,14 @@
 
 namespace PeridotEngine.Resources
 {
-    class TextureObject
+    class TextureData
     {
         /// <summary>
-        /// Unique name of the texture object.
+        /// Unique name of the TextureData object.
         /// </summary>
         public string Name { get; private set; }
         /// <summary>
-        /// The texture data of this TextureObject.
+        /// The texture data of this TextureData object.
         /// </summary>
         public Texture2D Texture { get; private set; }
         /// <summary>
@@ -18,7 +18,7 @@ namespace PeridotEngine.Resources
         public bool HasRandomTextureRotation { get; private set; }
 
 
-        public TextureObject(string name, Texture2D texture, bool hasRandomTextureRotation)
+        public TextureData(string name, Texture2D texture, bool hasRandomTextureRotation)
         {
             this.Name = name;
             this.Texture = texture;

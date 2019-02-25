@@ -7,7 +7,7 @@ namespace PeridotEngine.World
         /// <summary>
         /// Contains all WorldObjects placed in the level.
         /// </summary>
-        public List<WorldObject> WorldObjects { get; set; }
+        public List<IWorldObject> WorldObjects { get; set; }
         /// <summary>
         /// Contains all entities in the level.
         /// </summary>
@@ -19,7 +19,7 @@ namespace PeridotEngine.World
         /// </summary>
         public Level()
         {
-            this.WorldObjects = new List<WorldObject>();
+            this.WorldObjects = new List<IWorldObject>();
             this.Entities = new List<Entity>();
         }
 
@@ -28,10 +28,12 @@ namespace PeridotEngine.World
         /// </summary>
         /// <param name="worldObjects">The WorldObjects</param>
         /// <param name="entities">The entities</param>
-        public Level(List<WorldObject> worldObjects, List<Entity> entities)
+        public Level(List<IWorldObject> worldObjects, List<Entity> entities)
         {
             this.WorldObjects = worldObjects;
             this.Entities = entities;
         }
+
+
     }
 }

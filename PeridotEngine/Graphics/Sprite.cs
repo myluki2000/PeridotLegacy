@@ -10,13 +10,13 @@ namespace PeridotEngine.Graphics
         /// <summary>
         /// The texture of this sprite. Gets drawn to the screen when Sprite.Draw() is called. If null a dummy outline is drawn.
         /// </summary>
-        public TextureObject Texture { get; set; }
+        public TextureData Texture { get; set; }
         /// <summary>
         /// The position of the sprite in the current matrix.
         /// </summary>
         public Vector2 Position { get; set; }
         /// <summary>
-        /// The size of the sprite (width x height). Using texture size if null.
+        /// The size of the sprite (width x height).
         /// </summary>
         public Vector2 Size { get; set; }
         /// <summary>
@@ -28,9 +28,26 @@ namespace PeridotEngine.Graphics
         /// </summary>
         public float Opacity { get; set; } = 1;
 
-
+        /// <summary>
+        /// Create a new empty sprite object.
+        /// </summary>
         public Sprite()
         {
+            RotateRandomly();
+        }
+
+        /// <summary>
+        /// Create a new sprite with the specified parameters.
+        /// </summary>
+        /// <param name="texture">The texture of the sprite</param>
+        /// <param name="position">The position of the sprite</param>
+        /// <param name="size">The size of the sprite.</param>
+        public Sprite(TextureData texture, Vector2 position, Vector2 size)
+        {
+            this.Texture = texture;
+            this.Position = position;
+            this.Size = size;
+
             RotateRandomly();
         }
 

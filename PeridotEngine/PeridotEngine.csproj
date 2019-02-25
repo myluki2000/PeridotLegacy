@@ -51,12 +51,14 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\TextureLoader.cs" />
-    <Compile Include="Resources\TextureObject.cs" />
+    <Compile Include="Resources\TextureData.cs" />
     <Compile Include="UI\UIElements\UIElement.cs" />
     <Compile Include="UI\Screen.cs" />
     <Compile Include="UI\ScreenHandler.cs" />
     <Compile Include="World\Entity.cs" />
+    <Compile Include="World\FuncObject.cs" />
     <Compile Include="World\Level.cs" />
+    <Compile Include="World\TexturedObject.cs" />
     <Compile Include="World\WorldObject.cs" />
   </ItemGroup>
   <ItemGroup>
