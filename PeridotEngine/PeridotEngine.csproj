@@ -50,16 +50,18 @@
     <Compile Include="Main.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\TextureLoader.cs" />
+    <Compile Include="Resources\LazyLoadingTextureDictionary.cs" />
+    <Compile Include="Resources\LevelManager.cs" />
+    <Compile Include="Resources\TextureManager.cs" />
     <Compile Include="Resources\TextureData.cs" />
     <Compile Include="UI\UIElements\UIElement.cs" />
     <Compile Include="UI\Screen.cs" />
     <Compile Include="UI\ScreenHandler.cs" />
     <Compile Include="World\Entities\IEntity.cs" />
-    <Compile Include="World\FuncObject.cs" />
+    <Compile Include="World\WorldObjects\FuncObject.cs" />
     <Compile Include="World\Level.cs" />
-    <Compile Include="World\TexturedObject.cs" />
-    <Compile Include="World\IWorldObject.cs" />
+    <Compile Include="World\WorldObjects\TexturedObject.cs" />
+    <Compile Include="World\WorldObjects\IWorldObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -67,6 +69,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />

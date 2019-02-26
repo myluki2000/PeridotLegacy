@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using PeridotEngine.World.Entities;
+using PeridotEngine.World.WorldObjects;
+using System.Collections.Generic;
 
 namespace PeridotEngine.World
 {
@@ -11,7 +13,7 @@ namespace PeridotEngine.World
         /// <summary>
         /// Contains all entities in the level.
         /// </summary>
-        public List<Entity> Entities { get; set; }
+        public List<IEntity> Entities { get; set; }
 
 
         /// <summary>
@@ -20,7 +22,7 @@ namespace PeridotEngine.World
         public Level()
         {
             this.WorldObjects = new List<IWorldObject>();
-            this.Entities = new List<Entity>();
+            this.Entities = new List<IEntity>();
         }
 
         /// <summary>
@@ -28,7 +30,7 @@ namespace PeridotEngine.World
         /// </summary>
         /// <param name="worldObjects">The WorldObjects</param>
         /// <param name="entities">The entities</param>
-        public Level(List<IWorldObject> worldObjects, List<Entity> entities)
+        public Level(List<IWorldObject> worldObjects, List<IEntity> entities)
         {
             this.WorldObjects = worldObjects;
             this.Entities = entities;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace PeridotEngine.World
+namespace PeridotEngine.World.WorldObjects
 {
     abstract class FuncObject : IWorldObject
     {

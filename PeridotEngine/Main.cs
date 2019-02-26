@@ -14,6 +14,7 @@ namespace PeridotEngine
         public Main()
         {
             Globals.Graphics = new GraphicsDeviceManager(this);
+            Globals.Content = Content;
             Content.RootDirectory = "Content";
         }
 
