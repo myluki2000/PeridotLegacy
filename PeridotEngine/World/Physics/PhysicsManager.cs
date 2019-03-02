@@ -39,28 +39,28 @@ namespace PeridotEngine.World.Physics
             // apply gravity
             obj.Acceleration += new Vector2(0, (float)(700 * gameTime.ElapsedGameTime.TotalSeconds + 0.01));
 
-            // The new rect of the object after it has been moved by its velocity
-            Rectangle objRect = new Rectangle(newPos.ToPoint(), obj.Size.ToPoint());
-
             // apply velocity if object is not colliding with anything
-            if (!IsColliding(objRect)) {
+            if (!IsColliding(obj)) {
                 obj.Position += obj.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 obj.Velocity = Vector2.Zero;
             }
         }
 
         /// <summary>
-        /// Helper method to check if rect collides with any collider in the level.
+        /// Helper method to check if object collides with any collider in the level.
         /// </summary>
-        /// <param name="rect">The rect to check</param>
+        /// <param name="obj">The object to check</param>
         /// <returns>True if colliding, false otherwise</returns>
-        private bool IsColliding(Rectangle rect)
+        private bool IsColliding(IPhysicsObject obj)
         {
-            foreach (ICollider collider in Colliders)
+            foreach (Rectangle rect in obj.BoundingRects)
             {
-                if (collider.IsColliding(rect))
+                foreach (ICollider collider in Colliders)
                 {
-                    return true;
+                    if (collider.IsColliding(rect))
+                    {
+                        return true;
+                    }
                 }
             }
 

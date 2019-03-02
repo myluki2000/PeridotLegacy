@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace PeridotEngine.World.Physics
 {
@@ -12,6 +13,10 @@ namespace PeridotEngine.World.Physics
         /// The size of the object.
         /// </summary>
         Vector2 Size { get; set; }
+        /// <summary>
+        /// A hashset containing all retangles used for collision detection.
+        /// </summary>
+        HashSet<Rectangle> BoundingRects { get; set; }
         /// <summary>
         /// The velocity of the object.
         /// </summary>
