@@ -1,4 +1,5 @@
 ﻿using PeridotEngine.World;
+using PeridotEngine.World.Entities;
 using PeridotEngine.World.WorldObjects;
 using System;
 using System.Xml.Linq;
@@ -28,7 +29,17 @@ namespace PeridotEngine.Resources
                 level.WorldObjects.Add(wObj);
             }
 
+            // do the same for entites
+            foreach(XElement xEle in rootEle.Element("Entities").Elements())
+            {
+                Type entityType = Type.GetType("PeridotEngine.World.Entities." + xEle.Attribute("Type").Value);
 
+                IEntity entity = (IEntity)Activator.CreateInstance(entityType);
+
+                entity.InitializeFromXML(xEle, textures);
+
+                level.Entities.Add(entity);
+            }
 
             return level;
         }

@@ -57,7 +57,13 @@
     <Compile Include="UI\UIElements\UIElement.cs" />
     <Compile Include="UI\Screen.cs" />
     <Compile Include="UI\ScreenHandler.cs" />
+    <Compile Include="World\Entities\Character.cs" />
     <Compile Include="World\Entities\IEntity.cs" />
+    <Compile Include="World\Entities\Player.cs" />
+    <Compile Include="World\Physics\Colliders\RectCollider.cs" />
+    <Compile Include="World\Physics\Colliders\ICollider.cs" />
+    <Compile Include="World\Physics\IPhysicsObject.cs" />
+    <Compile Include="World\Physics\PhysicsManager.cs" />
     <Compile Include="World\WorldObjects\FuncObject.cs" />
     <Compile Include="World\Level.cs" />
     <Compile Include="World\WorldObjects\TexturedObject.cs" />

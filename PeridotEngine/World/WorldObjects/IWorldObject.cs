@@ -27,9 +27,8 @@ namespace PeridotEngine.World.WorldObjects
         /// Used when the objects in the level are loaded from xml. Provide an implementation
         /// which loads all properties you need into the object.
         /// </summary>
-        /// <param name="xEle"></param>
+        /// <param name="xEle">The XML node containing the data</param>
         /// <param name="textures">A dictionary containing textures</param>
-        /// <returns></returns>
         void InitializeFromXML(XElement xEle, LazyLoadingTextureDictionary textures);
     }
 }

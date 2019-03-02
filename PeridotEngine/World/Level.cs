@@ -9,20 +9,19 @@ namespace PeridotEngine.World
         /// <summary>
         /// Contains all WorldObjects placed in the level.
         /// </summary>
-        public List<IWorldObject> WorldObjects { get; set; }
+        public HashSet<IWorldObject> WorldObjects { get; set; }
         /// <summary>
         /// Contains all entities in the level.
         /// </summary>
-        public List<IEntity> Entities { get; set; }
-
+        public HashSet<IEntity> Entities { get; set; }
 
         /// <summary>
         /// Create a new empty level.
         /// </summary>
         public Level()
         {
-            this.WorldObjects = new List<IWorldObject>();
-            this.Entities = new List<IEntity>();
+            this.WorldObjects = new HashSet<IWorldObject>();
+            this.Entities = new HashSet<IEntity>();
         }
 
         /// <summary>
@@ -30,7 +29,7 @@ namespace PeridotEngine.World
         /// </summary>
         /// <param name="worldObjects">The WorldObjects</param>
         /// <param name="entities">The entities</param>
-        public Level(List<IWorldObject> worldObjects, List<IEntity> entities)
+        public Level(HashSet<IWorldObject> worldObjects, HashSet<IEntity> entities)
         {
             this.WorldObjects = worldObjects;
             this.Entities = entities;
