@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PeridotEngine.Resources;
+using PeridotEngine.UI;
 
 namespace PeridotEngine
 {
@@ -26,7 +28,9 @@ namespace PeridotEngine
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            ScreenHandler.SelectedScreen = new LevelScreen(LevelManager.LoadLevel(@"E:\Lukas\Desktop\PlatformerWorld\level.plvl"));
+
+
 
             base.Initialize();
         }
@@ -40,7 +44,7 @@ namespace PeridotEngine
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            
         }
 
         /// <summary>
@@ -49,7 +53,7 @@ namespace PeridotEngine
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            
         }
 
         /// <summary>
@@ -62,7 +66,7 @@ namespace PeridotEngine
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            ScreenHandler.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -75,7 +79,7 @@ namespace PeridotEngine
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            ScreenHandler.Draw(spriteBatch);
 
             base.Draw(gameTime);
         }

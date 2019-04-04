@@ -1,8 +1,12 @@
-﻿using PeridotEngine.World;
-using PeridotEngine.World.Entities;
-using PeridotEngine.World.WorldObjects;
+﻿#nullable enable
+
+using PeridotEngine.World;
+using PeridotEngine.World.WorldObjects.Entities;
 using System;
 using System.Xml.Linq;
+using PeridotEngine.World.WorldObjects.Solids;
+using System.IO;
+using PeridotEngine.World.WorldObjects;
 
 namespace PeridotEngine.Resources
 {
@@ -14,29 +18,25 @@ namespace PeridotEngine.Resources
 
             XElement rootEle = XElement.Load(path);
 
-            LazyLoadingTextureDictionary textures = new LazyLoadingTextureDictionary();
+            LazyLoadingTextureDictionary textures = new LazyLoadingTextureDictionary(Path.Combine(Path.GetDirectoryName(path), rootEle.Element("TextureDirectory").Value));
             
-            // loop through all world objects, find their type with reflection, create a new instance of that type
+            // loop through all solids, find their type with reflection, create a new instance of that type
             // and let it initialize itself with the provided xml.
-            foreach(XElement xEle in rootEle.Element("WorldObjects").Elements())
+            foreach(XElement xEle in rootEle.Element("Solids").Elements())
             {
-                Type wObjType = Type.GetType("PeridotEngine.World.WorldObjects." + xEle.Attribute("Type").Value);
+                Type solidType = Type.GetType("PeridotEngine.World.WorldObjects.Solids." + xEle.Element("Type").Value);
 
-                IWorldObject wObj = (IWorldObject)Activator.CreateInstance(wObjType);
+                ISolid solid = (ISolid)solidType.GetMethod("FromXML").Invoke(null, new object[] { xEle, textures });
 
-                wObj.InitializeFromXML(xEle, textures);
-
-                level.WorldObjects.Add(wObj);
+                level.Solids.Add(solid);
             }
 
             // do the same for entites
             foreach(XElement xEle in rootEle.Element("Entities").Elements())
             {
-                Type entityType = Type.GetType("PeridotEngine.World.Entities." + xEle.Attribute("Type").Value);
+                Type entityType = Type.GetType("PeridotEngine.World.WorldObjects.Entities." + xEle.Element("Type").Value);
 
-                IEntity entity = (IEntity)Activator.CreateInstance(entityType);
-
-                entity.InitializeFromXML(xEle, textures);
+                IEntity entity = (IEntity)entityType.GetMethod("FromXML").Invoke(null, new object[] { xEle, textures });
 
                 level.Entities.Add(entity);
             }

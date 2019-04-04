@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿#nullable enable
+
+using Microsoft.Xna.Framework;
 using PeridotEngine.World.Physics.Colliders;
 using System.Collections.Generic;
 
@@ -9,9 +11,9 @@ namespace PeridotEngine.World.Physics
         /// <summary>
         /// Contains all the physics colliders in the level.
         /// </summary>
-        public HashSet<ICollider> Colliders { get; set; }
+        public HashSet<ICollider> Colliders { get; set; } = new HashSet<ICollider>();
 
-        public HashSet<IPhysicsObject> PhysicsObjects { get; set; }
+        public HashSet<IPhysicsObject> PhysicsObjects { get; set; } = new HashSet<IPhysicsObject>();
 
 
         public void UpdatePhysics(GameTime gameTime)
@@ -33,6 +35,10 @@ namespace PeridotEngine.World.Physics
         /// <param name="gameTime">The current game time</param>
         private void DoObjectPhysicsUpdate(IPhysicsObject obj, GameTime gameTime)
         {
+            /* TODO:    This function is flawed. It only checks if the object is colliding in its current position, not
+                        in its future position.*/
+
+
             // the new position of the object after it has been moved by its velocity
             Vector2 newPos = obj.Position + obj.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
 

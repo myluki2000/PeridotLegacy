@@ -1,8 +1,8 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace PeridotEngine.Resources
 {
@@ -17,7 +17,7 @@ namespace PeridotEngine.Resources
             {
                 if (!base.ContainsKey(key))
                 {
-                    base.Add(key, TextureManager.LoadTexture(key));
+                    base.Add(key, TextureManager.LoadTexture(Path.Combine(TextureDirectory, key)));
                 }
 
                 if(base.ContainsKey(key))
@@ -29,5 +29,12 @@ namespace PeridotEngine.Resources
                 }
             }
         }
+
+        public LazyLoadingTextureDictionary(string textureDirectory)
+        {
+            this.TextureDirectory = textureDirectory;
+        }
+
+        public string TextureDirectory { get; set; }
     }
 }

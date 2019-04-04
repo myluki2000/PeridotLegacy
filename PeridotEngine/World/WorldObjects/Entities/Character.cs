@@ -1,10 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿#nullable enable
+
+using Microsoft.Xna.Framework;
 using PeridotEngine.Graphics;
 using PeridotEngine.Resources;
 using PeridotEngine.World.Physics;
+using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace PeridotEngine.World.Entities
+namespace PeridotEngine.World.WorldObjects.Entities
 {
     abstract class Character : Sprite, IEntity, IPhysicsObject
     {
@@ -13,8 +16,21 @@ namespace PeridotEngine.World.Entities
         public Vector2 Velocity { get; set; }
         public Vector2 Acceleration { get; set; }
         public bool HasPhysics { get; set; }
+        public HashSet<Rectangle> BoundingRects {
+            get
+            {
+                HashSet<Rectangle> rects = new HashSet<Rectangle>();
 
-        public abstract void InitializeFromXML(XElement xEle, LazyLoadingTextureDictionary textures);
+                rects.Add(new Rectangle(Position.ToPoint(), Size.ToPoint()));
+
+                return rects;
+            }
+
+            set
+            {
+
+            }
+        }
 
         public abstract void Update(GameTime gameTime);
     }

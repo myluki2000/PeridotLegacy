@@ -1,5 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿#nullable enable
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PeridotEngine.Resources;
 using System;
 using System.Collections.Generic;
 
@@ -23,7 +26,7 @@ namespace PeridotEngine.Graphics.Particles
         /// <summary>
         /// This array holds all textures which can be applied to the particles.
         /// </summary>
-        public Texture2D[] PossibleTextures { get; set; }
+        public TextureData[] PossibleTextures { get; set; }
         /// <summary>
         /// The lower bound for particle velocity when spawning.
         /// </summary>
@@ -55,9 +58,10 @@ namespace PeridotEngine.Graphics.Particles
         /// the position of the particle system.
         /// </summary>
         /// <param name="position">The position of the particle system</param>
-        public ParticleSystem(Vector2 position)
+        public ParticleSystem(Vector2 position, TextureData[] possibleTextures)
         {
             this.Position = position;
+            this.PossibleTextures = possibleTextures;
         }
 
         /// <summary>
@@ -65,10 +69,11 @@ namespace PeridotEngine.Graphics.Particles
         /// </summary>
         /// <param name="position">The upper-left corner of the spawn area</param>
         /// <param name="size">The size of the spawn area</param>
-        public ParticleSystem(Vector2 position, Point size)
+        public ParticleSystem(Vector2 position, Point size, TextureData[] possibleTextures)
         {
             this.Position = position;
             this.Size = size;
+            this.PossibleTextures = possibleTextures;
         }
 
         public void SpawnParticles(int amount)

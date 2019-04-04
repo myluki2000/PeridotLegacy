@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿#nullable enable
+
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.Resources;
-using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace PeridotEngine.World.WorldObjects
@@ -15,6 +17,10 @@ namespace PeridotEngine.World.WorldObjects
         /// The size of the sprite (width x height). Using texture size if null.
         /// </summary>
         Vector2 Size { get; set; }
+        /// <summary>
+        /// The z-index of the object in the level. 0 (zero) is the "play area".
+        /// </summary>
+        int ZIndex { get; set; }
 
 
         /// <summary>
@@ -24,11 +30,9 @@ namespace PeridotEngine.World.WorldObjects
         void Update(GameTime gameTime);
 
         /// <summary>
-        /// Used when the objects in the level are loaded from xml. Provide an implementation
-        /// which loads all properties you need into the object.
+        /// Draws the object to the specified SpriteBatch.
         /// </summary>
-        /// <param name="xEle">The XML node containing the data</param>
-        /// <param name="textures">A dictionary containing textures</param>
-        void InitializeFromXML(XElement xEle, LazyLoadingTextureDictionary textures);
+        /// <param name="sb">The SpriteBatch.</param>
+        void Draw(SpriteBatch sb);
     }
 }

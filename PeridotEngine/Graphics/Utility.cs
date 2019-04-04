@@ -1,20 +1,22 @@
-﻿using Microsoft.Xna.Framework;
+﻿#nullable enable
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace PeridotEngine.Graphics
 {
     class Utility
     {
-        private static Texture2D DummyTexture = new Texture2D(Globals.Graphics.GraphicsDevice, 1, 1);
+        private static readonly Texture2D dummyTexture = new Texture2D(Globals.Graphics.GraphicsDevice, 1, 1);
 
         static Utility()
         {
-            DummyTexture.SetData(new Color[] { Color.White });
+            dummyTexture.SetData(new Color[] { Color.White });
         }
 
         public static void DrawRectangle(SpriteBatch sb, Rectangle rect, Color color)
         {
-            sb.Draw(DummyTexture, rect, color);
+            sb.Draw(dummyTexture, rect, color);
         }
 
         public static void DrawOutline(SpriteBatch sb, Rectangle rect, Color color, int thickness)

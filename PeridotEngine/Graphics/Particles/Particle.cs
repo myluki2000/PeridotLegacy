@@ -1,5 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿#nullable enable
+
+using Microsoft.Xna.Framework;
+using PeridotEngine.Resources;
 
 namespace PeridotEngine.Graphics.Particles
 {
@@ -30,7 +32,7 @@ namespace PeridotEngine.Graphics.Particles
         private int lifeTimeCounter = 0;
 
 
-        public Particle(Texture2D texture, Vector2 position, Vector2 velocity, int lifeTime, int fadeTime)
+        public Particle(TextureData texture, Vector2 position, Vector2 velocity, int lifeTime, int fadeTime)
         {
             this.Texture = texture;
             this.Position = position;

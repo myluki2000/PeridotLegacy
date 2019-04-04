@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿#nullable enable
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.UI.UIElements;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ namespace PeridotEngine.UI
 {
     abstract class Screen
     {
-        public List<UIElement> UIElements { get; set; } = new List<UIElement>();
+        public HashSet<UIElement> UIElements { get; set; } = new HashSet<UIElement>();
 
         public abstract void Initialize();
 
@@ -22,6 +24,7 @@ namespace PeridotEngine.UI
             {
                 element.Draw(sb);
             }
+            sb.End();
         }
     }
 }

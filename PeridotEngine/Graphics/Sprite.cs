@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿#nullable enable
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.Resources;
 using System;
@@ -10,7 +12,7 @@ namespace PeridotEngine.Graphics
         /// <summary>
         /// The texture of this sprite. Gets drawn to the screen when Sprite.Draw() is called. If null a dummy outline is drawn.
         /// </summary>
-        public TextureData Texture { get; set; }
+        public TextureData? Texture { get; set; }
         /// <summary>
         /// The position of the sprite in the current matrix.
         /// </summary>
@@ -19,6 +21,8 @@ namespace PeridotEngine.Graphics
         /// The size of the sprite (width x height).
         /// </summary>
         public Vector2 Size { get; set; }
+
+        public int ZIndex { get; set; }
         /// <summary>
         /// The rotation of the sprite in radians.
         /// </summary>
@@ -71,7 +75,7 @@ namespace PeridotEngine.Graphics
                 }
 
 
-                sb.Draw(Texture.Texture, destRect, null, Color.White, Rotation, Vector2.Zero, SpriteEffects.None, 0);
+                sb.Draw(Texture.Texture, destRect, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, ZIndex);
             }
             else
             {
@@ -84,9 +88,12 @@ namespace PeridotEngine.Graphics
         /// </summary>
         private void RotateRandomly()
         {
-            if(Texture.HasRandomTextureRotation)
+            if(Texture != null)
             {
-                Rotation = (float)(Globals.Random.Next(0, 4) * Math.PI / 2);
+                if (Texture.HasRandomTextureRotation)
+                {
+                    Rotation = (float)(Globals.Random.Next(0, 4) * Math.PI / 2);
+                }
             }
         }
     }

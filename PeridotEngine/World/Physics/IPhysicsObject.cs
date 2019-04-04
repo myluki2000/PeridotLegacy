@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿#nullable enable
+
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
 namespace PeridotEngine.World.Physics

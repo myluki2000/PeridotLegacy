@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿#nullable enable
+
+using Microsoft.Xna.Framework.Graphics;
 
 namespace PeridotEngine.Resources
 {

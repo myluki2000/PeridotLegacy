@@ -1,5 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
+﻿#nullable enable
+
+using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using System.Xml.Linq;
 
@@ -28,7 +29,7 @@ namespace PeridotEngine.Resources
         /// <returns>A TextureData object containing the texture and its metadata</returns>
         public static TextureData LoadTexture(string contentPath)
         {
-            XElement rootEle = XElement.Load(contentPath);
+            XElement rootEle = XElement.Load(contentPath + ".ptex");
 
             string randomTextureRotString = rootEle.Element("RandomTextureRotation").Value.ToUpper();
             bool randomTextureRot;
