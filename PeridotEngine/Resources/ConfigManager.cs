@@ -1,13 +1,17 @@
 ﻿#nullable enable
 
 using Microsoft.Xna.Framework;
+using System;
+using System.IO;
+using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace PeridotEngine.Resources
 {
     static class ConfigManager
     {
-        private const string CONFIG_PATH = "/config/config.xml";
+        private const string CONFIG_PATH = "Config/config.xml";
 
         public static Config CurrentConfig { get; set; }
 
@@ -20,16 +24,26 @@ namespace PeridotEngine.Resources
         {
             Config config = new Config();
 
-            XElement rootEle = XElement.Load(CONFIG_PATH);
+            try
+            {
+                XElement rootEle = XElement.Load(CONFIG_PATH);
 
-
-            config.WindowSize = new Point(
+                config.WindowSize = new Point(
                 int.Parse(rootEle.Element("WindowWidth").Value),
                 int.Parse(rootEle.Element("WindowHeight").Value));
 
-            config.IsDevModeActive = rootEle.Element("DevMode").Value.ToUpper() == "TRUE";
+                config.IsDevModeActive = rootEle.Element("DevMode").Value.ToUpper() == "TRUE";
 
-            CurrentConfig = config;
+                CurrentConfig = config;
+            }
+            catch (DirectoryNotFoundException)
+            {
+                throw new Exception("Could not find config file. Is it missing?");
+            }
+            catch (XmlException)
+            {
+                throw new Exception("Error while reading config file. Is it misformed?");
+            }
         }
 
         public class Config

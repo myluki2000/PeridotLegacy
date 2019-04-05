@@ -30,6 +30,9 @@ namespace PeridotEngine
         {
             ScreenHandler.SelectedScreen = new LevelScreen(LevelManager.LoadLevel(@"E:\Lukas\Desktop\PlatformerWorld\level.plvl"));
 
+            Globals.Graphics.PreferredBackBufferWidth = ConfigManager.CurrentConfig.WindowSize.X;
+            Globals.Graphics.PreferredBackBufferHeight = ConfigManager.CurrentConfig.WindowSize.Y;
+
 
 
             base.Initialize();
