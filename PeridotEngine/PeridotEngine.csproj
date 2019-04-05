@@ -67,6 +67,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\ConfigManager.cs" />
     <Compile Include="Resources\LazyLoadingTextureDictionary.cs" />
     <Compile Include="Resources\LevelManager.cs" />
     <Compile Include="Resources\TextureManager.cs" />
