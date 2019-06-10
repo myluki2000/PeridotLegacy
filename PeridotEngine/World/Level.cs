@@ -20,6 +20,8 @@ namespace PeridotEngine.World
         /// </summary>
         public HashSet<IEntity> Entities { get; set; }
 
+        public string TextureDirectory { get; set; } = "";
+
         /// <summary>
         /// Create a new empty level.
         /// </summary>

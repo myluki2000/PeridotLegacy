@@ -18,7 +18,9 @@ namespace PeridotEngine.Resources
 
             XElement rootEle = XElement.Load(path);
 
-            LazyLoadingTextureDictionary textures = new LazyLoadingTextureDictionary(Path.Combine(Path.GetDirectoryName(path), rootEle.Element("TextureDirectory").Value));
+            level.TextureDirectory = Path.Combine(Path.GetDirectoryName(path), rootEle.Element("TextureDirectory").Value);
+
+            LazyLoadingTextureDictionary textures = new LazyLoadingTextureDictionary(level.TextureDirectory);
             
             // loop through all solids, find their type with reflection, create a new instance of that type
             // and let it initialize itself with the provided xml.

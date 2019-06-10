@@ -31,7 +31,9 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpSolids = new System.Windows.Forms.TabPage();
             this.tpEntities = new System.Windows.Forms.TabPage();
+            this.lvSolids = new System.Windows.Forms.ListView();
             this.tabControl1.SuspendLayout();
+            this.tpSolids.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -47,6 +49,7 @@
             // 
             // tpSolids
             // 
+            this.tpSolids.Controls.Add(this.lvSolids);
             this.tpSolids.Location = new System.Drawing.Point(4, 22);
             this.tpSolids.Name = "tpSolids";
             this.tpSolids.Padding = new System.Windows.Forms.Padding(3);
@@ -65,6 +68,15 @@
             this.tpEntities.Text = "Entities";
             this.tpEntities.UseVisualStyleBackColor = true;
             // 
+            // lvSolids
+            // 
+            this.lvSolids.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvSolids.Location = new System.Drawing.Point(3, 3);
+            this.lvSolids.Name = "lvSolids";
+            this.lvSolids.Size = new System.Drawing.Size(307, 650);
+            this.lvSolids.TabIndex = 0;
+            this.lvSolids.UseCompatibleStateImageBehavior = false;
+            // 
             // ToolboxForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -75,6 +87,7 @@
             this.Name = "ToolboxForm";
             this.Text = "ToolboxForm";
             this.tabControl1.ResumeLayout(false);
+            this.tpSolids.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -84,5 +97,6 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tpSolids;
         private System.Windows.Forms.TabPage tpEntities;
+        private System.Windows.Forms.ListView lvSolids;
     }
 }

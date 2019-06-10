@@ -60,6 +60,8 @@ namespace PeridotEngine.UI
         {
             toolbarForm.Show();
             toolboxForm.Show();
+
+            toolboxForm.PopulateSolidsFromTextureDirectory(Level.TextureDirectory);
         }
 
         public override void Draw(SpriteBatch sb)
