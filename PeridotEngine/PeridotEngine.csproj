@@ -58,6 +58,18 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Editor\Forms\ToolbarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\Forms\ToolbarForm.Designer.cs">
+      <DependentUpon>ToolbarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\Forms\ToolboxForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\Forms\ToolboxForm.Designer.cs">
+      <DependentUpon>ToolboxForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Graphics\Particles\Particle.cs" />
@@ -67,11 +79,22 @@
     <Compile Include="Main.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\ConfigManager.cs" />
+    <Compile Include="Resources\FontManager.cs" />
     <Compile Include="Resources\LazyLoadingTextureDictionary.cs" />
     <Compile Include="Resources\LevelManager.cs" />
     <Compile Include="Resources\TextureManager.cs" />
     <Compile Include="Resources\TextureData.cs" />
+    <Compile Include="UI\DevConsole\Commands\Command.cs" />
+    <Compile Include="UI\DevConsole\Commands\EditLvl.cs" />
+    <Compile Include="UI\DevConsole\DevConsole.cs" />
+    <Compile Include="UI\DevConsole\KeyboardInput.cs" />
+    <Compile Include="UI\EditorScreen.cs" />
     <Compile Include="UI\LevelScreen.cs" />
     <Compile Include="UI\UIElements\UIElement.cs" />
     <Compile Include="UI\Screen.cs" />
@@ -93,6 +116,8 @@
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -103,6 +128,15 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
+    <None Include="Content\Fonts\ChakraPetch\ChakraPetch-ExtraLarge.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Fonts\ChakraPetch\ChakraPetch-Large.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Fonts\ChakraPetch\ChakraPetch-Normal.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -110,6 +144,18 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Editor\Forms\ToolbarForm.resx">
+      <DependentUpon>ToolbarForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\Forms\ToolboxForm.resx">
+      <DependentUpon>ToolboxForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

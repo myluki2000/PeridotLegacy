@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PeridotEngine.UI.DevConsole;
+using System;
 
 static class Globals
 {

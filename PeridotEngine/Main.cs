@@ -1,8 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿#nullable enable
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PeridotEngine.Resources;
 using PeridotEngine.UI;
+using PeridotEngine.UI.DevConsole;
+using System;
 
 namespace PeridotEngine
 {
@@ -10,14 +14,35 @@ namespace PeridotEngine
     /// This is the main type for your game.
     /// </summary>
     public class Main : Game
-    { 
+    {
         SpriteBatch spriteBatch;
+        protected GraphicsDeviceManager graphics;
+
+        private PresentationParameters? presentationParameters = null;
+
+        private DevConsole devConsole = new DevConsole();
 
         public Main()
         {
-            Globals.Graphics = new GraphicsDeviceManager(this);
+            graphics = new GraphicsDeviceManager(this);
+            EventInput.Initialize(Window);
+            Globals.Graphics = graphics;
             Globals.Content = Content;
             Content.RootDirectory = "Content";
+        }
+
+        public Main(IntPtr windowHandle, int width, int height) : this()
+        {
+            presentationParameters = new PresentationParameters()
+            {
+                BackBufferWidth = width,
+                BackBufferHeight = height,
+                BackBufferFormat = SurfaceFormat.Color,
+                DepthStencilFormat = DepthFormat.Depth24,
+                DeviceWindowHandle = windowHandle,
+                PresentationInterval = PresentInterval.Immediate,
+                IsFullScreen = false
+            };
         }
 
         /// <summary>
@@ -28,12 +53,12 @@ namespace PeridotEngine
         /// </summary>
         protected override void Initialize()
         {
-            ScreenHandler.SelectedScreen = new LevelScreen(LevelManager.LoadLevel(@"E:\Lukas\Desktop\PlatformerWorld\level.plvl"));
+            ScreenHandler.SelectedScreen = new LevelScreen(LevelManager.LoadLevel(@"World\level.plvl"));
 
             Globals.Graphics.PreferredBackBufferWidth = ConfigManager.CurrentConfig.WindowSize.X;
             Globals.Graphics.PreferredBackBufferHeight = ConfigManager.CurrentConfig.WindowSize.Y;
 
-
+            devConsole.Initialize();
 
             base.Initialize();
         }
@@ -47,7 +72,12 @@ namespace PeridotEngine
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            
+            if (presentationParameters != null)
+            {
+                graphics.GraphicsDevice.Reset(presentationParameters);
+            }
+
+            FontManager.LoadFonts(Content);
         }
 
         /// <summary>
@@ -56,7 +86,7 @@ namespace PeridotEngine
         /// </summary>
         protected override void UnloadContent()
         {
-            
+
         }
 
         /// <summary>
@@ -71,6 +101,8 @@ namespace PeridotEngine
 
             ScreenHandler.Update(gameTime);
 
+            devConsole.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -83,6 +115,11 @@ namespace PeridotEngine
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             ScreenHandler.Draw(spriteBatch);
+
+
+            devConsole.Draw(spriteBatch);
+
+            GraphicsDevice.Present();
 
             base.Draw(gameTime);
         }

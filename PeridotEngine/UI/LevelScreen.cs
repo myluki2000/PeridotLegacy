@@ -31,8 +31,7 @@ namespace PeridotEngine.UI
 
         public override void Initialize()
         {
-            // This should not be necessary anymore because levels automatically get inited when set
-            //Level.Initialize();
+
         }
 
         public override void Draw(SpriteBatch sb)
