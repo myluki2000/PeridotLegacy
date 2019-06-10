@@ -10,6 +10,11 @@ namespace PeridotEngine.World.WorldObjects.Solids
 {
     class TexturedObject : Sprite, ISolid
     {
+        /// <summary>
+        /// The parallax multiplier of the object in the game world.
+        /// </summary>
+        public float ParallaxMultiplier { get; set; } = 1.0f;
+
         public void Update(GameTime gameTime) { }
 
         public static TexturedObject FromXML(XElement xEle, LazyLoadingTextureDictionary textures)

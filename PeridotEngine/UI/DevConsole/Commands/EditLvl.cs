@@ -13,7 +13,7 @@ namespace PeridotEngine.UI.DevConsole.Commands
         public string HelpMessage => "Opens a new or existing level in the level editor.\n" +
             "Syntax: editlvl <path>";
 
-        public void ExecuteCommand(string cmd)
+        public void ExecuteCommand(string cmd, DevConsole console)
         {
             ScreenHandler.SelectedScreen = new EditorScreen(cmd.Replace("editlvl ", ""));
         }

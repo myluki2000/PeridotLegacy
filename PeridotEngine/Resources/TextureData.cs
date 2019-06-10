@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace PeridotEngine.Resources
 {
-    class TextureData
+    public class TextureData
     {
         /// <summary>
         /// Unique name of the TextureData object.

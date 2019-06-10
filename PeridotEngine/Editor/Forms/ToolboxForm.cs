@@ -1,13 +1,8 @@
-﻿using PeridotEngine.Resources;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿#nullable enable
+
+using PeridotEngine.Resources;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -26,7 +21,7 @@ namespace PeridotEngine.Editor.Forms
 
             lvSolids.LargeImageList = il;
 
-            foreach(string filePath in Directory.GetFiles(directory, "*.ptex"))
+            foreach (string filePath in Directory.GetFiles(directory, "*.ptex"))
             {
                 System.Diagnostics.Debug.WriteLine(filePath);
                 XElement xEle = XElement.Load(filePath);
@@ -47,9 +42,20 @@ namespace PeridotEngine.Editor.Forms
 
                 lvSolids.Items.Add(lvItem);
             }
+        }
 
-            //il.Images.Add();
-            //
+        /// <summary>
+        /// Returns the selected texture or null if none is selected.
+        /// </summary>
+        public TextureData? GetSelectedTexture()
+        {
+            if(lvSolids.SelectedItems.Count > 0)
+            {
+                return null;
+            } else
+            {
+                return (TextureData)lvSolids.SelectedItems[0].Tag;
+            }
         }
     }
 }

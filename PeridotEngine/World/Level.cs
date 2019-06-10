@@ -6,6 +6,7 @@ using PeridotEngine.World.WorldObjects;
 using System.Collections.Generic;
 using PeridotEngine.World.WorldObjects.Solids;
 using Microsoft.Xna.Framework;
+using PeridotEngine.Graphics;
 
 namespace PeridotEngine.World
 {
@@ -21,6 +22,8 @@ namespace PeridotEngine.World
         public HashSet<IEntity> Entities { get; set; }
 
         public string TextureDirectory { get; set; } = "";
+
+        public Camera Camera = new Camera();
 
         /// <summary>
         /// Create a new empty level.
@@ -61,8 +64,8 @@ namespace PeridotEngine.World
             combinedObjects.AddRange(Entities);
 
             combinedObjects.Sort((x, y) => x.ZIndex.CompareTo(y.ZIndex));
-
-            sb.Begin();
+            
+            sb.Begin(transformMatrix: Camera.GetMatrix());
 
             foreach(IWorldObject obj in combinedObjects)
             {

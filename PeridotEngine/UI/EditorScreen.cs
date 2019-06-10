@@ -1,17 +1,12 @@
 ﻿#nullable enable
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using PeridotEngine.Editor.Forms;
 using PeridotEngine.Resources;
-using PeridotEngine.UI.DevConsole;
 using PeridotEngine.World;
+using System.IO;
 
 namespace PeridotEngine.UI
 {
@@ -71,9 +66,31 @@ namespace PeridotEngine.UI
             base.DrawUI(sb);
         }
 
+        private KeyboardState lastKeyboardState;
+        private MouseState lastMouseState;
         public override void Update(GameTime gameTime)
         {
+            KeyboardState keyboardState = Keyboard.GetState();
+            MouseState mouseState = Mouse.GetState();
+
             Level.Update(gameTime);
+
+            HandleCameraDrag(lastMouseState, mouseState);
+
+            lastKeyboardState = keyboardState;
+            lastMouseState = mouseState;
+        }
+
+        private void HandleCameraDrag(MouseState lastMouseState, MouseState mouseState)
+        {
+            if (mouseState.MiddleButton == ButtonState.Pressed)
+            {
+                Level.Camera.Translation = new Vector3(
+                    Level.Camera.Translation.X + mouseState.Position.X - lastMouseState.Position.X,
+                    Level.Camera.Translation.Y + mouseState.Position.Y - lastMouseState.Position.Y,
+                    0
+                );
+            }
         }
     }
 }

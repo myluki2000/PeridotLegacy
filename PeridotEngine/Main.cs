@@ -57,6 +57,7 @@ namespace PeridotEngine
 
             Globals.Graphics.PreferredBackBufferWidth = ConfigManager.CurrentConfig.WindowSize.X;
             Globals.Graphics.PreferredBackBufferHeight = ConfigManager.CurrentConfig.WindowSize.Y;
+            Globals.Graphics.ApplyChanges();
 
             devConsole.Initialize();
 
@@ -115,7 +116,6 @@ namespace PeridotEngine
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             ScreenHandler.Draw(spriteBatch);
-
 
             devConsole.Draw(spriteBatch);
 

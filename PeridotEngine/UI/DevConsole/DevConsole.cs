@@ -5,8 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PeridotEngine.Graphics;
 using PeridotEngine.Resources;
-using System;
-using System.Linq;
 
 namespace PeridotEngine.UI.DevConsole
 {
@@ -14,9 +12,10 @@ namespace PeridotEngine.UI.DevConsole
     {
         public bool IsVisible { get; set; } = false;
 
-        private string text = "";
+        private string inputText = "";
+        private string outputText = "";
 
-        private Commands.Command[] commands = { new Commands.EditLvl()};
+        private readonly Commands.Command[] commands = { new Commands.EditLvl() };
 
         public void Initialize()
         {
@@ -30,10 +29,15 @@ namespace PeridotEngine.UI.DevConsole
             {
                 sb.Begin();
 
-                Utility.DrawRectangle(sb, new Rectangle(0, 0, Globals.Graphics.PreferredBackBufferWidth, 30), Color.DimGray * 0.5f);
+                // output box background
+                Utility.DrawRectangle(sb, new Rectangle(0, 0, Globals.Graphics.PreferredBackBufferWidth, Globals.Graphics.PreferredBackBufferHeight / 2), new Color(110, 110, 110, 200));
 
-                string textToDraw = text;
+                // input box background
+                Utility.DrawRectangle(sb, new Rectangle(0, Globals.Graphics.PreferredBackBufferHeight / 2, Globals.Graphics.PreferredBackBufferWidth, 30), new Color(70, 70, 70, 200));
 
+                string textToDraw = inputText;
+
+                // blinking cursor
                 if (counter < 20)
                 {
                     textToDraw += "_";
@@ -43,7 +47,11 @@ namespace PeridotEngine.UI.DevConsole
                     counter = 0;
                 }
 
-                sb.DrawString(FontManager.Fonts.ChakraPetch.Regular, textToDraw, new Vector2(0, 0), Color.Black);
+                // output box text
+                sb.DrawString(FontManager.Fonts.ChakraPetch.Regular, outputText, new Vector2(0, 0), Color.Black);
+
+                // input box text
+                sb.DrawString(FontManager.Fonts.ChakraPetch.Regular, textToDraw, new Vector2(0, Globals.Graphics.PreferredBackBufferHeight / 2), Color.Black);
 
                 sb.End();
                 counter++;
@@ -64,35 +72,70 @@ namespace PeridotEngine.UI.DevConsole
             lastKeyboardState = keyboardState;
         }
 
+        public void WriteLine(string text)
+        {
+            Write(text + "\n");
+        }
+
+        public void Write(string text)
+        {
+            outputText += text;
+
+            // remove old text if output text is too long
+            while (FontManager.Fonts.ChakraPetch.Regular.MeasureString(outputText).Y > Globals.Graphics.PreferredBackBufferHeight / 2)
+            {
+                outputText = outputText.Remove(0, 1);
+            }
+        }
+
         private void HandleKeyInput(object sender, CharacterEventArgs e)
         {
             if (e.Character == '\r')
             {
-                InterpretCommand(text);
-                IsVisible = false;
-            } else if(e.Character == '\b')
+                InterpretCommand(inputText);
+            }
+            else if (e.Character == '\b')
             {
-                if(text.Length > 0)
+                if (inputText.Length > 0)
                 {
-                    text = text.Remove(text.Length - 1);
+                    inputText = inputText.Remove(inputText.Length - 1);
                 }
             }
             else
             {
-                text += e.Character;
+                inputText += e.Character;
             }
         }
 
         private void InterpretCommand(string cmdString)
         {
-            foreach(Commands.Command cmd in commands)
+            WriteLine("> " + cmdString);
+
+            if (cmdString == "help")
             {
-                if(cmdString.StartsWith(cmd.CommandString))
+                // print help message
+                foreach (Commands.Command cmd in commands)
                 {
-                    cmd.ExecuteCommand(cmdString);
-                    break;
+                    WriteLine(cmd.CommandString + ": " + cmd.HelpMessage);
+                }
+
+                return;
+            }
+            else
+            {
+                // search fitting command and execute it
+                foreach (Commands.Command cmd in commands)
+                {
+                    if (cmdString.StartsWith(cmd.CommandString))
+                    {
+                        cmd.ExecuteCommand(cmdString, this);
+                        return;
+                    }
                 }
             }
+
+            // no suitable command found if we reach this point
+            WriteLine("This command does not exist.");
         }
     }
 }

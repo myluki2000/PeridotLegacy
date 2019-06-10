@@ -35,7 +35,6 @@
             this.miLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.miSave = new System.Windows.Forms.ToolStripMenuItem();
             this.miSaveAs = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnCursor = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.cmbView = new System.Windows.Forms.ToolStripComboBox();
@@ -47,7 +46,6 @@
             this.toolStrip1.AutoSize = false;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1,
-            this.btnCursor,
             this.toolStripSeparator1,
             this.toolStripLabel1,
             this.cmbView});
@@ -74,35 +72,26 @@
             // miNew
             // 
             this.miNew.Name = "miNew";
-            this.miNew.Size = new System.Drawing.Size(180, 22);
+            this.miNew.Size = new System.Drawing.Size(130, 22);
             this.miNew.Text = "New Level";
             // 
             // miLoad
             // 
             this.miLoad.Name = "miLoad";
-            this.miLoad.Size = new System.Drawing.Size(180, 22);
+            this.miLoad.Size = new System.Drawing.Size(130, 22);
             this.miLoad.Text = "Load Level";
             // 
             // miSave
             // 
             this.miSave.Name = "miSave";
-            this.miSave.Size = new System.Drawing.Size(180, 22);
+            this.miSave.Size = new System.Drawing.Size(130, 22);
             this.miSave.Text = "Save";
             // 
             // miSaveAs
             // 
             this.miSaveAs.Name = "miSaveAs";
-            this.miSaveAs.Size = new System.Drawing.Size(180, 22);
+            this.miSaveAs.Size = new System.Drawing.Size(130, 22);
             this.miSaveAs.Text = "Save As...";
-            // 
-            // btnCursor
-            // 
-            this.btnCursor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnCursor.Image = ((System.Drawing.Image)(resources.GetObject("btnCursor.Image")));
-            this.btnCursor.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCursor.Name = "btnCursor";
-            this.btnCursor.Size = new System.Drawing.Size(46, 33);
-            this.btnCursor.Text = "Cursor";
             // 
             // toolStripSeparator1
             // 
@@ -149,7 +138,6 @@
         private System.Windows.Forms.ToolStripMenuItem miLoad;
         private System.Windows.Forms.ToolStripMenuItem miSave;
         private System.Windows.Forms.ToolStripMenuItem miSaveAs;
-        private System.Windows.Forms.ToolStripButton btnCursor;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripComboBox cmbView;

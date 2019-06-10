@@ -20,6 +20,6 @@ namespace PeridotEngine.UI.DevConsole.Commands
         /// The method which is executed when the command is typed into the dev console.
         /// </summary>
         /// <param name="cmd">The command string which was typed into the console</param>
-        public void ExecuteCommand(string cmd);
+        public void ExecuteCommand(string cmd, DevConsole console);
     }
 }
