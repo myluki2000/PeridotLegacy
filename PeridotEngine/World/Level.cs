@@ -74,7 +74,6 @@ namespace PeridotEngine.World
 
             sb.End();
 
-
         }
 
         /// <summary>

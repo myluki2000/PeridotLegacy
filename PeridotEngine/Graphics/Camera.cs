@@ -40,7 +40,7 @@ namespace PeridotEngine.Graphics
         {
             return Matrix.CreateTranslation(Translation) *
                 Matrix.CreateScale(Scale) *
-                Matrix.CreateScale((float)Globals.Graphics.PreferredBackBufferHeight / 1080); // *
+                Matrix.CreateScale((float)Globals.Graphics.PreferredBackBufferHeight / 1080);
                 //Matrix.CreateTranslation(new Vector3((float)(Globals.Graphics.GraphicsDevice.Viewport.Width / 2), (float)(Globals.Graphics.GraphicsDevice.Viewport.Height / 2), 0));
         }
 
@@ -54,7 +54,7 @@ namespace PeridotEngine.Graphics
             return Matrix.CreateTranslation(Translation * new Vector3(1 / parallax.X, 1, 1)) *
                 Matrix.CreateTranslation(new Vector3(0, 150, 0)) *
                 Matrix.CreateScale(Scale) *
-                Matrix.CreateScale((float)Globals.Graphics.PreferredBackBufferHeight / 1080); // *
+                Matrix.CreateScale((float)Globals.Graphics.PreferredBackBufferHeight / 1080);
                 //Matrix.CreateTranslation(new Vector3((float)(Globals.Graphics.GraphicsDevice.Viewport.Width / 2), (float)(Globals.Graphics.GraphicsDevice.Viewport.Height / 2), 0));
         }
 
@@ -65,6 +65,14 @@ namespace PeridotEngine.Graphics
         public void FocusOnPosition(Vector2 focusPos)
         {
             Translation = new Vector3(-focusPos, 0);
+        }
+
+        public Vector2 ScreenPosToWorldPos(Vector2 screenPos)
+        {
+            return new Vector2(
+                (screenPos.X / Globals.Graphics.PreferredBackBufferWidth) * 1920 - Translation.X,
+                (screenPos.Y / Globals.Graphics.PreferredBackBufferHeight) * 1080 - Translation.Y
+            );
         }
     }
 }

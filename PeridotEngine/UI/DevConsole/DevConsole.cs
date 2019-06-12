@@ -10,7 +10,23 @@ namespace PeridotEngine.UI.DevConsole
 {
     class DevConsole
     {
-        public bool IsVisible { get; set; } = false;
+        private bool isVisible = false;
+        public bool IsVisible
+        {
+            get => isVisible;
+
+            set
+            {
+                isVisible = value;
+                if(isVisible)
+                {
+                    EventInput.CharEntered += HandleKeyInput;
+                } else
+                {
+                    EventInput.CharEntered -= HandleKeyInput;
+                }
+            }
+        }
 
         private string inputText = "";
         private string outputText = "";
@@ -19,7 +35,7 @@ namespace PeridotEngine.UI.DevConsole
 
         public void Initialize()
         {
-            EventInput.CharEntered += HandleKeyInput;
+
         }
 
         ushort counter = 0;
@@ -59,6 +75,7 @@ namespace PeridotEngine.UI.DevConsole
         }
 
         private KeyboardState lastKeyboardState;
+
         public void Update(GameTime gameTime)
         {
             KeyboardState keyboardState = Keyboard.GetState();

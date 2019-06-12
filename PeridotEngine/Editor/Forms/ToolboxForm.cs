@@ -47,14 +47,18 @@ namespace PeridotEngine.Editor.Forms
         /// <summary>
         /// Returns the selected texture or null if none is selected.
         /// </summary>
-        public TextureData? GetSelectedTexture()
+        public TextureData? SelectedTexture
         {
-            if(lvSolids.SelectedItems.Count > 0)
+            get
             {
-                return null;
-            } else
-            {
-                return (TextureData)lvSolids.SelectedItems[0].Tag;
+                if (lvSolids.SelectedItems.Count > 0)
+                {
+                    return (TextureData)lvSolids.SelectedItems[0].Tag;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
     }

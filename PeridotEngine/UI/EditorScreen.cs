@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using PeridotEngine.Editor.Forms;
 using PeridotEngine.Resources;
 using PeridotEngine.World;
+using PeridotEngine.World.WorldObjects.Solids;
 using System.IO;
 
 namespace PeridotEngine.UI
@@ -76,6 +77,8 @@ namespace PeridotEngine.UI
             Level.Update(gameTime);
 
             HandleCameraDrag(lastMouseState, mouseState);
+            HandleCameraZoom(lastMouseState, mouseState);
+            HandleObjectPlacement(lastMouseState, mouseState);
 
             lastKeyboardState = keyboardState;
             lastMouseState = mouseState;
@@ -90,6 +93,40 @@ namespace PeridotEngine.UI
                     Level.Camera.Translation.Y + mouseState.Position.Y - lastMouseState.Position.Y,
                     0
                 );
+            }
+        }
+
+        private void HandleCameraZoom(MouseState lastMouseState, MouseState mouseState)
+        {
+            int scrollDelta = mouseState.ScrollWheelValue - lastMouseState.ScrollWheelValue;
+            if(scrollDelta > 0)
+            {
+                Level.Camera.Translation -= new Vector3(1920 / 2, 1080 / 2, 0) / Level.Camera.Scale;
+                Level.Camera.Scale *= new Vector3(1.25f, 1.25f, 1);
+                Level.Camera.Translation += new Vector3(1920 / 2, 1080 / 2, 0) / Level.Camera.Scale;
+            } else if(scrollDelta < 0)
+            {
+                Level.Camera.Translation -= new Vector3(1920 / 2, 1080 / 2, 0) / Level.Camera.Scale;
+                Level.Camera.Scale /= new Vector3(1.25f, 1.25f, 1);
+                Level.Camera.Translation += new Vector3(1920 / 2, 1080 / 2, 0) / Level.Camera.Scale;
+            }
+        }
+
+        private void HandleObjectPlacement(MouseState lastMouseState, MouseState mouseState)
+        {
+            // place if left mouse button was pressed
+            if(lastMouseState.LeftButton == ButtonState.Pressed && mouseState.LeftButton == ButtonState.Released)
+            {
+                // check if any texture is selected
+                if (toolboxForm.SelectedTexture != null)
+                {
+                    Level.Solids.Add(new TexturedObject()
+                    {
+                        Position = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2()),
+                        Texture = toolboxForm.SelectedTexture,
+                        Size = new Vector2(100, 100)
+                    });
+                }
             }
         }
     }

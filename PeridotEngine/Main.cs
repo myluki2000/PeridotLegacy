@@ -55,6 +55,8 @@ namespace PeridotEngine
         {
             ScreenHandler.SelectedScreen = new LevelScreen(LevelManager.LoadLevel(@"World\level.plvl"));
 
+            IsMouseVisible = true;
+
             Globals.Graphics.PreferredBackBufferWidth = ConfigManager.CurrentConfig.WindowSize.X;
             Globals.Graphics.PreferredBackBufferHeight = ConfigManager.CurrentConfig.WindowSize.Y;
             Globals.Graphics.ApplyChanges();
@@ -97,14 +99,17 @@ namespace PeridotEngine
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            if (IsActive)
+            {
+                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    Exit();
 
-            ScreenHandler.Update(gameTime);
+                ScreenHandler.Update(gameTime);
 
-            devConsole.Update(gameTime);
+                devConsole.Update(gameTime);
 
-            base.Update(gameTime);
+                base.Update(gameTime);
+            }
         }
 
         /// <summary>
