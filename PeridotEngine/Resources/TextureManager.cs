@@ -53,6 +53,19 @@ namespace PeridotEngine.Resources
                                                      LoadRawTexture(contentPath),
                                                      randomTextureRot);
 
+            XElement xEleWidth = rootEle.Element("Width");
+            // set texture size if set in .ptex file
+            if (xEleWidth != null)
+            {
+                newTexture.Width = int.Parse(xEleWidth.Value);
+            }
+
+            XElement xEleHeight = rootEle.Element("Height");
+            if(xEleHeight != null)
+            {
+                newTexture.Height = int.Parse(xEleHeight.Value);
+            }
+
             return newTexture;
         }
     }

@@ -1,10 +1,10 @@
 ﻿#nullable enable
 
-using System.Globalization;
-using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using PeridotEngine.Graphics;
 using PeridotEngine.Resources;
+using System.Globalization;
+using System.Xml.Linq;
 
 namespace PeridotEngine.World.WorldObjects.Solids
 {
@@ -16,6 +16,8 @@ namespace PeridotEngine.World.WorldObjects.Solids
         public float ParallaxMultiplier { get; set; } = 1.0f;
 
         public void Update(GameTime gameTime) { }
+
+        public void Initialize() { }
 
         public static TexturedObject FromXML(XElement xEle, LazyLoadingTextureDictionary textures)
         {

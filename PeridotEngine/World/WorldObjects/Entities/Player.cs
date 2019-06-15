@@ -11,6 +11,7 @@ namespace PeridotEngine.World.WorldObjects.Entities
         public override string Name { get; set; }
         public override Level Level { get; set; }
 
+        public override void Initialize() { }
 
         public static Player FromXML(XElement xEle, LazyLoadingTextureDictionary textures)
         {

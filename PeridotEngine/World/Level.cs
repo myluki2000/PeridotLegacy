@@ -50,7 +50,12 @@ namespace PeridotEngine.World
         /// </summary>
         public void Initialize()
         {
+            foreach(ISolid solid in Solids)
+                solid.Initialize();
+            
 
+            foreach (IEntity entity in Entities)
+                entity.Initialize();
         }
 
         /// <summary>

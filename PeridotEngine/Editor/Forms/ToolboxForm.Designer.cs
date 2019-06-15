@@ -30,28 +30,59 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ToolboxForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnCursor = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpSolids = new System.Windows.Forms.TabPage();
             this.lvSolids = new System.Windows.Forms.ListView();
             this.tpEntities = new System.Windows.Forms.TabPage();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.btnCursor = new System.Windows.Forms.ToolStripButton();
+            this.lvEntities = new System.Windows.Forms.ListView();
+            this.nudHeight = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.nudWidth = new System.Windows.Forms.NumericUpDown();
             this.panel1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpSolids.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.tpEntities.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.nudWidth);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.nudHeight);
             this.panel1.Controls.Add(this.toolStrip1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(321, 24);
             this.panel1.TabIndex = 0;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnCursor});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(321, 25);
+            this.toolStrip1.TabIndex = 0;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // btnCursor
+            // 
+            this.btnCursor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnCursor.Image = ((System.Drawing.Image)(resources.GetObject("btnCursor.Image")));
+            this.btnCursor.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCursor.Name = "btnCursor";
+            this.btnCursor.Size = new System.Drawing.Size(46, 22);
+            this.btnCursor.Text = "Cursor";
             // 
             // panel2
             // 
@@ -92,35 +123,69 @@
             this.lvSolids.Size = new System.Drawing.Size(307, 626);
             this.lvSolids.TabIndex = 0;
             this.lvSolids.UseCompatibleStateImageBehavior = false;
+            this.lvSolids.SelectedIndexChanged += new System.EventHandler(this.LvSolids_SelectedIndexChanged);
             // 
             // tpEntities
             // 
+            this.tpEntities.Controls.Add(this.lvEntities);
             this.tpEntities.Location = new System.Drawing.Point(4, 22);
             this.tpEntities.Name = "tpEntities";
             this.tpEntities.Padding = new System.Windows.Forms.Padding(3);
-            this.tpEntities.Size = new System.Drawing.Size(313, 656);
+            this.tpEntities.Size = new System.Drawing.Size(313, 632);
             this.tpEntities.TabIndex = 1;
             this.tpEntities.Text = "Entities";
             this.tpEntities.UseVisualStyleBackColor = true;
             // 
-            // toolStrip1
+            // lvEntities
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnCursor});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(321, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
+            this.lvEntities.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvEntities.Location = new System.Drawing.Point(3, 3);
+            this.lvEntities.Name = "lvEntities";
+            this.lvEntities.Size = new System.Drawing.Size(307, 626);
+            this.lvEntities.TabIndex = 0;
+            this.lvEntities.UseCompatibleStateImageBehavior = false;
             // 
-            // btnCursor
+            // nudHeight
             // 
-            this.btnCursor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnCursor.Image = ((System.Drawing.Image)(resources.GetObject("btnCursor.Image")));
-            this.btnCursor.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCursor.Name = "btnCursor";
-            this.btnCursor.Size = new System.Drawing.Size(46, 22);
-            this.btnCursor.Text = "Cursor";
+            this.nudHeight.Location = new System.Drawing.Point(251, 3);
+            this.nudHeight.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.nudHeight.Name = "nudHeight";
+            this.nudHeight.Size = new System.Drawing.Size(67, 20);
+            this.nudHeight.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(211, 5);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Height";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(100, 5);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Width";
+            // 
+            // nudWidth
+            // 
+            this.nudWidth.Location = new System.Drawing.Point(137, 3);
+            this.nudWidth.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.nudWidth.Name = "nudWidth";
+            this.nudWidth.Size = new System.Drawing.Size(67, 20);
+            this.nudWidth.TabIndex = 3;
             // 
             // ToolboxForm
             // 
@@ -134,11 +199,14 @@
             this.Text = "ToolboxForm";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tpSolids.ResumeLayout(false);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.tpEntities.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -153,5 +221,10 @@
         private System.Windows.Forms.TabPage tpSolids;
         private System.Windows.Forms.ListView lvSolids;
         private System.Windows.Forms.TabPage tpEntities;
+        private System.Windows.Forms.ListView lvEntities;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown nudWidth;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown nudHeight;
     }
 }

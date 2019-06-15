@@ -99,12 +99,13 @@ namespace PeridotEngine.UI
         private void HandleCameraZoom(MouseState lastMouseState, MouseState mouseState)
         {
             int scrollDelta = mouseState.ScrollWheelValue - lastMouseState.ScrollWheelValue;
-            if(scrollDelta > 0)
+            if (scrollDelta > 0)
             {
                 Level.Camera.Translation -= new Vector3(1920 / 2, 1080 / 2, 0) / Level.Camera.Scale;
                 Level.Camera.Scale *= new Vector3(1.25f, 1.25f, 1);
                 Level.Camera.Translation += new Vector3(1920 / 2, 1080 / 2, 0) / Level.Camera.Scale;
-            } else if(scrollDelta < 0)
+            }
+            else if (scrollDelta < 0)
             {
                 Level.Camera.Translation -= new Vector3(1920 / 2, 1080 / 2, 0) / Level.Camera.Scale;
                 Level.Camera.Scale /= new Vector3(1.25f, 1.25f, 1);
@@ -115,17 +116,16 @@ namespace PeridotEngine.UI
         private void HandleObjectPlacement(MouseState lastMouseState, MouseState mouseState)
         {
             // place if left mouse button was pressed
-            if(lastMouseState.LeftButton == ButtonState.Pressed && mouseState.LeftButton == ButtonState.Released)
+            if (lastMouseState.LeftButton == ButtonState.Pressed && mouseState.LeftButton == ButtonState.Released)
             {
                 // check if any texture is selected
-                if (toolboxForm.SelectedTexture != null)
+                if (toolboxForm.SelectedObject != null)
                 {
-                    Level.Solids.Add(new TexturedObject()
+                    if (toolboxForm.SelectedObject is ISolid obj)
                     {
-                        Position = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2()),
-                        Texture = toolboxForm.SelectedTexture,
-                        Size = new Vector2(100, 100)
-                    });
+                        obj.Position = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2());
+                        Level.Solids.Add(obj);
+                    }
                 }
             }
         }

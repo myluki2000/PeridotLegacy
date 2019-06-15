@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace PeridotEngine.World.WorldObjects
 {
-    interface IWorldObject
+    public interface IWorldObject
     {
         /// <summary>
         /// The position of the sprite in the current matrix.
@@ -22,6 +22,10 @@ namespace PeridotEngine.World.WorldObjects
         /// </summary>
         int ZIndex { get; set; }
 
+        /// <summary>
+        /// Called upon initialization of the level the object is in.
+        /// </summary>
+        void Initialize();
 
         /// <summary>
         /// Update method. Called once each game update.

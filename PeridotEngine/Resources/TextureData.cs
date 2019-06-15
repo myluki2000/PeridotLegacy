@@ -18,7 +18,25 @@ namespace PeridotEngine.Resources
         /// If set to true the texture will be randomly rotated for each sprite it is used on.
         /// </summary>
         public bool HasRandomTextureRotation { get; private set; }
+        /// <summary>
+        /// Gets the width of the texture object. This does not necessarily maatch the width in pixels of the texture.
+        /// </summary>
+        public int Width
+        {
+            get => width == null ? Texture.Width : (int)width;
+            set => width = value;
+        }
+        /// <summary>
+        /// Gets the height of the texture object. This does not necessarily maatch the height in pixels of the texture.
+        /// </summary>
+        public int Height
+        {
+            get => height == null ? Texture.Height : (int)height;
+            set => height = value;
+        }
 
+        private int? width = null;
+        private int? height = null;
 
         public TextureData(string name, Texture2D texture, bool hasRandomTextureRotation)
         {
