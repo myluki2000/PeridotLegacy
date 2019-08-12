@@ -30,6 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ToolboxForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.nudWidth = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.nudHeight = new System.Windows.Forms.NumericUpDown();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnCursor = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -38,18 +42,14 @@
             this.lvSolids = new System.Windows.Forms.ListView();
             this.tpEntities = new System.Windows.Forms.TabPage();
             this.lvEntities = new System.Windows.Forms.ListView();
-            this.nudHeight = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.nudWidth = new System.Windows.Forms.NumericUpDown();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpSolids.SuspendLayout();
             this.tpEntities.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -64,6 +64,58 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(321, 24);
             this.panel1.TabIndex = 0;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(100, 5);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Width";
+            // 
+            // nudWidth
+            // 
+            this.nudWidth.Location = new System.Drawing.Point(137, 3);
+            this.nudWidth.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.nudWidth.Name = "nudWidth";
+            this.nudWidth.Size = new System.Drawing.Size(67, 20);
+            this.nudWidth.TabIndex = 3;
+            this.nudWidth.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(211, 5);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Height";
+            // 
+            // nudHeight
+            // 
+            this.nudHeight.Location = new System.Drawing.Point(251, 3);
+            this.nudHeight.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.nudHeight.Name = "nudHeight";
+            this.nudHeight.Size = new System.Drawing.Size(67, 20);
+            this.nudHeight.TabIndex = 1;
+            this.nudHeight.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             // 
             // toolStrip1
             // 
@@ -145,48 +197,6 @@
             this.lvEntities.TabIndex = 0;
             this.lvEntities.UseCompatibleStateImageBehavior = false;
             // 
-            // nudHeight
-            // 
-            this.nudHeight.Location = new System.Drawing.Point(251, 3);
-            this.nudHeight.Maximum = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            0});
-            this.nudHeight.Name = "nudHeight";
-            this.nudHeight.Size = new System.Drawing.Size(67, 20);
-            this.nudHeight.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(211, 5);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Height";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(100, 5);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Width";
-            // 
-            // nudWidth
-            // 
-            this.nudWidth.Location = new System.Drawing.Point(137, 3);
-            this.nudWidth.Maximum = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            0});
-            this.nudWidth.Name = "nudWidth";
-            this.nudWidth.Size = new System.Drawing.Size(67, 20);
-            this.nudWidth.TabIndex = 3;
-            // 
             // ToolboxForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -199,14 +209,14 @@
             this.Text = "ToolboxForm";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tpSolids.ResumeLayout(false);
             this.tpEntities.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).EndInit();
             this.ResumeLayout(false);
 
         }
