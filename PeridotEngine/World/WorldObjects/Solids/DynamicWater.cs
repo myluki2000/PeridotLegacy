@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PeridotEngine.Graphics;
+using PeridotEngine.UI;
 
 namespace PeridotEngine.World.WorldObjects.Solids
 {
@@ -22,6 +24,7 @@ namespace PeridotEngine.World.WorldObjects.Solids
         private const float SPRING_CONSTANT = 0.02f;
         private const float POINT_MASS = 1.0f;
         private const float DAMPING = 0.97f;
+
         private List<WaterPoint> waterPoints = new List<WaterPoint>();
         private BasicEffect basicEffect = new BasicEffect(Globals.Graphics.GraphicsDevice)
         {
@@ -40,13 +43,24 @@ namespace PeridotEngine.World.WorldObjects.Solids
         {
             sb.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
             basicEffect.World = Matrix.Identity;
-            basicEffect.View = Matrix.Identity;
             basicEffect.Projection = Matrix.CreateOrthographicOffCenter(0.0f,
                                                                         Globals.Graphics.PreferredBackBufferWidth,
                                                                         Globals.Graphics.PreferredBackBufferHeight,
                                                                         0.0f,
                                                                         0.0f,
                                                                         1.0f);
+
+            // TODO: Maybe pass a reference to the level to the draw method?
+            if (ScreenHandler.SelectedScreen.GetType() == typeof(LevelScreen))
+            {
+                basicEffect.View = ((LevelScreen)ScreenHandler.SelectedScreen).Level.Camera.GetMatrix();
+            } else if(ScreenHandler.SelectedScreen.GetType() == typeof(EditorScreen))
+            {
+                basicEffect.View = ((EditorScreen)ScreenHandler.SelectedScreen).Level.Camera.GetMatrix();
+            } else
+            {
+                throw new Exception("Dynamic water can only be rendered in levels.");
+            }
 
             List<VertexPositionColor> verts = new List<VertexPositionColor>();
 
