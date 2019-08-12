@@ -22,8 +22,11 @@ namespace PeridotEngine.World.WorldObjects.Solids
         public int Resolution { get; set; } = 10;
 
         private const float SPRING_CONSTANT = 0.02f;
+        private const float AMPLIFICATION = 2.0f;
         private const float POINT_MASS = 1.0f;
         private const float DAMPING = 0.97f;
+
+        private float displacementX = 0.0f;
 
         private List<WaterPoint> waterPoints = new List<WaterPoint>();
         private BasicEffect basicEffect = new BasicEffect(Globals.Graphics.GraphicsDevice)
@@ -156,6 +159,8 @@ namespace PeridotEngine.World.WorldObjects.Solids
                     force += SPRING_CONSTANT * (waterPoints[i + 1].Position.Y - waterPoints[i].Position.Y);
                 }
             }
+
+            displacementX += 0.08f;
         }
 
         public void Splash(float relativePosition)
@@ -163,22 +168,13 @@ namespace PeridotEngine.World.WorldObjects.Solids
             waterPoints[waterPoints.Count / 2].Position += new Vector2(0, -30);
         }
 
-        int animCounter = 0;
-        float displacementX = 0.0f;
         private float WaveFunction(float x)
         {
-            if(animCounter > 100)
-            {
-                animCounter = 0;
-                displacementX += 0.2f;
-            }
-
-            animCounter++;
-
             float result = 0;
             result += (float)(2 * Math.Sin(((x - displacementX) * 8) / Resolution));
             result += (float)(1 * Math.Sin(((x + displacementX) * 5) / Resolution));
             result += (float)(0.5 * Math.Sin(((x + displacementX) * 15) / Resolution));
+            result *= AMPLIFICATION;
 
             return result;
         }

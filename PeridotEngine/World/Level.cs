@@ -87,7 +87,15 @@ namespace PeridotEngine.World
         /// <param name="gameTime">The current game time</param>
         public void Update(GameTime gameTime)
         {
+            foreach(ISolid obj in Solids)
+            {
+                obj.Update(gameTime);
+            }
 
+            foreach(IEntity obj in Entities)
+            {
+                obj.Update(gameTime);
+            }
         }
 
     }
