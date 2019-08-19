@@ -2,11 +2,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using PeridotEngine.Graphics;
 using PeridotEngine.UI;
 
@@ -158,14 +160,29 @@ namespace PeridotEngine.World.WorldObjects.Solids
                     // standard case
                     force += SPRING_CONSTANT * (waterPoints[i + 1].Position.Y - waterPoints[i].Position.Y);
                 }
+
+                // update velocity and position of water point
+                float accel = force / POINT_MASS;
+                waterPoints[i].VelocityY = DAMPING * waterPoints[i].VelocityY + accel;
+                waterPoints[i].Position += new Vector2(0, waterPoints[i].VelocityY);
             }
 
             displacementX += 0.08f;
         }
 
-        public void Splash(float relativePosition)
+        /// <summary>
+        /// Creates a splash in the water.
+        /// 
+        /// Creates a splash at the position specified in world pixels from the left edge of the water.
+        /// </summary>
+        /// <param name="position">Position in world pixels from the left edge of the water object</param>
+        /// <param name="strength">Strength of the splash. A decently sized splash has a value of 20</param>
+        public void Splash(float position, float strength)
         {
-            waterPoints[waterPoints.Count / 2].Position += new Vector2(0, -30);
+            // Checks whether the position is within the bounds of the water object
+            Debug.Assert(position >= 0 && position <= Size.X);
+
+            waterPoints[(int)Math.Round(position / Resolution)].Position += new Vector2(0, -strength);
         }
 
         private float WaveFunction(float x)
