@@ -10,7 +10,7 @@ using PeridotEngine.Graphics;
 
 namespace PeridotEngine.World
 {
-    class Level
+    public class Level
     {
         /// <summary>
         /// Contains all WorldObjects placed in the level.
@@ -51,11 +51,11 @@ namespace PeridotEngine.World
         public void Initialize()
         {
             foreach(ISolid solid in Solids)
-                solid.Initialize();
+                solid.Initialize(this);
             
 
             foreach (IEntity entity in Entities)
-                entity.Initialize();
+                entity.Initialize(this);
         }
 
         /// <summary>

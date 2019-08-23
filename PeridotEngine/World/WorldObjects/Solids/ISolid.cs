@@ -2,7 +2,7 @@
 
 namespace PeridotEngine.World.WorldObjects.Solids
 {
-    interface ISolid : IWorldObject
+    public interface ISolid : IWorldObject
     {
         /// <summary>
         /// The parallax multiplier of the object in the game world.

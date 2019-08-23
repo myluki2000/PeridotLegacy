@@ -39,7 +39,7 @@ namespace PeridotEngine.World.WorldObjects.Solids
             VertexColorEnabled = true
         };
 
-        public void Initialize()
+        public void Initialize(Level level)
         {
             for(int i = 0; i < (int)(Size.X / Resolution); i++)
             {

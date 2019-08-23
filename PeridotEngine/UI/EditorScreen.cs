@@ -116,17 +116,16 @@ namespace PeridotEngine.UI
         private void HandleObjectPlacement(MouseState lastMouseState, MouseState mouseState)
         {
             // place if left mouse button was pressed
-            if (lastMouseState.LeftButton == ButtonState.Pressed && mouseState.LeftButton == ButtonState.Released)
+            if (lastMouseState.LeftButton != ButtonState.Pressed || mouseState.LeftButton != ButtonState.Released) return;
+
+            // check if any texture is selected
+            if (toolboxForm.SelectedObject == null) return;
+
+            if (toolboxForm.SelectedObject is ISolid obj)
             {
-                // check if any texture is selected
-                if (toolboxForm.SelectedObject != null)
-                {
-                    if (toolboxForm.SelectedObject is ISolid obj)
-                    {
-                        obj.Position = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2());
-                        Level.Solids.Add(obj);
-                    }
-                }
+                obj.Initialize(Level);
+                obj.Position = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2());
+                Level.Solids.Add(obj);
             }
         }
     }

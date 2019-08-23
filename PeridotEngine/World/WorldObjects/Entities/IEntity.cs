@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 namespace PeridotEngine.World.WorldObjects.Entities
 {
-    interface IEntity : IWorldObject
+    public interface IEntity : IWorldObject
     {
         /// <summary>
         /// Unique name to identify the entity.

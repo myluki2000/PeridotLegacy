@@ -17,7 +17,7 @@ namespace PeridotEngine.World.WorldObjects.Solids
 
         public void Update(GameTime gameTime) { }
 
-        public void Initialize() { }
+        public void Initialize(Level level) { }
 
         public static TexturedObject FromXML(XElement xEle, LazyLoadingTextureDictionary textures)
         {

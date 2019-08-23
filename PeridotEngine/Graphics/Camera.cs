@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace PeridotEngine.Graphics
 {
-    class Camera
+    public class Camera
     {
         /// <summary>
         /// The translation of the camera view.

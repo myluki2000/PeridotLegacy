@@ -23,7 +23,8 @@ namespace PeridotEngine.World.WorldObjects
         /// <summary>
         /// Called upon initialization of the level the object is in.
         /// </summary>
-        void Initialize();
+        /// <param name="level">The level the object is in</param>
+        void Initialize(Level level);
 
         /// <summary>
         /// Update method. Called once each game update.

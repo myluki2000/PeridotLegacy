@@ -32,7 +32,7 @@ namespace PeridotEngine.World.WorldObjects.Entities
             }
         }
 
-        public abstract void Initialize();
+        public abstract void Initialize(Level level);
         public abstract void Update(GameTime gameTime);
     }
 }

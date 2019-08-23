@@ -75,8 +75,6 @@ namespace PeridotEngine.Editor.Forms
                             Size = new Vector2((int)nudWidth.Value, (int)nudHeight.Value)
                         };
 
-                        obj.Initialize();
-
                         return obj;
                     }
                     else
