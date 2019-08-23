@@ -33,6 +33,8 @@ namespace PeridotEngine.World.WorldObjects.Solids
 
         private float displacementX = 0.0f;
 
+        private Level? parentLevel;
+
         private readonly List<WaterPoint> waterPoints = new List<WaterPoint>();
         private readonly BasicEffect basicEffect = new BasicEffect(Globals.Graphics.GraphicsDevice)
         {
@@ -41,6 +43,8 @@ namespace PeridotEngine.World.WorldObjects.Solids
 
         public void Initialize(Level level)
         {
+            parentLevel = level;
+
             for(int i = 0; i < (int)(Size.X / Resolution); i++)
             {
                 waterPoints.Add(new WaterPoint() { NormalPositionY = Size.Y, Position = new Vector2(i * Resolution, Size.Y) });
@@ -58,17 +62,9 @@ namespace PeridotEngine.World.WorldObjects.Solids
                                                                         0.0f,
                                                                         1.0f);
 
-            // TODO: Maybe pass a reference to the level to the draw method?
-            if (ScreenHandler.SelectedScreen.GetType() == typeof(LevelScreen))
-            {
-                basicEffect.View = ((LevelScreen)ScreenHandler.SelectedScreen).Level.Camera.GetMatrix();
-            } else if(ScreenHandler.SelectedScreen.GetType() == typeof(EditorScreen))
-            {
-                basicEffect.View = ((EditorScreen)ScreenHandler.SelectedScreen).Level.Camera.GetMatrix();
-            } else
-            {
-                throw new Exception("Dynamic water can only be rendered in levels.");
-            }
+
+            Debug.Assert(parentLevel != null, nameof(parentLevel) + " != null");
+            basicEffect.View = parentLevel.Camera.GetMatrix();
 
             List<VertexPositionColor> verts = new List<VertexPositionColor>();
 
