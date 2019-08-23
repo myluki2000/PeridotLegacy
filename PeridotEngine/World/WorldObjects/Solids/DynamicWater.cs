@@ -4,21 +4,24 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using PeridotEngine.Graphics;
 using PeridotEngine.UI;
 
 namespace PeridotEngine.World.WorldObjects.Solids
 {
+    /// <summary>
+    /// A dynamic water object which can be placed in a level.
+    /// </summary>
     class DynamicWater : ISolid
     {
+        /// <inheritdoc />
         public float ParallaxMultiplier { get; set; }
+        /// <inheritdoc />
         public Vector2 Position { get; set; }
+        /// <inheritdoc />
         public Vector2 Size { get; set; }
+        /// <inheritdoc />
         public int ZIndex { get; set; }
 
         public int Resolution { get; set; } = 10;
@@ -30,8 +33,8 @@ namespace PeridotEngine.World.WorldObjects.Solids
 
         private float displacementX = 0.0f;
 
-        private List<WaterPoint> waterPoints = new List<WaterPoint>();
-        private BasicEffect basicEffect = new BasicEffect(Globals.Graphics.GraphicsDevice)
+        private readonly List<WaterPoint> waterPoints = new List<WaterPoint>();
+        private readonly BasicEffect basicEffect = new BasicEffect(Globals.Graphics.GraphicsDevice)
         {
             VertexColorEnabled = true
         };

@@ -2,8 +2,6 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using PeridotEngine.Resources;
-using System.Xml.Linq;
 
 namespace PeridotEngine.World.WorldObjects
 {
