@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PeridotEngine.Graphics;
 using PeridotEngine.UI;
 
 namespace PeridotEngine.World.WorldObjects.Solids
@@ -122,7 +123,7 @@ namespace PeridotEngine.World.WorldObjects.Solids
             foreach(EffectPass pass in basicEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                sb.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, verts.ToArray(), 0, verts.Count, GetIndicesArray(verts), 0, verts.Count / 3);
+                sb.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, verts.ToArray(), 0, verts.Count, Utility.GetIndicesArray(verts), 0, verts.Count / 3);
             }
         }
 
@@ -191,18 +192,6 @@ namespace PeridotEngine.World.WorldObjects.Solids
             result += (float)(1 * Math.Sin(((x + displacementX) * 5) / Resolution));
             result += (float)(0.5 * Math.Sin(((x + displacementX) * 15) / Resolution));
             result *= AMPLIFICATION;
-
-            return result;
-        }
-
-        private int[] GetIndicesArray(List<VertexPositionColor> verts)
-        {
-            int[] result = new int[verts.Count];
-
-            for(int i = 0; i < verts.Count; i++)
-            {
-                result[i] = i;
-            }
 
             return result;
         }

@@ -79,7 +79,7 @@ namespace PeridotEngine.Editor.Forms
                     }
                     else
                     {
-                        return new TexturedObject()
+                        return new TexturedSolid()
                         {
                             Texture = (TextureData)lvSolids.SelectedItems[0].Tag,
                             Size = new Vector2((int)nudWidth.Value, (int)nudHeight.Value)

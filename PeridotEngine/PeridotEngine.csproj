@@ -75,6 +75,7 @@
     <Compile Include="Graphics\Particles\Particle.cs" />
     <Compile Include="Graphics\Particles\ParticleSystem.cs" />
     <Compile Include="Graphics\Sprite.cs" />
+    <Compile Include="Graphics\TransformableSprite.cs" />
     <Compile Include="Graphics\Utility.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Program.cs" />
@@ -109,8 +110,9 @@
     <Compile Include="World\Level.cs" />
     <Compile Include="World\WorldObjects\Solids\DynamicWater.cs" />
     <Compile Include="World\WorldObjects\Solids\ISolid.cs" />
-    <Compile Include="World\WorldObjects\Solids\TexturedObject.cs" />
+    <Compile Include="World\WorldObjects\Solids\TexturedSolid.cs" />
     <Compile Include="World\WorldObjects\IWorldObject.cs" />
+    <Compile Include="World\WorldObjects\Solids\TexturedTransformableSolid.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

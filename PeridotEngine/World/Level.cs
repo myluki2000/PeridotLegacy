@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using PeridotEngine.World.WorldObjects.Solids;
 using Microsoft.Xna.Framework;
 using PeridotEngine.Graphics;
+using PeridotEngine.Resources;
 
 namespace PeridotEngine.World
 {
@@ -24,7 +25,7 @@ namespace PeridotEngine.World
         public string TextureDirectory { get; set; } = "";
 
         public Camera Camera = new Camera();
-
+       
         /// <summary>
         /// Create a new empty level.
         /// </summary>

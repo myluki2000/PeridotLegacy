@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace PeridotEngine.World.WorldObjects.Solids
 {
-    class TexturedObject : Sprite, ISolid
+    class TexturedSolid : Sprite, ISolid
     {
         /// <summary>
         /// The parallax multiplier of the object in the game world.
@@ -19,9 +19,9 @@ namespace PeridotEngine.World.WorldObjects.Solids
 
         public void Initialize(Level level) { }
 
-        public static TexturedObject FromXML(XElement xEle, LazyLoadingTextureDictionary textures)
+        public static TexturedSolid FromXML(XElement xEle, LazyLoadingTextureDictionary textures)
         {
-            TexturedObject obj = new TexturedObject();
+            TexturedSolid obj = new TexturedSolid();
 
             // get pos from xml
             Vector2 pos;

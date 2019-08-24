@@ -21,7 +21,9 @@ namespace PeridotEngine.Graphics
         /// The size of the sprite (width x height).
         /// </summary>
         public Vector2 Size { get; set; }
-
+        /// <summary>
+        /// Z-index of the sprite. A larger z-index draws this sprite in front of others.
+        /// </summary>
         public int ZIndex { get; set; }
         /// <summary>
         /// The rotation of the sprite in radians.
@@ -59,7 +61,7 @@ namespace PeridotEngine.Graphics
         /// Draw the sprite to the screen.
         /// </summary>
         /// <param name="sb">The SpriteBatch which is used to draw the sprite</param>
-        public virtual void Draw(SpriteBatch sb)
+        public void Draw(SpriteBatch sb)
         {
             if (Texture != null)
             {
