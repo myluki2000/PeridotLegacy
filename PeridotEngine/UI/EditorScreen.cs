@@ -1,5 +1,8 @@
 ﻿#nullable enable
 
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -8,6 +11,11 @@ using PeridotEngine.Resources;
 using PeridotEngine.World;
 using PeridotEngine.World.WorldObjects.Solids;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms.VisualStyles;
+using PeridotEngine.Graphics;
+using PeridotEngine.World.WorldObjects;
+using PeridotEngine.World.WorldObjects.Entities;
 
 namespace PeridotEngine.UI
 {
@@ -17,6 +25,8 @@ namespace PeridotEngine.UI
         private readonly ToolboxForm toolboxForm = new ToolboxForm();
 
         private string levelPath;
+
+        private IWorldObject? selectedObject;
 
         private Level _level;
         /// <summary>
@@ -64,6 +74,9 @@ namespace PeridotEngine.UI
         {
             Level.Draw(sb);
 
+            DrawPreview(sb);
+            DrawSelectionBox(sb);
+
             base.DrawUI(sb);
         }
 
@@ -79,9 +92,60 @@ namespace PeridotEngine.UI
             HandleCameraDrag(lastMouseState, mouseState);
             HandleCameraZoom(lastMouseState, mouseState);
             HandleObjectPlacement(lastMouseState, mouseState);
+            HandleObjectSelection(lastMouseState, mouseState);
 
             lastKeyboardState = keyboardState;
             lastMouseState = mouseState;
+        }
+
+        private void DrawPreview(SpriteBatch sb)
+        {
+            if (toolboxForm.SelectedObject == null) return;
+
+            IWorldObject obj = toolboxForm.SelectedObject;
+
+            sb.Begin();
+            // TODO: Implement preview image when placing objects
+            sb.End();
+        }
+
+        private void DrawSelectionBox(SpriteBatch sb)
+        {
+            if (selectedObject == null) return;
+
+            sb.Begin(transformMatrix: Level.Camera.GetMatrix());
+            Utility.DrawOutline(sb, new Rectangle(selectedObject.Position.ToPoint(), selectedObject.Size.ToPoint()), Color.Red, 2);
+            sb.End();
+        }
+
+        private void HandleObjectSelection(MouseState lastMouseState, MouseState mouseState)
+        {
+            // Left mouse button was clicked
+            if (lastMouseState.LeftButton != ButtonState.Pressed ||
+                mouseState.LeftButton != ButtonState.Released) return;
+                
+            // cursor is selected
+            if (toolboxForm.SelectedObject != null) return;
+
+            Vector2 mousePosWorldSpace = Vector2.Transform(Mouse.GetState().Position.ToVector2(), Matrix.Invert(Level.Camera.GetMatrix()));
+
+            IEnumerable<IEntity> entities = Level.Entities.Where(x => new Rectangle(x.Position.ToPoint(), x.Size.ToPoint()).Contains(mousePosWorldSpace));
+
+            if(entities.Any())
+            {
+                selectedObject = entities.First();
+                return;
+            }
+
+            IEnumerable<ISolid> solids = Level.Solids.Where(x => new Rectangle(x.Position.ToPoint(), x.Size.ToPoint()).Contains(mousePosWorldSpace));
+            
+            if (solids.Any())
+            {
+                selectedObject = solids.First();
+                return;
+            }
+
+            selectedObject = null;
         }
 
         private void HandleCameraDrag(MouseState lastMouseState, MouseState mouseState)
