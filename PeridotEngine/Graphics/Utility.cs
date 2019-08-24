@@ -33,11 +33,28 @@ namespace PeridotEngine.Graphics
         /// </summary>
         /// <param name="verts"></param>
         /// <returns></returns>
-        public static int[] GetIndicesArray(List<VertexPositionColor> verts)
+        public static int[] GetIndicesArray<T>(List<T> verts)
         {
             int[] result = new int[verts.Count];
 
             for (int i = 0; i < verts.Count; i++)
+            {
+                result[i] = i;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Returns an array which contains indices of all elements in the verts list. Basically just 0,1,2,3,4,...,(n-1) if n = verts.Count
+        /// </summary>
+        /// <param name="verts"></param>
+        /// <returns></returns>
+        public static int[] GetIndicesArray<T>(T[] verts)
+        {
+            int[] result = new int[verts.Length];
+
+            for (int i = 0; i < verts.Length; i++)
             {
                 result[i] = i;
             }

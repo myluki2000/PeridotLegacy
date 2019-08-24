@@ -6,7 +6,6 @@ using System.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.Resources;
-using Color = Microsoft.Xna.Framework.Color;
 
 namespace PeridotEngine.Graphics
 {
@@ -32,6 +31,14 @@ namespace PeridotEngine.Graphics
         /// The position of the bottom-right corner of the sprite.
         /// </summary>
         public Vector2 BottomRight { get; set; }
+
+        public Matrix TopLeftMatrix { get; set; }
+
+        public Matrix TopRightMatrix { get; set; }
+
+        public Matrix BottomLeftMatrix { get; set; }
+
+        public Matrix BottomRightMatrix { get; set; }
         /// <summary>
         /// Z-index of the sprite. A larger z-index draws this sprite in front of others.
         /// </summary>
@@ -43,8 +50,7 @@ namespace PeridotEngine.Graphics
 
         private readonly BasicEffect basicEffect = new BasicEffect(Globals.Graphics.GraphicsDevice)
         {
-            //TextureEnabled = true,
-            VertexColorEnabled = true
+            TextureEnabled = true
         };
 
         /// <summary>
@@ -71,25 +77,25 @@ namespace PeridotEngine.Graphics
                                                                         0.0f,
                                                                         0.0f,
                                                                         1.0f);
-
-
             basicEffect.View = viewMatrix;
+            basicEffect.TextureEnabled = true;
+            basicEffect.Texture = Texture.Texture;
 
             // TODO: convert this to array for extra performance. We know how many verts we have
-            List<VertexPositionColor> verts = new List<VertexPositionColor>
+            VertexPositionTexture[] verts = new VertexPositionTexture[6]
             {
-                new VertexPositionColor() {Position = new Vector3(TopLeft, 0), Color = Color.Red},
-                new VertexPositionColor() {Position = new Vector3(TopRight, 0), Color = Color.Yellow},
-                new VertexPositionColor() {Position = new Vector3(BottomRight, 0), Color = Color.Green},
-                new VertexPositionColor() {Position = new Vector3(TopLeft, 0), Color = Color.Magenta},
-                new VertexPositionColor() {Position = new Vector3(BottomRight, 0), Color = Color.DarkGreen},
-                new VertexPositionColor() {Position = new Vector3(BottomLeft, 0), Color = Color.Blue}
+                new VertexPositionTexture() {Position = Vector3.Transform(new Vector3(TopLeft, 0), TopLeftMatrix), TextureCoordinate = new Vector2(0, 0)},
+                new VertexPositionTexture() {Position = Vector3.Transform(new Vector3(TopRight, 0), TopRightMatrix), TextureCoordinate = new Vector2(1, 0)},
+                new VertexPositionTexture() {Position = Vector3.Transform(new Vector3(BottomRight, 0), BottomRightMatrix), TextureCoordinate = new Vector2(1, 1)},
+                new VertexPositionTexture() {Position = Vector3.Transform(new Vector3(TopLeft, 0),TopLeftMatrix), TextureCoordinate = new Vector2(0, 0)},
+                new VertexPositionTexture() {Position = Vector3.Transform(new Vector3(BottomRight, 0), BottomRightMatrix), TextureCoordinate = new Vector2(1, 1)},
+                new VertexPositionTexture() {Position = Vector3.Transform(new Vector3(BottomLeft, 0), BottomLeftMatrix), TextureCoordinate = new Vector2(0, 1)}
             };
 
             foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                sb.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, verts.ToArray(), 0, verts.Count, Utility.GetIndicesArray(verts), 0, verts.Count / 3);
+                sb.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, verts, 0, verts.Length, Utility.GetIndicesArray(verts), 0, verts.Length / 3);
             }
         }
     }
