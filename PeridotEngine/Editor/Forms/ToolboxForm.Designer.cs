@@ -1,4 +1,6 @@
-﻿namespace PeridotEngine.Editor.Forms
+﻿using PeridotEngine.Editor.UI;
+
+namespace PeridotEngine.Editor.Forms
 {
     partial class ToolboxForm
     {
@@ -34,7 +36,7 @@
             this.nudWidth = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.nudHeight = new System.Windows.Forms.NumericUpDown();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStrip1 = new PeridotEngine.Editor.UI.ToolStripEx();
             this.btnCursor = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -68,15 +70,15 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(100, 5);
+            this.label2.Location = new System.Drawing.Point(100, 4);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 2;
+            this.label2.TabIndex = 6;
             this.label2.Text = "Width";
             // 
             // nudWidth
             // 
-            this.nudWidth.Location = new System.Drawing.Point(137, 3);
+            this.nudWidth.Location = new System.Drawing.Point(137, 2);
             this.nudWidth.Maximum = new decimal(new int[] {
             99999,
             0,
@@ -89,7 +91,7 @@
             0});
             this.nudWidth.Name = "nudWidth";
             this.nudWidth.Size = new System.Drawing.Size(67, 20);
-            this.nudWidth.TabIndex = 3;
+            this.nudWidth.TabIndex = 7;
             this.nudWidth.Value = new decimal(new int[] {
             100,
             0,
@@ -99,15 +101,15 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(211, 5);
+            this.label1.Location = new System.Drawing.Point(211, 4);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 1;
+            this.label1.TabIndex = 4;
             this.label1.Text = "Height";
             // 
             // nudHeight
             // 
-            this.nudHeight.Location = new System.Drawing.Point(251, 3);
+            this.nudHeight.Location = new System.Drawing.Point(251, 2);
             this.nudHeight.Maximum = new decimal(new int[] {
             99999,
             0,
@@ -120,7 +122,7 @@
             0});
             this.nudHeight.Name = "nudHeight";
             this.nudHeight.Size = new System.Drawing.Size(67, 20);
-            this.nudHeight.TabIndex = 1;
+            this.nudHeight.TabIndex = 5;
             this.nudHeight.Value = new decimal(new int[] {
             100,
             0,
@@ -129,6 +131,7 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.ClickThrough = true;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnCursor});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -145,6 +148,7 @@
             this.btnCursor.Name = "btnCursor";
             this.btnCursor.Size = new System.Drawing.Size(46, 22);
             this.btnCursor.Text = "Cursor";
+            this.btnCursor.Click += new System.EventHandler(this.BtnCursor_Click);
             // 
             // panel2
             // 
@@ -234,8 +238,6 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton btnCursor;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tpSolids;
@@ -246,5 +248,7 @@
         private System.Windows.Forms.NumericUpDown nudWidth;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown nudHeight;
+        private PeridotEngine.Editor.UI.ToolStripEx toolStrip1;
+        private System.Windows.Forms.ToolStripButton btnCursor;
     }
 }

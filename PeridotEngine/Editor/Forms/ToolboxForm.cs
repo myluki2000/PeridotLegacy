@@ -1,11 +1,13 @@
 ﻿#nullable enable
 
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using PeridotEngine.Resources;
 using PeridotEngine.World.WorldObjects;
 using PeridotEngine.World.WorldObjects.Solids;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -108,6 +110,12 @@ namespace PeridotEngine.Editor.Forms
                 nudWidth.Value = selectedTexture.Width;
                 nudHeight.Value = selectedTexture.Height;
             }
+        }
+
+        private void BtnCursor_Click(object sender, System.EventArgs e)
+        {
+            lvSolids.SelectedIndices.Clear();
+            lvEntities.SelectedIndices.Clear();
         }
     }
 }
