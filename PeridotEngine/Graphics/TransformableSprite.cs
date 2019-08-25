@@ -84,12 +84,12 @@ namespace PeridotEngine.Graphics
             // TODO: convert this to array for extra performance. We know how many verts we have
             VertexPositionTexture[] verts = new VertexPositionTexture[6]
             {
-                new VertexPositionTexture() {Position = Vector3.Transform(new Vector3(TopLeft, 0), TopLeftMatrix), TextureCoordinate = new Vector2(0, 0)},
-                new VertexPositionTexture() {Position = Vector3.Transform(new Vector3(TopRight, 0), TopRightMatrix), TextureCoordinate = new Vector2(1, 0)},
-                new VertexPositionTexture() {Position = Vector3.Transform(new Vector3(BottomRight, 0), BottomRightMatrix), TextureCoordinate = new Vector2(1, 1)},
-                new VertexPositionTexture() {Position = Vector3.Transform(new Vector3(TopLeft, 0),TopLeftMatrix), TextureCoordinate = new Vector2(0, 0)},
-                new VertexPositionTexture() {Position = Vector3.Transform(new Vector3(BottomRight, 0), BottomRightMatrix), TextureCoordinate = new Vector2(1, 1)},
-                new VertexPositionTexture() {Position = Vector3.Transform(new Vector3(BottomLeft, 0), BottomLeftMatrix), TextureCoordinate = new Vector2(0, 1)}
+                new VertexPositionTexture() {Position = new Vector3(TopLeft, 0).Transform(TopLeftMatrix), TextureCoordinate = new Vector2(0, 0)},
+                new VertexPositionTexture() {Position = new Vector3(TopRight, 0).Transform(TopRightMatrix), TextureCoordinate = new Vector2(1, 0)},
+                new VertexPositionTexture() {Position = new Vector3(BottomRight, 0).Transform(BottomRightMatrix), TextureCoordinate = new Vector2(1, 1)},
+                new VertexPositionTexture() {Position = new Vector3(TopLeft, 0).Transform(TopLeftMatrix), TextureCoordinate = new Vector2(0, 0)},
+                new VertexPositionTexture() {Position = new Vector3(BottomRight, 0).Transform(BottomRightMatrix), TextureCoordinate = new Vector2(1, 1)},
+                new VertexPositionTexture() {Position = new Vector3(BottomLeft, 0).Transform(BottomLeftMatrix), TextureCoordinate = new Vector2(0, 1)}
             };
 
             foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)

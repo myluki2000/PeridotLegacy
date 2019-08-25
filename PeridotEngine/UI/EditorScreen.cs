@@ -133,7 +133,7 @@ namespace PeridotEngine.UI
             // cursor is selected
             if (toolboxForm.SelectedObject != null) return;
 
-            Vector2 mousePosWorldSpace = Vector2.Transform(Mouse.GetState().Position.ToVector2(), Matrix.Invert(Level.Camera.GetMatrix()));
+            Vector2 mousePosWorldSpace = Mouse.GetState().Position.ToVector2().Transform(Matrix.Invert(Level.Camera.GetMatrix()));
 
             IEnumerable<IEntity> entities = Level.Entities.Where(x => new Rectangle(x.Position.ToPoint(), x.Size.ToPoint()).Contains(mousePosWorldSpace));
 
