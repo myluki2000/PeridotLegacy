@@ -128,7 +128,7 @@ namespace PeridotEngine.Graphics.Particles
             // fire ParticlesDespawned event if all particles have despawned
             if(particles.Count == 0)
             {
-                ParticlesDespawned(this, null);
+                ParticlesDespawned?.Invoke(this, null);
             }
 
         }

@@ -12,10 +12,12 @@ using PeridotEngine.World;
 using PeridotEngine.World.WorldObjects.Solids;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using PeridotEngine.Graphics;
 using PeridotEngine.World.WorldObjects;
 using PeridotEngine.World.WorldObjects.Entities;
+using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 
 namespace PeridotEngine.UI
 {
@@ -66,6 +68,10 @@ namespace PeridotEngine.UI
         {
             toolbarForm.Show();
             toolboxForm.Show();
+
+            toolboxForm.ObjectWidthChanged += SelectedObjectWidthChanged;
+            toolboxForm.ObjectHeightChanged += SelectedObjectHeightChanged;
+            toolboxForm.ObjectZIndexChanged += SelectedObjectZIndexChanged;
 
             toolboxForm.PopulateSolidsFromTextureDirectory(Level.TextureDirectory);
         }
@@ -134,6 +140,7 @@ namespace PeridotEngine.UI
             if(entities.Any())
             {
                 selectedObject = entities.First();
+                PopulateValuesFromSelectedObject();
                 return;
             }
 
@@ -142,10 +149,20 @@ namespace PeridotEngine.UI
             if (solids.Any())
             {
                 selectedObject = solids.First();
+                PopulateValuesFromSelectedObject();
                 return;
             }
 
             selectedObject = null;
+        }
+
+        private void PopulateValuesFromSelectedObject()
+        {
+            if (selectedObject == null) return;
+
+            toolboxForm.ObjectWidth = (int)selectedObject.Size.X;
+            toolboxForm.ObjectHeight = (int)selectedObject.Size.Y;
+            toolboxForm.ObjectZIndex = selectedObject.ZIndex;
         }
 
         private void HandleCameraDrag(MouseState lastMouseState, MouseState mouseState)
@@ -191,6 +208,22 @@ namespace PeridotEngine.UI
                 obj.Position = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2());
                 Level.Solids.Add(obj);
             }
+        }
+
+        private void SelectedObjectWidthChanged(object sender, int value)
+        {
+            if (selectedObject != null) selectedObject.Size = new Vector2(value, selectedObject.Size.Y);
+            
+        }
+
+        private void SelectedObjectHeightChanged(object sender, int value)
+        {
+            if (selectedObject != null) selectedObject.Size = new Vector2(selectedObject.Size.X, value);
+        }
+
+        private void SelectedObjectZIndexChanged(object sender, int value)
+        {
+            if (selectedObject != null) selectedObject.ZIndex = value;
         }
     }
 }
