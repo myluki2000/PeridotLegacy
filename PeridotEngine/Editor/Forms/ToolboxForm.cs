@@ -18,7 +18,7 @@ namespace PeridotEngine.Editor.Forms
         /// <summary>
         /// Gets or sets the z-index of the z-index control in the form.
         /// </summary>
-        public int ObjectZIndex { get => (int)nudZIndex.Value; set => nudZIndex.Value = value; }
+        public sbyte ObjectZIndex { get => (sbyte)nudZIndex.Value; set => nudZIndex.Value = value; }
         /// <summary>
         /// Gets or sets the value set for object width in the toolbox.
         /// </summary>
@@ -68,7 +68,7 @@ namespace PeridotEngine.Editor.Forms
             }
         }
 
-        public event EventHandler<int> ObjectZIndexChanged;
+        public event EventHandler<sbyte> ObjectZIndexChanged;
         public event EventHandler<int> ObjectWidthChanged;
         public event EventHandler<int> ObjectHeightChanged;
 
@@ -140,7 +140,7 @@ namespace PeridotEngine.Editor.Forms
 
         private void NudZIndex_ValueChanged(object sender, EventArgs e)
         {
-            ObjectZIndexChanged?.Invoke(this, (int)nudZIndex.Value);
+            ObjectZIndexChanged?.Invoke(this, (sbyte)nudZIndex.Value);
         }
 
         private void NudWidth_ValueChanged(object sender, EventArgs e)

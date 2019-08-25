@@ -23,7 +23,7 @@ namespace PeridotEngine.World.WorldObjects.Solids
         /// <inheritdoc />
         public Vector2 Size { get; set; }
         /// <inheritdoc />
-        public int ZIndex { get; set; }
+        public sbyte ZIndex { get; set; }
 
         public int Resolution { get; set; } = 10;
 

@@ -24,7 +24,7 @@ namespace PeridotEngine.Graphics
         /// <summary>
         /// Z-index of the sprite. A larger z-index draws this sprite in front of others.
         /// </summary>
-        public int ZIndex { get; set; }
+        public sbyte ZIndex { get; set; }
         /// <summary>
         /// The rotation of the sprite in radians.
         /// </summary>
@@ -77,7 +77,7 @@ namespace PeridotEngine.Graphics
                 }
 
 
-                sb.Draw(Texture.Texture, destRect, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, ZIndex);
+                sb.Draw(Texture.Texture, destRect, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, ZIndex.Map(-128, 127, 0, 1));
             }
             else
             {

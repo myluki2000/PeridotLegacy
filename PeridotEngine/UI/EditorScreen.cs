@@ -221,7 +221,7 @@ namespace PeridotEngine.UI
             if (selectedObject != null) selectedObject.Size = new Vector2(selectedObject.Size.X, value);
         }
 
-        private void SelectedObjectZIndexChanged(object sender, int value)
+        private void SelectedObjectZIndexChanged(object sender, sbyte value)
         {
             if (selectedObject != null) selectedObject.ZIndex = value;
         }

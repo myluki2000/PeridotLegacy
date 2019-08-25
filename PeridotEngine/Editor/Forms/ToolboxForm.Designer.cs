@@ -32,10 +32,12 @@ namespace PeridotEngine.Editor.Forms
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ToolboxForm));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
+            this.nudZIndex = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
             this.nudWidth = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
             this.nudHeight = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1 = new PeridotEngine.Editor.UI.ToolStripEx();
             this.btnCursor = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -44,9 +46,8 @@ namespace PeridotEngine.Editor.Forms
             this.lvSolids = new System.Windows.Forms.ListView();
             this.tpEntities = new System.Windows.Forms.TabPage();
             this.lvEntities = new System.Windows.Forms.ListView();
-            this.nudZIndex = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudZIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -54,7 +55,6 @@ namespace PeridotEngine.Editor.Forms
             this.tabControl1.SuspendLayout();
             this.tpSolids.SuspendLayout();
             this.tpEntities.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudZIndex)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -72,16 +72,36 @@ namespace PeridotEngine.Editor.Forms
             this.panel1.Size = new System.Drawing.Size(353, 24);
             this.panel1.TabIndex = 0;
             // 
-            // label2
+            // nudZIndex
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(179, 5);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(33, 13);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Width";
+            this.nudZIndex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.nudZIndex.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nudZIndex.Location = new System.Drawing.Point(136, 3);
+            this.nudZIndex.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.nudZIndex.Minimum = new decimal(new int[] {
+            128,
+            0,
+            0,
+            -2147483648});
+            this.nudZIndex.Name = "nudZIndex";
+            this.nudZIndex.Size = new System.Drawing.Size(40, 19);
+            this.nudZIndex.TabIndex = 9;
+            this.nudZIndex.ValueChanged += new System.EventHandler(this.NudZIndex_ValueChanged);
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(105, 5);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(34, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Z-Ind.";
             // 
             // nudWidth
             // 
@@ -108,17 +128,6 @@ namespace PeridotEngine.Editor.Forms
             0});
             this.nudWidth.ValueChanged += new System.EventHandler(this.NudWidth_ValueChanged);
             // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(263, 5);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(37, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Height";
-            // 
             // nudHeight
             // 
             this.nudHeight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -143,6 +152,28 @@ namespace PeridotEngine.Editor.Forms
             0,
             0});
             this.nudHeight.ValueChanged += new System.EventHandler(this.NudHeight_ValueChanged);
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(179, 5);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(33, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Width";
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(263, 5);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(37, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Height";
             // 
             // toolStrip1
             // 
@@ -212,7 +243,7 @@ namespace PeridotEngine.Editor.Forms
             this.tpEntities.Location = new System.Drawing.Point(4, 22);
             this.tpEntities.Name = "tpEntities";
             this.tpEntities.Padding = new System.Windows.Forms.Padding(3);
-            this.tpEntities.Size = new System.Drawing.Size(313, 632);
+            this.tpEntities.Size = new System.Drawing.Size(345, 632);
             this.tpEntities.TabIndex = 1;
             this.tpEntities.Text = "Entities";
             this.tpEntities.UseVisualStyleBackColor = true;
@@ -222,35 +253,9 @@ namespace PeridotEngine.Editor.Forms
             this.lvEntities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvEntities.Location = new System.Drawing.Point(3, 3);
             this.lvEntities.Name = "lvEntities";
-            this.lvEntities.Size = new System.Drawing.Size(307, 626);
+            this.lvEntities.Size = new System.Drawing.Size(339, 626);
             this.lvEntities.TabIndex = 0;
             this.lvEntities.UseCompatibleStateImageBehavior = false;
-            // 
-            // nudZIndex
-            // 
-            this.nudZIndex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudZIndex.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudZIndex.Location = new System.Drawing.Point(136, 3);
-            this.nudZIndex.Minimum = new decimal(new int[] {
-            99,
-            0,
-            0,
-            -2147483648});
-            this.nudZIndex.Name = "nudZIndex";
-            this.nudZIndex.Size = new System.Drawing.Size(40, 19);
-            this.nudZIndex.TabIndex = 9;
-            this.nudZIndex.ValueChanged += new System.EventHandler(this.NudZIndex_ValueChanged);
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(105, 5);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(34, 13);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Z-Ind.";
             // 
             // ToolboxForm
             // 
@@ -264,6 +269,7 @@ namespace PeridotEngine.Editor.Forms
             this.Text = "ToolboxForm";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudZIndex)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).EndInit();
             this.toolStrip1.ResumeLayout(false);
@@ -272,7 +278,6 @@ namespace PeridotEngine.Editor.Forms
             this.tabControl1.ResumeLayout(false);
             this.tpSolids.ResumeLayout(false);
             this.tpEntities.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.nudZIndex)).EndInit();
             this.ResumeLayout(false);
 
         }

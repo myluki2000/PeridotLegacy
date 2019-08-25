@@ -38,7 +38,7 @@ namespace PeridotEngine.World.WorldObjects.Solids
             obj.Size = size;
 
             // get z-index
-            obj.ZIndex = int.Parse(xEle.Element("Z-Index").Value);
+            obj.ZIndex = sbyte.Parse(xEle.Element("Z-Index").Value);
 
             // get texture from lazy loading dictionary provided by the LevelManager
             obj.Texture = textures[xEle.Element("TexturePath").Value];

@@ -42,7 +42,7 @@ namespace PeridotEngine.Graphics
         /// <summary>
         /// Z-index of the sprite. A larger z-index draws this sprite in front of others.
         /// </summary>
-        public int ZIndex { get; set; }
+        public sbyte ZIndex { get; set; }
         /// <summary>
         /// The opacity of the sprite on a scale from 0.0 - 1.0. Default: 1.0
         /// </summary>

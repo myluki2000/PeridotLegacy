@@ -18,7 +18,7 @@ namespace PeridotEngine.World.WorldObjects
         /// <summary>
         /// The z-index of the object in the level. 0 (zero) is the "play area".
         /// </summary>
-        int ZIndex { get; set; }
+        sbyte ZIndex { get; set; }
 
         /// <summary>
         /// Called upon initialization of the level the object is in.
