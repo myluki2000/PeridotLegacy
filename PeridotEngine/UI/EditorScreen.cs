@@ -99,6 +99,7 @@ namespace PeridotEngine.UI
             HandleCameraZoom(lastMouseState, mouseState);
             HandleObjectPlacement(lastMouseState, mouseState);
             HandleObjectSelection(lastMouseState, mouseState);
+            HandleObjectDrag(lastMouseState, mouseState);
 
             lastKeyboardState = keyboardState;
             lastMouseState = mouseState;
@@ -124,12 +125,41 @@ namespace PeridotEngine.UI
             sb.End();
         }
 
+        private bool dragging = false;
+        private Vector2 cursorDelta;
+        private void HandleObjectDrag(MouseState lastMouseState, MouseState mouseState)
+        {
+            if (selectedObject == null) return;
+
+            if (lastMouseState.LeftButton == ButtonState.Released && mouseState.LeftButton == ButtonState.Pressed)
+            {
+                // check if mouse pos is in selected object
+                Vector2 mouseWorldCoords = mouseState.Position.ToVector2().Transform(Level.Camera.GetMatrix().Invert());
+                if (new Rectangle(selectedObject.Position.ToPoint(), selectedObject.Size.ToPoint()).Contains(mouseWorldCoords))
+                {
+                    // dragging starts
+                    dragging = true;
+                    // calculate difference between cursor and object position
+                    cursorDelta = mouseWorldCoords - selectedObject.Position;
+                }
+            }
+            else if (lastMouseState.LeftButton == ButtonState.Pressed && mouseState.LeftButton == ButtonState.Pressed && dragging)
+            {
+                // dragging continues; update selected object position to mouse position
+                selectedObject.Position = mouseState.Position.ToVector2().Transform(Level.Camera.GetMatrix().Invert()) - cursorDelta;
+            }
+            else
+            {
+                dragging = false;
+            }
+        }
+
         private void HandleObjectSelection(MouseState lastMouseState, MouseState mouseState)
         {
-            // Left mouse button was clicked
+            // left mouse button was clicked
             if (lastMouseState.LeftButton != ButtonState.Pressed ||
                 mouseState.LeftButton != ButtonState.Released) return;
-                
+
             // cursor is selected
             if (toolboxForm.SelectedObject != null) return;
 
@@ -137,7 +167,7 @@ namespace PeridotEngine.UI
 
             IEnumerable<IEntity> entities = Level.Entities.Where(x => new Rectangle(x.Position.ToPoint(), x.Size.ToPoint()).Contains(mousePosWorldSpace));
 
-            if(entities.Any())
+            if (entities.Any())
             {
                 selectedObject = entities.First();
                 PopulateValuesFromSelectedObject();
@@ -145,7 +175,7 @@ namespace PeridotEngine.UI
             }
 
             IEnumerable<ISolid> solids = Level.Solids.Where(x => new Rectangle(x.Position.ToPoint(), x.Size.ToPoint()).Contains(mousePosWorldSpace));
-            
+
             if (solids.Any())
             {
                 selectedObject = solids.First();
@@ -199,21 +229,27 @@ namespace PeridotEngine.UI
             // place if left mouse button was pressed
             if (lastMouseState.LeftButton != ButtonState.Pressed || mouseState.LeftButton != ButtonState.Released) return;
 
-            // check if any texture is selected
+            // check if any object is selected
             if (toolboxForm.SelectedObject == null) return;
 
-            if (toolboxForm.SelectedObject is ISolid obj)
+            if (toolboxForm.SelectedObject is ISolid solid)
             {
-                obj.Initialize(Level);
-                obj.Position = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2());
-                Level.Solids.Add(obj);
+                solid.Initialize(Level);
+                solid.Position = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2());
+                Level.Solids.Add(solid);
+            }
+            else if (toolboxForm.SelectedObject is IEntity entity)
+            {
+                entity.Initialize(Level);
+                entity.Position = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2());
+                Level.Entities.Add(entity);
             }
         }
 
         private void SelectedObjectWidthChanged(object sender, int value)
         {
             if (selectedObject != null) selectedObject.Size = new Vector2(value, selectedObject.Size.Y);
-            
+
         }
 
         private void SelectedObjectHeightChanged(object sender, int value)

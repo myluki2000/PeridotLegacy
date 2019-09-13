@@ -10,6 +10,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using PeridotEngine.World.WorldObjects.Entities;
 
 namespace PeridotEngine.Editor.Forms
 {
@@ -34,6 +35,7 @@ namespace PeridotEngine.Editor.Forms
         {
             get
             {
+                Vector2 size = new Vector2((int) nudWidth.Value, (int) nudHeight.Value);
                 if (lvSolids.SelectedItems.Count > 0)
                 {
 
@@ -41,7 +43,7 @@ namespace PeridotEngine.Editor.Forms
                     {
                         DynamicWater obj = new DynamicWater()
                         {
-                            Size = new Vector2((int)nudWidth.Value, (int)nudHeight.Value)
+                            Size = size
                         };
 
                         return obj;
@@ -51,15 +53,22 @@ namespace PeridotEngine.Editor.Forms
                         return new TexturedSolid()
                         {
                             Texture = (TextureData)lvSolids.SelectedItems[0].Tag,
-                            Size = new Vector2((int)nudWidth.Value, (int)nudHeight.Value)
+                            Size = size
                         };
                     }
 
                 }
                 else if (lvEntities.SelectedItems.Count > 0)
                 {
-                    // TODO: Implement selection of entities
-                    return null;
+                    String s = lvEntities.SelectedItems[0].Text;
+                    switch (s)
+                    {
+                        case "Player":
+                            return new Player() {Size = size};
+
+                        default:
+                            return null;
+                    }
                 }
                 else
                 {
@@ -76,6 +85,7 @@ namespace PeridotEngine.Editor.Forms
         {
             InitializeComponent();
             PopulateDefaultSolids();
+            PopulateDefaultEntities();
         }
 
         /// <summary>
@@ -113,12 +123,12 @@ namespace PeridotEngine.Editor.Forms
 
         private void PopulateDefaultSolids()
         {
-            ListViewItem lvItem = new ListViewItem()
-            {
-                Text = "Dynamic Water"
-            };
+            lvSolids.Items.Add("Dynamic Water");
+        }
 
-            lvSolids.Items.Add(lvItem);
+        private void PopulateDefaultEntities()
+        {
+            lvEntities.Items.Add("Player");
         }
 
         private void LvSolids_SelectedIndexChanged(object sender, System.EventArgs e)

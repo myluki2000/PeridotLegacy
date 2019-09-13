@@ -35,5 +35,10 @@ namespace PeridotEngine
         {
             return Vector3.Transform(value, transformationMatrix);
         }
+
+        public static Matrix Invert(this Matrix value)
+        {
+            return Matrix.Invert(value);
+        }
     }
 }

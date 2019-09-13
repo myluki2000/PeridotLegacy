@@ -14,6 +14,6 @@ namespace PeridotEngine.World.WorldObjects.Entities
         /// <summary>
         /// Reference to the level the entity is in.
         /// </summary>
-        Level Level { get; set; }
+        Level? Level { get; set; }
     }
 }

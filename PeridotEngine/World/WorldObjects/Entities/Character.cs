@@ -12,16 +12,17 @@ namespace PeridotEngine.World.WorldObjects.Entities
     abstract class Character : Sprite, IEntity, IPhysicsObject
     {
         public abstract string Name { get; set; }
-        public abstract Level Level { get; set; }
+        public abstract Level? Level { get; set; }
         public Vector2 Velocity { get; set; }
         public Vector2 Acceleration { get; set; }
         public bool HasPhysics { get; set; }
         public HashSet<Rectangle> BoundingRects {
             get
             {
-                HashSet<Rectangle> rects = new HashSet<Rectangle>();
-
-                rects.Add(new Rectangle(Position.ToPoint(), Size.ToPoint()));
+                HashSet<Rectangle> rects = new HashSet<Rectangle>
+                {
+                    new Rectangle(Position.ToPoint(), Size.ToPoint())
+                };
 
                 return rects;
             }
