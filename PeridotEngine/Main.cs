@@ -7,6 +7,7 @@ using PeridotEngine.Resources;
 using PeridotEngine.UI;
 using PeridotEngine.UI.DevConsole;
 using System;
+using PeridotEngine.World;
 
 namespace PeridotEngine
 {
@@ -53,7 +54,7 @@ namespace PeridotEngine
         /// </summary>
         protected override void Initialize()
         {
-            ScreenHandler.SelectedScreen = new LevelScreen(LevelManager.LoadLevel(@"World\level.plvl"));
+            ScreenHandler.SelectedScreen = new LevelScreen(Level.FromXML(@"World\level.plvl"));
 
             IsMouseVisible = true;
 

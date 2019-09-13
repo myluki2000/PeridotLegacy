@@ -92,7 +92,6 @@
     <Compile Include="Resources\ConfigManager.cs" />
     <Compile Include="Resources\FontManager.cs" />
     <Compile Include="Resources\LazyLoadingTextureDictionary.cs" />
-    <Compile Include="Resources\LevelManager.cs" />
     <Compile Include="Resources\TextureManager.cs" />
     <Compile Include="Resources\TextureData.cs" />
     <Compile Include="UI\DevConsole\Commands\Command.cs" />

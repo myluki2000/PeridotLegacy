@@ -53,7 +53,7 @@ namespace PeridotEngine.UI
             if (File.Exists(lvlPath))
             {
                 // load level
-                _level = LevelManager.LoadLevel(lvlPath);
+                _level = Level.FromXML(lvlPath);
                 _level.Initialize();
             }
             else

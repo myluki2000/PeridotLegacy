@@ -1,9 +1,12 @@
 ﻿#nullable enable
 
+using System;
 using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.World.WorldObjects.Entities;
 using PeridotEngine.World.WorldObjects;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml.Linq;
 using PeridotEngine.World.WorldObjects.Solids;
 using Microsoft.Xna.Framework;
 using PeridotEngine.Graphics;
@@ -99,5 +102,38 @@ namespace PeridotEngine.World
             }
         }
 
+        public static Level FromXML(string path)
+        {
+            Level level = new Level();
+
+            XElement rootEle = XElement.Load(path);
+
+            level.TextureDirectory = Path.Combine(Path.GetDirectoryName(path), rootEle.Element("TextureDirectory").Value);
+
+            LazyLoadingTextureDictionary textures = new LazyLoadingTextureDictionary(level.TextureDirectory);
+
+            // loop through all solids, find their type with reflection, create a new instance of that type
+            // and let it initialize itself with the provided xml.
+            foreach (XElement xEle in rootEle.Element("Solids").Elements())
+            {
+                Type solidType = Type.GetType("PeridotEngine.World.WorldObjects.Solids." + xEle.Element("Type").Value);
+
+                ISolid solid = (ISolid)solidType.GetMethod("FromXML").Invoke(null, new object[] { xEle, textures });
+
+                level.Solids.Add(solid);
+            }
+
+            // do the same for entites
+            foreach (XElement xEle in rootEle.Element("Entities").Elements())
+            {
+                Type entityType = Type.GetType("PeridotEngine.World.WorldObjects.Entities." + xEle.Element("Type").Value);
+
+                IEntity entity = (IEntity)entityType.GetMethod("FromXML").Invoke(null, new object[] { xEle, textures });
+
+                level.Entities.Add(entity);
+            }
+
+            return level;
+        }
     }
 }
