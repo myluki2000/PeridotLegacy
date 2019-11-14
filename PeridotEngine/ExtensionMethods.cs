@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Globalization;
+using System.Xml.Linq;
+using Microsoft.Xna.Framework;
 
 namespace PeridotEngine
 {
@@ -39,6 +41,23 @@ namespace PeridotEngine
         public static Matrix Invert(this Matrix value)
         {
             return Matrix.Invert(value);
+        }
+
+        public static XElement[] ToXml(this Vector2 value)
+        {
+            return new XElement[]
+            {
+                new XElement("X", value.X.ToString(System.Globalization.CultureInfo.InvariantCulture)),
+                new XElement("Y", value.Y.ToString(System.Globalization.CultureInfo.InvariantCulture)),
+            };
+        }
+
+        public static Vector2 FromXml(this Vector2 value, XElement xEle)
+        {
+            value.X = float.Parse(xEle.Element("X").Value, CultureInfo.InvariantCulture.NumberFormat);
+            value.Y = float.Parse(xEle.Element("Y").Value, CultureInfo.InvariantCulture.NumberFormat);
+
+            return value;
         }
     }
 }

@@ -6,6 +6,7 @@ using PeridotEngine.World.WorldObjects.Entities;
 using PeridotEngine.World.WorldObjects;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 using PeridotEngine.World.WorldObjects.Solids;
 using Microsoft.Xna.Framework;
@@ -26,6 +27,8 @@ namespace PeridotEngine.World
         public HashSet<IEntity> Entities { get; set; }
 
         public string TextureDirectory { get; set; } = "";
+
+        public LazyLoadingTextureDictionary? TextureDictionary { get; set; }
 
         public Camera Camera = new Camera();
        
@@ -102,7 +105,7 @@ namespace PeridotEngine.World
             }
         }
 
-        public static Level FromXML(string path)
+        public static Level FromFile(string path)
         {
             Level level = new Level();
 
@@ -110,7 +113,7 @@ namespace PeridotEngine.World
 
             level.TextureDirectory = Path.Combine(Path.GetDirectoryName(path), rootEle.Element("TextureDirectory").Value);
 
-            LazyLoadingTextureDictionary textures = new LazyLoadingTextureDictionary(level.TextureDirectory);
+            level.TextureDictionary = new LazyLoadingTextureDictionary(level.TextureDirectory);
 
             // loop through all solids, find their type with reflection, create a new instance of that type
             // and let it initialize itself with the provided xml.
@@ -118,22 +121,34 @@ namespace PeridotEngine.World
             {
                 Type solidType = Type.GetType("PeridotEngine.World.WorldObjects.Solids." + xEle.Element("Type").Value);
 
-                ISolid solid = (ISolid)solidType.GetMethod("FromXML").Invoke(null, new object[] { xEle, textures });
+                ISolid solid = (ISolid)solidType.GetMethod("FromXml").Invoke(null, new object[] { xEle, level.TextureDictionary });
 
                 level.Solids.Add(solid);
             }
 
-            // do the same for entites
+            // do the same for entities
             foreach (XElement xEle in rootEle.Element("Entities").Elements())
             {
                 Type entityType = Type.GetType("PeridotEngine.World.WorldObjects.Entities." + xEle.Element("Type").Value);
 
-                IEntity entity = (IEntity)entityType.GetMethod("FromXML").Invoke(null, new object[] { xEle, textures });
+                IEntity entity = (IEntity)entityType.GetMethod("FromXml").Invoke(null, new object[] { xEle, level.TextureDictionary });
 
                 level.Entities.Add(entity);
             }
 
             return level;
+        }
+
+        public void ToFile(string path)
+        {
+            XElement root = new XElement("Level",
+                new XElement("TextureDirectory", TextureDirectory.Substring(TextureDirectory.IndexOf(@"\") + 1)), // remove the leading "world\" from the path
+                new XElement("Solids",
+                    from solid in Solids
+                    select solid.ToXml(TextureDictionary)),
+                new XElement("Entities")
+            );
+            root.Save(path);
         }
     }
 }

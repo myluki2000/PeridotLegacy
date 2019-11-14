@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
@@ -49,11 +50,12 @@ namespace PeridotEngine.UI
         {
             this.levelPath = lvlPath;
 
+
             // load level if it exists or create it if it doesn't
             if (File.Exists(lvlPath))
             {
                 // load level
-                _level = Level.FromXML(lvlPath);
+                _level = Level.FromFile(lvlPath);
                 _level.Initialize();
             }
             else
@@ -67,12 +69,15 @@ namespace PeridotEngine.UI
         public override void Initialize()
         {
             toolbarForm.Show();
+
+            toolbarForm.MiSaveClick += ToolbarForm_MiSave_Click;
+
+
             toolboxForm.Show();
 
             toolboxForm.ObjectWidthChanged += SelectedObjectWidthChanged;
             toolboxForm.ObjectHeightChanged += SelectedObjectHeightChanged;
             toolboxForm.ObjectZIndexChanged += SelectedObjectZIndexChanged;
-
             toolboxForm.PopulateSolidsFromTextureDirectory(Level.TextureDirectory);
         }
 
@@ -246,10 +251,14 @@ namespace PeridotEngine.UI
             }
         }
 
+        private void ToolbarForm_MiSave_Click(object sender, EventArgs e)
+        {
+            Level.ToFile(levelPath);
+        }
+
         private void SelectedObjectWidthChanged(object sender, int value)
         {
             if (selectedObject != null) selectedObject.Size = new Vector2(value, selectedObject.Size.Y);
-
         }
 
         private void SelectedObjectHeightChanged(object sender, int value)

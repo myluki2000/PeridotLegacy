@@ -54,7 +54,7 @@ namespace PeridotEngine
         /// </summary>
         protected override void Initialize()
         {
-            ScreenHandler.SelectedScreen = new LevelScreen(Level.FromXML(@"World\level.plvl"));
+            ScreenHandler.SelectedScreen = new LevelScreen(Level.FromFile(@"World\level.plvl"));
 
             IsMouseVisible = true;
 

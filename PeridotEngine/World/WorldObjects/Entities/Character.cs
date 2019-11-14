@@ -35,5 +35,11 @@ namespace PeridotEngine.World.WorldObjects.Entities
 
         public abstract void Initialize(Level level);
         public abstract void Update(GameTime gameTime);
+
+        /// <inheritdoc />
+        public XElement ToXml(LazyLoadingTextureDictionary textureDictionary)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

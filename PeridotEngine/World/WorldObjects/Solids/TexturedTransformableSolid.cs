@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Xml.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.Graphics;
+using PeridotEngine.Resources;
 
 namespace PeridotEngine.World.WorldObjects.Solids
 {
@@ -26,6 +28,12 @@ namespace PeridotEngine.World.WorldObjects.Solids
 
         /// <inheritdoc />
         public void Draw(SpriteBatch sb)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public XElement ToXml(LazyLoadingTextureDictionary textureDictionary)
         {
             throw new System.NotImplementedException();
         }

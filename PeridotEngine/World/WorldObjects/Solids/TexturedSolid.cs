@@ -17,25 +17,33 @@ namespace PeridotEngine.World.WorldObjects.Solids
 
         public void Update(GameTime gameTime) { }
 
+        /// <inheritdoc />
+        public XElement ToXml(LazyLoadingTextureDictionary textureDictionary)
+        {
+            XElement? texPathXEle = Texture != null ? new XElement("TexturePath", textureDictionary.GetTexturePathByName(Texture.Name)) : null;
+
+            return new XElement("Solid",
+                new XElement("Type", this.GetType().Name),
+                new XElement("Position", Position.ToXml()),
+                new XElement("Size", Size.ToXml()),
+                texPathXEle,
+                new XElement("Rotation", Rotation.ToString(CultureInfo.InvariantCulture)),
+                new XElement("Opacity", Opacity.ToString(CultureInfo.InvariantCulture)),
+                new XElement("Z-Index", ZIndex.ToString(CultureInfo.InvariantCulture))
+            );
+        }
+
         public void Initialize(Level level) { }
 
-        public static TexturedSolid FromXML(XElement xEle, LazyLoadingTextureDictionary textures)
+        public static TexturedSolid FromXml(XElement xEle, LazyLoadingTextureDictionary textures)
         {
             TexturedSolid obj = new TexturedSolid();
 
             // get pos from xml
-            Vector2 pos;
-            pos.X = float.Parse(xEle.Element("X").Value, CultureInfo.InvariantCulture.NumberFormat);
-            pos.Y = float.Parse(xEle.Element("Y").Value, CultureInfo.InvariantCulture.NumberFormat);
-
-            obj.Position = pos;
+            obj.Position = new Vector2().FromXml(xEle.Element("Position"));
 
             // get size from xml
-            Vector2 size;
-            size.X = float.Parse(xEle.Element("Width").Value, CultureInfo.InvariantCulture.NumberFormat);
-            size.Y = float.Parse(xEle.Element("Height").Value, CultureInfo.InvariantCulture.NumberFormat);
-
-            obj.Size = size;
+            obj.Size = new Vector2().FromXml(xEle.Element("Size"));
 
             // get z-index
             obj.ZIndex = sbyte.Parse(xEle.Element("Z-Index").Value);

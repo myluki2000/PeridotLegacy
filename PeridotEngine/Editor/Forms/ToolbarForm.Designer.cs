@@ -94,25 +94,25 @@
             // miNew
             // 
             this.miNew.Name = "miNew";
-            this.miNew.Size = new System.Drawing.Size(130, 22);
+            this.miNew.Size = new System.Drawing.Size(180, 22);
             this.miNew.Text = "New Level";
             // 
             // miLoad
             // 
             this.miLoad.Name = "miLoad";
-            this.miLoad.Size = new System.Drawing.Size(130, 22);
+            this.miLoad.Size = new System.Drawing.Size(180, 22);
             this.miLoad.Text = "Load Level";
             // 
             // miSave
             // 
             this.miSave.Name = "miSave";
-            this.miSave.Size = new System.Drawing.Size(130, 22);
+            this.miSave.Size = new System.Drawing.Size(180, 22);
             this.miSave.Text = "Save";
             // 
             // miSaveAs
             // 
             this.miSaveAs.Name = "miSaveAs";
-            this.miSaveAs.Size = new System.Drawing.Size(130, 22);
+            this.miSaveAs.Size = new System.Drawing.Size(180, 22);
             this.miSaveAs.Text = "Save As...";
             // 
             // toolStripSeparator1

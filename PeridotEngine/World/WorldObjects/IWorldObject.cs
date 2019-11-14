@@ -1,7 +1,9 @@
 ﻿#nullable enable
 
+using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PeridotEngine.Resources;
 
 namespace PeridotEngine.World.WorldObjects
 {
@@ -37,5 +39,12 @@ namespace PeridotEngine.World.WorldObjects
         /// </summary>
         /// <param name="sb">The SpriteBatch.</param>
         void Draw(SpriteBatch sb);
+
+        /// <summary>
+        /// Serializes this object to xml.
+        /// </summary>
+        /// <param name="textureDictionary">Texture dictionary used for this object</param>
+        /// <returns>XElement representing the object as xml</returns>
+        XElement ToXml(LazyLoadingTextureDictionary textureDictionary);
     }
 }

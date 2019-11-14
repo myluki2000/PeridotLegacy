@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.Graphics;
+using PeridotEngine.Resources;
 using PeridotEngine.UI;
 
 namespace PeridotEngine.World.WorldObjects.Solids
@@ -125,6 +127,12 @@ namespace PeridotEngine.World.WorldObjects.Solids
                 pass.Apply();
                 sb.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, verts.ToArray(), 0, verts.Count, Utility.GetIndicesArray(verts), 0, verts.Count / 3);
             }
+        }
+
+        /// <inheritdoc />
+        public XElement ToXml(LazyLoadingTextureDictionary textureDictionary)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(GameTime gameTime)
