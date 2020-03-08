@@ -46,7 +46,7 @@ namespace PeridotEngine.Graphics.Particles
         /// <summary>
         /// Raised when all particles of the system have despawned.
         /// </summary>
-        public event EventHandler ParticlesDespawned;
+        public event EventHandler? ParticlesDespawned;
 
         /// <summary>
         /// Contains all currently existing particles emitted from the system.
@@ -88,7 +88,7 @@ namespace PeridotEngine.Graphics.Particles
                 randVelocity.X = Globals.Random.Next(ParticleVelocityLowest.X, ParticleVelocityHighest.X + 1);
                 randVelocity.Y = Globals.Random.Next(ParticleVelocityLowest.Y, ParticleVelocityHighest.Y + 1);
                 int randomTextureIndex = Globals.Random.Next(0, PossibleTextures.Length);
-                particles.Add(new Particle(PossibleTextures[randomTextureIndex], Position, randVelocity, ParticleLifeTime, ParticleFadeTime));
+                particles.Add(new Particle(PossibleTextures[randomTextureIndex], randPos, randVelocity, ParticleLifeTime, ParticleFadeTime));
             }
         }
 

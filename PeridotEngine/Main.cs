@@ -7,6 +7,7 @@ using PeridotEngine.Resources;
 using PeridotEngine.UI;
 using PeridotEngine.UI.DevConsole;
 using System;
+using System.Diagnostics;
 using PeridotEngine.World;
 
 namespace PeridotEngine
@@ -16,18 +17,16 @@ namespace PeridotEngine
     /// </summary>
     public class Main : Game
     {
-        SpriteBatch spriteBatch;
-        protected GraphicsDeviceManager graphics;
+        private SpriteBatch? spriteBatch;
 
-        private PresentationParameters? presentationParameters = null;
+        private readonly PresentationParameters? presentationParameters = null;
 
-        private DevConsole devConsole = new DevConsole();
+        private readonly DevConsole devConsole = new DevConsole();
 
         public Main()
         {
-            graphics = new GraphicsDeviceManager(this);
+            Globals.Graphics = new GraphicsDeviceManager(this);
             EventInput.Initialize(Window);
-            Globals.Graphics = graphics;
             Globals.Content = Content;
             Content.RootDirectory = "Content";
         }
@@ -78,7 +77,7 @@ namespace PeridotEngine
 
             if (presentationParameters != null)
             {
-                graphics.GraphicsDevice.Reset(presentationParameters);
+                Globals.Graphics.GraphicsDevice.Reset(presentationParameters);
             }
 
             FontManager.LoadFonts(Content);
@@ -122,7 +121,6 @@ namespace PeridotEngine
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             ScreenHandler.Draw(spriteBatch);
-
             devConsole.Draw(spriteBatch);
 
             GraphicsDevice.Present();
