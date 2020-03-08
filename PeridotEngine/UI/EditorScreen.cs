@@ -19,6 +19,7 @@ using PeridotEngine.Graphics;
 using PeridotEngine.World.WorldObjects;
 using PeridotEngine.World.WorldObjects.Entities;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
+using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace PeridotEngine.UI
 {
@@ -105,6 +106,7 @@ namespace PeridotEngine.UI
             HandleObjectPlacement(lastMouseState, mouseState);
             HandleObjectSelection(lastMouseState, mouseState);
             HandleObjectDrag(lastMouseState, mouseState);
+            HandleObjectDeletion(lastKeyboardState, keyboardState);
 
             lastKeyboardState = keyboardState;
             lastMouseState = mouseState;
@@ -189,6 +191,19 @@ namespace PeridotEngine.UI
             }
 
             selectedObject = null;
+        }
+
+        private void HandleObjectDeletion(KeyboardState lastKeyboardState, KeyboardState keyboardState)
+        {
+            if (lastKeyboardState.IsKeyDown(Keys.Delete) && keyboardState.IsKeyUp(Keys.Delete))
+            {
+                if (selectedObject != null)
+                {
+                    if (selectedObject is IEntity) Level.Entities.Remove((IEntity)selectedObject);
+                    if (selectedObject is ISolid) Level.Solids.Remove((ISolid)selectedObject);
+                    selectedObject = null;
+                }
+            }
         }
 
         private void PopulateValuesFromSelectedObject()
