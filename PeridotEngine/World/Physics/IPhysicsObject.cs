@@ -27,6 +27,7 @@ namespace PeridotEngine.World.Physics
         /// The acceleration of the object.
         /// </summary>
         Vector2 Acceleration { get; set; }
+
         /// <summary>
         /// True if object should be affected by physics.
         /// </summary>

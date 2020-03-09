@@ -77,9 +77,9 @@ namespace PeridotEngine.Editor.Forms
             }
         }
 
-        public event EventHandler<sbyte> ObjectZIndexChanged;
-        public event EventHandler<int> ObjectWidthChanged;
-        public event EventHandler<int> ObjectHeightChanged;
+        public event EventHandler<sbyte>? ObjectZIndexChanged;
+        public event EventHandler<int>? ObjectWidthChanged;
+        public event EventHandler<int>? ObjectHeightChanged;
 
         public ToolboxForm()
         {

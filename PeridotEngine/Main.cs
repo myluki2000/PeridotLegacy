@@ -8,6 +8,7 @@ using PeridotEngine.UI;
 using PeridotEngine.UI.DevConsole;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using PeridotEngine.World;
 
 namespace PeridotEngine
@@ -107,6 +108,8 @@ namespace PeridotEngine
                 ScreenHandler.Update(gameTime);
 
                 devConsole.Update(gameTime);
+
+                Window.Title = (1.0d / gameTime.ElapsedGameTime.TotalSeconds).ToString(CultureInfo.InvariantCulture);
 
                 base.Update(gameTime);
             }

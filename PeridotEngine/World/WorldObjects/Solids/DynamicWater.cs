@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.Graphics;
+using PeridotEngine.Misc;
 using PeridotEngine.Resources;
 using PeridotEngine.UI;
 

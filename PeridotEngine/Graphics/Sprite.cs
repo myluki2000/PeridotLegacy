@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.Resources;
 using System;
+using PeridotEngine.Misc;
 
 namespace PeridotEngine.Graphics
 {

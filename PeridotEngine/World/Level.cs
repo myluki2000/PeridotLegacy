@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.World.WorldObjects.Entities;
 using PeridotEngine.World.WorldObjects;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -12,6 +15,8 @@ using PeridotEngine.World.WorldObjects.Solids;
 using Microsoft.Xna.Framework;
 using PeridotEngine.Graphics;
 using PeridotEngine.Resources;
+using PeridotEngine.Misc;
+using PeridotEngine.World.Physics;
 
 namespace PeridotEngine.World
 {
@@ -20,25 +25,30 @@ namespace PeridotEngine.World
         /// <summary>
         /// Contains all WorldObjects placed in the level.
         /// </summary>
-        public HashSet<ISolid> Solids { get; set; }
+        public ObservableRangeCollection<ISolid> Solids { get; }
         /// <summary>
         /// Contains all entities in the level.
         /// </summary>
-        public HashSet<IEntity> Entities { get; set; }
+        public ObservableRangeCollection<IEntity> Entities { get; }
 
         public string TextureDirectory { get; set; } = "";
 
         public LazyLoadingTextureDictionary? TextureDictionary { get; set; }
 
         public Camera Camera = new Camera();
+
+        private PhysicsManager physicsManager = new PhysicsManager();
        
         /// <summary>
         /// Create a new empty level.
         /// </summary>
         public Level()
         {
-            this.Solids = new HashSet<ISolid>();
-            this.Entities = new HashSet<IEntity>();
+            this.Solids = new ObservableRangeCollection<ISolid>();
+            this.Entities = new ObservableRangeCollection<IEntity>();
+
+            this.Solids.CollectionChanged += OnSolidsChanged;
+            this.Entities.CollectionChanged += OnEntitiesChanged;
         }
 
         /// <summary>
@@ -46,10 +56,10 @@ namespace PeridotEngine.World
         /// </summary>
         /// <param name="solids">The WorldObjects</param>
         /// <param name="entities">The entities</param>
-        public Level(HashSet<ISolid> solids, HashSet<IEntity> entities)
+        public Level(Collection<ISolid> solids, Collection<IEntity> entities)
         {
-            this.Solids = solids;
-            this.Entities = entities;
+            this.Solids.AddRange(solids);
+            this.Entities.AddRange(entities);
         }
 
         /// <summary>
@@ -103,6 +113,8 @@ namespace PeridotEngine.World
             {
                 obj.Update(gameTime);
             }
+
+            physicsManager.UpdatePhysics(gameTime);
         }
 
         public static Level FromFile(string path)
@@ -142,13 +154,31 @@ namespace PeridotEngine.World
         public void ToFile(string path)
         {
             XElement root = new XElement("Level",
-                new XElement("TextureDirectory", TextureDirectory.Substring(TextureDirectory.IndexOf(@"\") + 1)), // remove the leading "world\" from the path
+                new XElement("TextureDirectory", TextureDirectory.Substring(TextureDirectory.IndexOf(@"\", StringComparison.InvariantCulture) + 1)), // remove the leading "world\" from the path
                 new XElement("Solids",
                     from solid in Solids
                     select solid.ToXml(TextureDictionary)),
-                new XElement("Entities")
+                new XElement("Entities",
+                    from entity in Entities
+                    select entity.ToXml(TextureDictionary))
             );
             root.Save(path);
+        }
+
+        private void OnSolidsChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+
+        }
+
+        private void OnEntitiesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            foreach(IEntity entity in Entities)
+            {
+                if (entity is IPhysicsObject physObj)
+                {
+                    physicsManager.PhysicsObjects.Add(physObj);
+                }
+            }
         }
     }
 }

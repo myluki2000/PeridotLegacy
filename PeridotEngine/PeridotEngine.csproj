@@ -80,7 +80,7 @@
     <Compile Include="Graphics\Particles\ParticleSystem.cs" />
     <Compile Include="Graphics\Sprite.cs" />
     <Compile Include="Graphics\TransformableSprite.cs" />
-    <Compile Include="Graphics\Utility.cs" />
+    <Compile Include="Misc\Utility.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,6 +103,7 @@
     <Compile Include="UI\UIElements\UIElement.cs" />
     <Compile Include="UI\Screen.cs" />
     <Compile Include="UI\ScreenHandler.cs" />
+    <Compile Include="Misc\ObservableRangeCollection.cs" />
     <Compile Include="World\WorldObjects\Entities\Character.cs" />
     <Compile Include="World\WorldObjects\Entities\IEntity.cs" />
     <Compile Include="World\WorldObjects\Entities\Player.cs" />

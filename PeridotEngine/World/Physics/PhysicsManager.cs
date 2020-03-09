@@ -35,20 +35,32 @@ namespace PeridotEngine.World.Physics
         /// <param name="gameTime">The current game time</param>
         private void DoObjectPhysicsUpdate(IPhysicsObject obj, GameTime gameTime)
         {
-            /* TODO:    This function is flawed. It only checks if the object is colliding in its current position, not
-                        in its future position.*/
-
+            // apply acceleration and gravity
+            obj.Velocity += new Vector2(obj.Acceleration.X, obj.Acceleration.Y + (float)(700 * gameTime.ElapsedGameTime.TotalSeconds + 0.01));
 
             // the new position of the object after it has been moved by its velocity
-            Vector2 newPos = obj.Position + obj.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            // apply gravity
-            obj.Acceleration += new Vector2(0, (float)(700 * gameTime.ElapsedGameTime.TotalSeconds + 0.01));
+            Vector2 posDelta = obj.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             // apply velocity if object is not colliding with anything
-            if (!IsColliding(obj)) {
-                obj.Position += obj.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                obj.Velocity = Vector2.Zero;
+            CollidingSide collidingSide = IsColliding(obj, posDelta);
+
+            switch(collidingSide)
+            {
+                case CollidingSide.BOTTOM:
+                case CollidingSide.TOP:
+                    obj.Velocity = new Vector2(obj.Velocity.X, 0);
+                    obj.Position += new Vector2(posDelta.X, 0);
+                    break;
+
+                case CollidingSide.LEFT:
+                case CollidingSide.RIGHT:
+                    obj.Velocity = new Vector2(0, obj.Velocity.Y);
+                    obj.Position += new Vector2(0, posDelta.Y);
+                    break;
+
+                case CollidingSide.NONE:
+                    obj.Position += posDelta;
+                    break;
             }
         }
 
@@ -56,21 +68,41 @@ namespace PeridotEngine.World.Physics
         /// Helper method to check if object collides with any collider in the level.
         /// </summary>
         /// <param name="obj">The object to check</param>
+        /// <param name="posDelta">How much the object moves from its current position if it doesn't collide</param>
         /// <returns>True if colliding, false otherwise</returns>
-        private bool IsColliding(IPhysicsObject obj)
+        private CollidingSide IsColliding(IPhysicsObject obj, Vector2 posDelta)
         {
+            // TODO: Handle very small floating point numbers (rounding errors)
+
             foreach (Rectangle rect in obj.BoundingRects)
             {
+                Rectangle newRectX = new Rectangle(rect.Location + new Point((int)posDelta.X), rect.Size);
+                Rectangle newRectY = new Rectangle(rect.Location + new Point(0, (int)posDelta.Y), rect.Size);
+
                 foreach (ICollider collider in Colliders)
                 {
-                    if (collider.IsColliding(rect))
+                    if (posDelta.X != 0 && collider.IsColliding(newRectX))
                     {
-                        return true;
+                        return posDelta.X > 0 ? CollidingSide.RIGHT : CollidingSide.LEFT;
+                    }
+
+                    if (posDelta.Y != 0 && collider.IsColliding(newRectY))
+                    {
+                        return posDelta.Y > 0 ? CollidingSide.BOTTOM : CollidingSide.TOP;
                     }
                 }
             }
 
-            return false;
+            return CollidingSide.NONE;
+        }
+
+        private enum CollidingSide
+        {
+            TOP,
+            RIGHT,
+            BOTTOM,
+            LEFT,
+            NONE
         }
     }
 }
