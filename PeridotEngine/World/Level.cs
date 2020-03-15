@@ -35,9 +35,11 @@ namespace PeridotEngine.World
 
         public LazyLoadingTextureDictionary? TextureDictionary { get; set; }
 
-        public Camera Camera = new Camera();
+        public bool IsPhysicsEnabled { get; set; } = true;
 
-        private PhysicsManager physicsManager = new PhysicsManager();
+        public Camera Camera { get; set; } = new Camera();
+
+        private readonly PhysicsManager physicsManager = new PhysicsManager();
        
         /// <summary>
         /// Create a new empty level.
@@ -114,7 +116,10 @@ namespace PeridotEngine.World
                 obj.Update(gameTime);
             }
 
-            physicsManager.UpdatePhysics(gameTime);
+            if (IsPhysicsEnabled)
+            {
+                physicsManager.UpdatePhysics(gameTime);
+            }
         }
 
         public static Level FromFile(string path)

@@ -29,22 +29,26 @@ namespace PeridotEngine.UI
         private readonly ToolbarForm toolbarForm = new ToolbarForm();
         private readonly ToolboxForm toolboxForm = new ToolboxForm();
 
-        private string levelPath;
+        private readonly string levelPath;
 
         private IWorldObject? selectedObject;
 
-        private Level _level;
+        private Level level;
         /// <summary>
         /// The level which is being edited.
         /// </summary>
         public Level Level
         {
-            get => _level;
+            get => level;
 
             set
             {
-                _level = value;
-                _level.Initialize();
+                level = value;
+
+                // disable physics updating for this level
+                level.IsPhysicsEnabled = false;
+
+                level.Initialize();
             }
         }
 
@@ -52,20 +56,25 @@ namespace PeridotEngine.UI
         {
             this.levelPath = lvlPath;
 
-
+            Level tmpLevel;
             // load level if it exists or create it if it doesn't
             if (File.Exists(lvlPath))
             {
                 // load level
-                _level = Level.FromFile(lvlPath);
-                _level.Initialize();
+                tmpLevel = Level.FromFile(lvlPath);
             }
             else
             {
                 // create new level
-                _level = new Level();
-                _level.Initialize();
+                tmpLevel = new Level();
             }
+
+            level = tmpLevel;
+
+            // disable physics updating for this level
+            level.IsPhysicsEnabled = false;
+
+            level.Initialize();
         }
 
         public override void Initialize()
