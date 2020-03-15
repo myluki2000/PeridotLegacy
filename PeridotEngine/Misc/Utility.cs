@@ -22,6 +22,18 @@ namespace PeridotEngine.Misc
 
         public static void DrawOutline(SpriteBatch sb, Rectangle rect, Color color, int thickness)
         {
+            if (rect.Width < 0)
+            {
+                rect.Width = -rect.Width;
+                rect.X = rect.X - rect.Width;
+            }
+
+            if (rect.Height < 0)
+            {
+                rect.Height = -rect.Height;
+                rect.Y = rect.Y - rect.Height;
+            }
+
             DrawRectangle(sb, new Rectangle(rect.X, rect.Y, rect.Width, thickness), color); // Outline Top
             DrawRectangle(sb, new Rectangle(rect.X, rect.Y + rect.Height - thickness, rect.Width, thickness), color); // Outline Bottom
             DrawRectangle(sb, new Rectangle(rect.X, rect.Y, thickness, rect.Height), color); // Outline Left
