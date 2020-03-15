@@ -121,7 +121,10 @@ namespace PeridotEngine.UI.DevConsole
             }
             else
             {
-                inputText += e.Character;
+                if (FontManager.Fonts.ChakraPetch.Regular.Characters.Contains(e.Character))
+                {
+                    inputText += e.Character;
+                }
             }
         }
 
