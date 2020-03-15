@@ -17,6 +17,7 @@ using PeridotEngine.Graphics;
 using PeridotEngine.Resources;
 using PeridotEngine.Misc;
 using PeridotEngine.World.Physics;
+using PeridotEngine.World.Physics.Colliders;
 
 namespace PeridotEngine.World
 {
@@ -30,6 +31,14 @@ namespace PeridotEngine.World
         /// Contains all entities in the level.
         /// </summary>
         public ObservableRangeCollection<IEntity> Entities { get; }
+        /// <summary>
+        /// Contains all physics objects in the level.
+        /// </summary>
+        public HashSet<IPhysicsObject> PhysicsObjects { get; set; } = new HashSet<IPhysicsObject>();
+        /// <summary>
+        /// Contains all the physics colliders in the level.
+        /// </summary>
+        public HashSet<ICollider> Colliders { get; set; } = new HashSet<ICollider>();
 
         public string TextureDirectory { get; set; } = "";
 
@@ -39,8 +48,6 @@ namespace PeridotEngine.World
 
         public Camera Camera { get; set; } = new Camera();
 
-        private readonly PhysicsManager physicsManager = new PhysicsManager();
-       
         /// <summary>
         /// Create a new empty level.
         /// </summary>
@@ -118,7 +125,7 @@ namespace PeridotEngine.World
 
             if (IsPhysicsEnabled)
             {
-                physicsManager.UpdatePhysics(gameTime);
+                PhysicsHelper.UpdatePhysics(this, gameTime);
             }
         }
 
@@ -177,11 +184,12 @@ namespace PeridotEngine.World
 
         private void OnEntitiesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            PhysicsObjects.Clear();
             foreach(IEntity entity in Entities)
             {
                 if (entity is IPhysicsObject physObj)
                 {
-                    physicsManager.PhysicsObjects.Add(physObj);
+                    PhysicsObjects.Add(physObj);
                 }
             }
         }

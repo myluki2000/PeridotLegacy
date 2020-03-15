@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PeridotEngine.World.Physics
 {
-    interface IPhysicsObject
+    public interface IPhysicsObject
     {
         /// <summary>
         /// The position of the object in the level.
