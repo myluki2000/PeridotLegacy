@@ -100,9 +100,10 @@ namespace PeridotEngine.UI
             DrawPreview(sb);
             DrawSelectionBox(sb);
 
-            if (toolbarForm.BtnShowCollidersChecked)
+            if (toolbarForm.BtnEditCollidersChecked)
             {
                 DrawColliders(sb);
+                DrawColliderPreview(sb);
             }
 
             base.DrawUI(sb);
@@ -119,10 +120,20 @@ namespace PeridotEngine.UI
 
             HandleCameraDrag(lastMouseState, mouseState);
             HandleCameraZoom(lastMouseState, mouseState);
-            HandleObjectPlacement(lastMouseState, mouseState);
-            HandleObjectSelection(lastMouseState, mouseState);
-            HandleObjectDrag(lastMouseState, mouseState);
-            HandleObjectDeletion(lastKeyboardState, keyboardState);
+
+            // handle collider specific edit moves when in collider edit mode, handle default edit moves otherwise
+            if (toolbarForm.BtnEditCollidersChecked)
+            {
+                HandleColliderPlacement(lastMouseState, mouseState);
+            }
+            else
+            {
+                HandleObjectPlacement(lastMouseState, mouseState);
+                HandleObjectSelection(lastMouseState, mouseState);
+                HandleObjectDrag(lastMouseState, mouseState);
+                HandleObjectDeletion(lastKeyboardState, keyboardState);
+            }
+
 
             lastKeyboardState = keyboardState;
             lastMouseState = mouseState;
@@ -130,10 +141,14 @@ namespace PeridotEngine.UI
 
         private void DrawColliders(SpriteBatch sb)
         {
+            sb.Begin(transformMatrix: Level.Camera.GetMatrix());
+
             foreach (ICollider collider in Level.Colliders)
             {
                 collider.Draw(sb);
             }
+
+            sb.End();
         }
 
         private void DrawPreview(SpriteBatch sb)
@@ -147,6 +162,8 @@ namespace PeridotEngine.UI
             sb.End();
         }
 
+        #region Object Editing Handling
+
         private void DrawSelectionBox(SpriteBatch sb)
         {
             if (selectedObject == null) return;
@@ -154,6 +171,28 @@ namespace PeridotEngine.UI
             sb.Begin(transformMatrix: Level.Camera.GetMatrix());
             Utility.DrawOutline(sb, new Rectangle(selectedObject.Position.ToPoint(), selectedObject.Size.ToPoint()), Color.Red, 2);
             sb.End();
+        }
+
+        private void HandleObjectPlacement(MouseState lastMouseState, MouseState mouseState)
+        {
+            // place if left mouse button was pressed
+            if (lastMouseState.LeftButton != ButtonState.Pressed || mouseState.LeftButton != ButtonState.Released) return;
+
+            // check if any object is selected
+            if (toolboxForm.SelectedObject == null) return;
+
+            if (toolboxForm.SelectedObject is ISolid solid)
+            {
+                solid.Initialize(Level);
+                solid.Position = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2());
+                Level.Solids.Add(solid);
+            }
+            else if (toolboxForm.SelectedObject is IEntity entity)
+            {
+                entity.Initialize(Level);
+                entity.Position = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2());
+                Level.Entities.Add(entity);
+            }
         }
 
         private bool dragging = false;
@@ -230,6 +269,57 @@ namespace PeridotEngine.UI
             }
         }
 
+        #endregion
+
+        #region Collider Editing Handling
+
+        private Point? colliderStart = null;
+        private void HandleColliderPlacement(MouseState lastMouseState, MouseState mouseState)
+        {
+            if (toolboxForm.SelectedCollider is RectCollider)
+            {
+                if (lastMouseState.LeftButton == ButtonState.Released
+                    && mouseState.LeftButton == ButtonState.Pressed)
+                {
+                    // user starts pressing mouse
+                    colliderStart = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2()).ToPoint();
+                }
+                else if (lastMouseState.LeftButton == ButtonState.Pressed
+                         && mouseState.LeftButton == ButtonState.Released)
+                {
+                    // user releases mouse
+                    if (toolboxForm.SelectedCollider is RectCollider collider && colliderStart != null)
+                    {
+                        collider.Rect = new Rectangle((Point)colliderStart, Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2()).ToPoint() - (Point)colliderStart);
+                        Level.Colliders.Add(collider);
+                        colliderStart = null;
+                    }
+                    else
+                    {
+                        throw new Exception("Selected collider not supported! Is the implementation missing?");
+                    }
+                }
+            }
+        }
+
+        private void DrawColliderPreview(SpriteBatch sb)
+        {
+            if (colliderStart != null)
+            {
+                sb.Begin(transformMatrix: Level.Camera.GetMatrix());
+                Utility.DrawOutline(
+                    sb,
+                    new Rectangle((Point)colliderStart, Level.Camera.ScreenPosToWorldPos(Mouse.GetState().Position.ToVector2()).ToPoint() - (Point)colliderStart),
+                    Color.Red,
+                    2
+                );
+                sb.End();
+            }
+        }
+
+        #endregion
+
+
         private void PopulateValuesFromSelectedObject()
         {
             if (selectedObject == null) return;
@@ -268,28 +358,6 @@ namespace PeridotEngine.UI
             }
         }
 
-        private void HandleObjectPlacement(MouseState lastMouseState, MouseState mouseState)
-        {
-            // place if left mouse button was pressed
-            if (lastMouseState.LeftButton != ButtonState.Pressed || mouseState.LeftButton != ButtonState.Released) return;
-
-            // check if any object is selected
-            if (toolboxForm.SelectedObject == null) return;
-
-            if (toolboxForm.SelectedObject is ISolid solid)
-            {
-                solid.Initialize(Level);
-                solid.Position = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2());
-                Level.Solids.Add(solid);
-            }
-            else if (toolboxForm.SelectedObject is IEntity entity)
-            {
-                entity.Initialize(Level);
-                entity.Position = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2());
-                Level.Entities.Add(entity);
-            }
-        }
-
         private void ToolbarForm_MiSave_Click(object sender, EventArgs e)
         {
             Level.ToFile(levelPath);
@@ -297,7 +365,7 @@ namespace PeridotEngine.UI
 
         private void ToolbarForm_BtnEditColliders_CheckedChanged(object sender, EventArgs e)
         {
-            toolboxForm.ColliderEditMode = toolbarForm.BtnShowCollidersChecked;
+            toolboxForm.ColliderEditMode = toolbarForm.BtnEditCollidersChecked;
         }
 
         private void SelectedObjectWidthChanged(object sender, int value)

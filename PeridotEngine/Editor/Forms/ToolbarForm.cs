@@ -19,7 +19,7 @@ namespace PeridotEngine.Editor.Forms
             remove => btnEditColliders.CheckedChanged -= value;
         }
 
-        public bool BtnShowCollidersChecked
+        public bool BtnEditCollidersChecked
         {
             get => btnEditColliders.Checked;
             set => btnEditColliders.Checked = value;

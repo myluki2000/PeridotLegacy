@@ -18,7 +18,7 @@ namespace PeridotEngine.World.Physics.Colliders
         /// <inheritdoc />
         public void Draw(SpriteBatch sb)
         {
-            Utility.DrawOutline(sb, Rect, Color.Green, 1);
+            Utility.DrawOutline(sb, Rect, Color.Green, 2);
         }
     }
 }
