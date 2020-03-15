@@ -10,12 +10,36 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using PeridotEngine.World.Physics.Colliders;
 using PeridotEngine.World.WorldObjects.Entities;
 
 namespace PeridotEngine.Editor.Forms
 {
     public partial class ToolboxForm : Form
     {
+        /// <summary>
+        /// Gets or sets the collider edit mode property. If true the toolbox will show tools useful for editing colliders, if it
+        /// is false the toolbox will show the default tools.
+        /// </summary>
+        public bool ColliderEditMode
+        {
+            get => colliderEditMode;
+            set
+            {
+                colliderEditMode = value;
+                if (colliderEditMode)
+                {
+                    tabControl.Visible = false;
+                    lvColliders.Visible = true;
+                }
+                else
+                {
+                    tabControl.Visible = true;
+                    lvColliders.Visible = false;
+                }
+            }
+        }
+
         /// <summary>
         /// Gets or sets the z-index of the z-index control in the form.
         /// </summary>
@@ -76,16 +100,42 @@ namespace PeridotEngine.Editor.Forms
                 }
             }
         }
+        /// <summary>
+        /// Returns the selected collider or null if none is selected.
+        /// </summary>
+        public ICollider? SelectedCollider
+        {
+            get
+            {
+                if (lvColliders.SelectedItems.Count > 0)
+                {
+                    switch (lvColliders.SelectedItems[0].Text)
+                    {
+                        case "Rectangle":
+                            return new RectCollider();
+                        default:
+                            throw new Exception("Unsupported collider selected? Is the implementation missing?");
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
 
         public event EventHandler<sbyte>? ObjectZIndexChanged;
         public event EventHandler<int>? ObjectWidthChanged;
         public event EventHandler<int>? ObjectHeightChanged;
+
+        private bool colliderEditMode;
 
         public ToolboxForm()
         {
             InitializeComponent();
             PopulateDefaultSolids();
             PopulateDefaultEntities();
+            PopulateDefaultColliders();
         }
 
         /// <summary>
@@ -129,6 +179,11 @@ namespace PeridotEngine.Editor.Forms
         private void PopulateDefaultEntities()
         {
             lvEntities.Items.Add("Player");
+        }
+
+        private void PopulateDefaultColliders()
+        {
+            lvColliders.Items.Add("Rectangle");
         }
 
         private void LvSolids_SelectedIndexChanged(object sender, System.EventArgs e)

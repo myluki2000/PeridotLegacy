@@ -38,10 +38,10 @@
             this.miSave = new System.Windows.Forms.ToolStripMenuItem();
             this.miSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnEditColliders = new System.Windows.Forms.ToolStripButton();
             this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.LeftToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.ContentPanel = new System.Windows.Forms.ToolStripContentPanel();
-            this.btnShowColliders = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,7 +68,7 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1,
             this.toolStripSeparator1,
-            this.btnShowColliders});
+            this.btnEditColliders});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(784, 34);
@@ -92,31 +92,41 @@
             // miNew
             // 
             this.miNew.Name = "miNew";
-            this.miNew.Size = new System.Drawing.Size(180, 22);
+            this.miNew.Size = new System.Drawing.Size(130, 22);
             this.miNew.Text = "New Level";
             // 
             // miLoad
             // 
             this.miLoad.Name = "miLoad";
-            this.miLoad.Size = new System.Drawing.Size(180, 22);
+            this.miLoad.Size = new System.Drawing.Size(130, 22);
             this.miLoad.Text = "Load Level";
             // 
             // miSave
             // 
             this.miSave.Name = "miSave";
-            this.miSave.Size = new System.Drawing.Size(180, 22);
+            this.miSave.Size = new System.Drawing.Size(130, 22);
             this.miSave.Text = "Save";
             // 
             // miSaveAs
             // 
             this.miSaveAs.Name = "miSaveAs";
-            this.miSaveAs.Size = new System.Drawing.Size(180, 22);
+            this.miSaveAs.Size = new System.Drawing.Size(130, 22);
             this.miSaveAs.Text = "Save As...";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 34);
+            // 
+            // btnEditColliders
+            // 
+            this.btnEditColliders.CheckOnClick = true;
+            this.btnEditColliders.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnEditColliders.Image = ((System.Drawing.Image)(resources.GetObject("btnEditColliders.Image")));
+            this.btnEditColliders.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnEditColliders.Name = "btnEditColliders";
+            this.btnEditColliders.Size = new System.Drawing.Size(80, 31);
+            this.btnEditColliders.Text = "Edit Colliders";
             // 
             // RightToolStripPanel
             // 
@@ -137,16 +147,6 @@
             // ContentPanel
             // 
             this.ContentPanel.Size = new System.Drawing.Size(150, 114);
-            // 
-            // btnShowColliders
-            // 
-            this.btnShowColliders.CheckOnClick = true;
-            this.btnShowColliders.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnShowColliders.Image = ((System.Drawing.Image)(resources.GetObject("btnShowColliders.Image")));
-            this.btnShowColliders.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowColliders.Name = "btnShowColliders";
-            this.btnShowColliders.Size = new System.Drawing.Size(89, 31);
-            this.btnShowColliders.Text = "Show Colliders";
             // 
             // ToolbarForm
             // 
@@ -177,6 +177,6 @@
         private System.Windows.Forms.ToolStripPanel RightToolStripPanel;
         private System.Windows.Forms.ToolStripPanel LeftToolStripPanel;
         private System.Windows.Forms.ToolStripContentPanel ContentPanel;
-        private System.Windows.Forms.ToolStripButton btnShowColliders;
+        private System.Windows.Forms.ToolStripButton btnEditColliders;
     }
 }

@@ -83,7 +83,7 @@ namespace PeridotEngine.UI
             toolbarForm.Show();
 
             toolbarForm.MiSaveClick += ToolbarForm_MiSave_Click;
-
+            toolbarForm.BtnEditCollidersCheckedChanged += ToolbarForm_BtnEditColliders_CheckedChanged;
 
             toolboxForm.Show();
 
@@ -293,6 +293,11 @@ namespace PeridotEngine.UI
         private void ToolbarForm_MiSave_Click(object sender, EventArgs e)
         {
             Level.ToFile(levelPath);
+        }
+
+        private void ToolbarForm_BtnEditColliders_CheckedChanged(object sender, EventArgs e)
+        {
+            toolboxForm.ColliderEditMode = toolbarForm.BtnShowCollidersChecked;
         }
 
         private void SelectedObjectWidthChanged(object sender, int value)

@@ -13,16 +13,16 @@ namespace PeridotEngine.Editor.Forms
             remove => miSave.Click -= value;
         }
 
-        public event EventHandler BtnShowCollidersCheckedChanged
+        public event EventHandler BtnEditCollidersCheckedChanged
         {
-            add => btnShowColliders.CheckedChanged += value;
-            remove => btnShowColliders.CheckedChanged -= value;
+            add => btnEditColliders.CheckedChanged += value;
+            remove => btnEditColliders.CheckedChanged -= value;
         }
 
         public bool BtnShowCollidersChecked
         {
-            get => btnShowColliders.Checked;
-            set => btnShowColliders.Checked = value;
+            get => btnEditColliders.Checked;
+            set => btnEditColliders.Checked = value;
         }
 
         public ToolbarForm()
