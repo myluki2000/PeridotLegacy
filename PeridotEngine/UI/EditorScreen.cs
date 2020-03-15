@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using PeridotEngine.Graphics;
 using PeridotEngine.Misc;
+using PeridotEngine.World.Physics.Colliders;
 using PeridotEngine.World.WorldObjects;
 using PeridotEngine.World.WorldObjects.Entities;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
@@ -99,6 +100,11 @@ namespace PeridotEngine.UI
             DrawPreview(sb);
             DrawSelectionBox(sb);
 
+            if (toolbarForm.BtnShowCollidersChecked)
+            {
+                DrawColliders(sb);
+            }
+
             base.DrawUI(sb);
         }
 
@@ -120,6 +126,14 @@ namespace PeridotEngine.UI
 
             lastKeyboardState = keyboardState;
             lastMouseState = mouseState;
+        }
+
+        private void DrawColliders(SpriteBatch sb)
+        {
+            foreach (ICollider collider in Level.Colliders)
+            {
+                collider.Draw(sb);
+            }
         }
 
         private void DrawPreview(SpriteBatch sb)

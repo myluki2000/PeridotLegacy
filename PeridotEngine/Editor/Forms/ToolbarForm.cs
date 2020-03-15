@@ -19,6 +19,12 @@ namespace PeridotEngine.Editor.Forms
             remove => btnShowColliders.CheckedChanged -= value;
         }
 
+        public bool BtnShowCollidersChecked
+        {
+            get => btnShowColliders.Checked;
+            set => btnShowColliders.Checked = value;
+        }
+
         public ToolbarForm()
         {
             InitializeComponent();
