@@ -33,6 +33,7 @@ namespace PeridotEngine.UI
         private readonly string levelPath;
 
         private IWorldObject? selectedObject;
+        private ICollider? selectedCollider;
 
         private Level level;
         /// <summary>
@@ -97,6 +98,8 @@ namespace PeridotEngine.UI
         {
             Level.Draw(sb);
 
+            sb.Begin(transformMatrix: Level.Camera.GetMatrix());
+
             DrawPreview(sb);
             DrawSelectionBox(sb);
 
@@ -105,6 +108,8 @@ namespace PeridotEngine.UI
                 DrawColliders(sb);
                 DrawColliderPreview(sb);
             }
+
+            sb.End();
 
             base.DrawUI(sb);
         }
@@ -125,6 +130,9 @@ namespace PeridotEngine.UI
             if (toolbarForm.BtnEditCollidersChecked)
             {
                 HandleColliderPlacement(lastMouseState, mouseState);
+                HandleColliderSelection(lastMouseState, mouseState);
+
+                selectedCollider?.HandleDraggingAndResizing(Level, lastMouseState, mouseState);
             }
             else
             {
@@ -141,14 +149,22 @@ namespace PeridotEngine.UI
 
         private void DrawColliders(SpriteBatch sb)
         {
-            sb.Begin(transformMatrix: Level.Camera.GetMatrix());
-
+            // draw the colliders
             foreach (ICollider collider in Level.Colliders)
             {
-                collider.Draw(sb);
+                // draw the collider with a red color if it is selected and green otherwise
+                collider.Draw(sb, collider == selectedCollider ? Color.Red : Color.Green, collider == selectedCollider);
             }
+        }
 
-            sb.End();
+
+        #region Object Editing Handling
+
+        private void DrawSelectionBox(SpriteBatch sb)
+        {
+            if (selectedObject == null) return;
+
+            Utility.DrawOutline(sb, new Rectangle(selectedObject.Position.ToPoint(), selectedObject.Size.ToPoint()), Color.Red, 2);
         }
 
         private void DrawPreview(SpriteBatch sb)
@@ -157,20 +173,7 @@ namespace PeridotEngine.UI
 
             IWorldObject obj = toolboxForm.SelectedObject;
 
-            sb.Begin();
             // TODO: Implement preview image when placing objects
-            sb.End();
-        }
-
-        #region Object Editing Handling
-
-        private void DrawSelectionBox(SpriteBatch sb)
-        {
-            if (selectedObject == null) return;
-
-            sb.Begin(transformMatrix: Level.Camera.GetMatrix());
-            Utility.DrawOutline(sb, new Rectangle(selectedObject.Position.ToPoint(), selectedObject.Size.ToPoint()), Color.Red, 2);
-            sb.End();
         }
 
         private void HandleObjectPlacement(MouseState lastMouseState, MouseState mouseState)
@@ -271,6 +274,7 @@ namespace PeridotEngine.UI
 
         #endregion
 
+
         #region Collider Editing Handling
 
         private Point? colliderStart = null;
@@ -302,18 +306,33 @@ namespace PeridotEngine.UI
             }
         }
 
+        private void HandleColliderSelection(MouseState lastMouseState, MouseState mouseState)
+        {
+            if (lastMouseState.LeftButton == ButtonState.Pressed && mouseState.LeftButton == ButtonState.Released)
+            {
+                foreach (ICollider collider in Level.Colliders)
+                {
+                    if (collider.Contains(Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2()).ToPoint()))
+                    {
+                        selectedCollider = collider;
+                        return;
+                    }
+                }
+
+                selectedCollider = null;
+            }
+        }
+
         private void DrawColliderPreview(SpriteBatch sb)
         {
             if (colliderStart != null)
             {
-                sb.Begin(transformMatrix: Level.Camera.GetMatrix());
                 Utility.DrawOutline(
                     sb,
                     new Rectangle((Point)colliderStart, Level.Camera.ScreenPosToWorldPos(Mouse.GetState().Position.ToVector2()).ToPoint() - (Point)colliderStart),
                     Color.Red,
                     2
                 );
-                sb.End();
             }
         }
 
