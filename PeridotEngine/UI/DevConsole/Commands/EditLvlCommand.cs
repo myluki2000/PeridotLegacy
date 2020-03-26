@@ -21,7 +21,9 @@ namespace PeridotEngine.UI.DevConsole.Commands
                 console.WriteLine("Error: Level files have to end with \".plvl\"");
                 return;
             }
+
             ScreenHandler.SelectedScreen = new EditorScreen(lvlPath);
+            console.WriteLine("Loading level...");
         }
     }
 }

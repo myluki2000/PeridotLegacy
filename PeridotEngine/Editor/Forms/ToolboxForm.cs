@@ -144,6 +144,12 @@ namespace PeridotEngine.Editor.Forms
         /// <param name="directory">The directory to populate from</param>
         public void PopulateSolidsFromTextureDirectory(string directory)
         {
+            // cancel loading if there is no texture directory to load
+            if (directory == null || !Directory.Exists(directory))
+            {
+                return;
+            }
+
             ImageList il = new ImageList();
 
             lvSolids.LargeImageList = il;

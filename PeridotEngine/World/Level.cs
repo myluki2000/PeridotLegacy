@@ -40,7 +40,7 @@ namespace PeridotEngine.World
         /// </summary>
         public HashSet<ICollider> Colliders { get; set; } = new HashSet<ICollider>();
 
-        public string TextureDirectory { get; set; } = "";
+        public string TextureDirectory { get; set; } = null;
 
         public LazyLoadingTextureDictionary? TextureDictionary { get; set; }
 
