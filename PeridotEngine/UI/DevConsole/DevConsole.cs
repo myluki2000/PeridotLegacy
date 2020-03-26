@@ -32,7 +32,7 @@ namespace PeridotEngine.UI.DevConsole
         private string inputText = "";
         private string outputText = "";
 
-        private readonly Commands.Command[] commands = { new Commands.EditLvl() };
+        private readonly Commands.Command[] commands = { new Commands.EditLvlCommand() };
 
         public void Initialize()
         {
@@ -68,7 +68,7 @@ namespace PeridotEngine.UI.DevConsole
                 sb.DrawString(FontManager.Fonts.ChakraPetch.Regular, outputText, new Vector2(0, 0), Color.Black);
 
                 // input box text
-                sb.DrawString(FontManager.Fonts.ChakraPetch.Regular, textToDraw, new Vector2(0, Globals.Graphics.PreferredBackBufferHeight / 2), Color.Black);
+                sb.DrawString(FontManager.Fonts.ChakraPetch.Regular, textToDraw, new Vector2(0, Globals.Graphics.PreferredBackBufferHeight / 2.0f), Color.Black);
 
                 sb.End();
                 counter++;

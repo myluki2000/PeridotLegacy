@@ -95,7 +95,7 @@
     <Compile Include="Resources\TextureManager.cs" />
     <Compile Include="Resources\TextureData.cs" />
     <Compile Include="UI\DevConsole\Commands\Command.cs" />
-    <Compile Include="UI\DevConsole\Commands\EditLvl.cs" />
+    <Compile Include="UI\DevConsole\Commands\EditLvlCommand.cs" />
     <Compile Include="UI\DevConsole\DevConsole.cs" />
     <Compile Include="UI\DevConsole\KeyboardInput.cs" />
     <Compile Include="UI\EditorScreen.cs" />

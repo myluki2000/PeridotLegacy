@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PeridotEngine.UI.DevConsole.Commands
 {
-    class EditLvl : Command
+    class EditLvlCommand : Command
     {
         public string CommandString => "editlvl";
 
@@ -15,7 +15,13 @@ namespace PeridotEngine.UI.DevConsole.Commands
 
         public void ExecuteCommand(string cmd, DevConsole console)
         {
-            ScreenHandler.SelectedScreen = new EditorScreen(cmd.Replace("editlvl ", ""));
+            string lvlPath = cmd.Replace("editlvl ", "");
+            if (!lvlPath.EndsWith(".plvl"))
+            {
+                console.WriteLine("Error: Level files have to end with \".plvl\"");
+                return;
+            }
+            ScreenHandler.SelectedScreen = new EditorScreen(lvlPath);
         }
     }
 }
