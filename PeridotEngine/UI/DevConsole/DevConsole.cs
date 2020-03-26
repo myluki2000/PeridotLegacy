@@ -130,6 +130,8 @@ namespace PeridotEngine.UI.DevConsole
 
         private void InterpretCommand(string cmdString)
         {
+            ClearInputBox();
+
             WriteLine("> " + cmdString);
 
             if (cmdString == "help")
@@ -157,6 +159,16 @@ namespace PeridotEngine.UI.DevConsole
 
             // no suitable command found if we reach this point
             WriteLine("This command does not exist.");
+        }
+
+        public void ClearInputBox()
+        {
+            inputText = "";
+        }
+
+        public void ClearOutputBox()
+        {
+            outputText = "";
         }
     }
 }
