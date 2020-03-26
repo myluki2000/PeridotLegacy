@@ -201,7 +201,7 @@ namespace PeridotEngine.Editor.Forms
         {
             lvSolids.SelectedIndices.Clear();
             lvEntities.SelectedIndices.Clear();
-            lvColliders.Clear();
+            lvColliders.SelectedIndices.Clear();
         }
 
         private void NudZIndex_ValueChanged(object sender, EventArgs e)
