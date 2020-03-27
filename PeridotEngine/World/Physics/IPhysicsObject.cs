@@ -18,7 +18,7 @@ namespace PeridotEngine.World.Physics
         /// <summary>
         /// A hashset containing all retangles used for collision detection.
         /// </summary>
-        HashSet<Rectangle> BoundingRects { get; }
+        Rectangle BoundingRect { get; }
         /// <summary>
         /// The velocity of the object.
         /// </summary>

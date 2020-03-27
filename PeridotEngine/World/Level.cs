@@ -46,6 +46,8 @@ namespace PeridotEngine.World
 
         public bool IsPhysicsEnabled { get; set; } = true;
 
+        public LevelSettings Settings { get; set; } = new LevelSettings();
+
         public Camera Camera { get; set; } = new Camera();
 
         /// <summary>
@@ -101,6 +103,14 @@ namespace PeridotEngine.World
             foreach(IWorldObject obj in combinedObjects)
             {
                 obj.Draw(sb);
+            }
+
+            if (Settings.DrawColliders)
+            {
+                foreach (ICollider collider in Colliders)
+                {
+                    collider.Draw(sb, Color.Green, false);
+                }
             }
 
             sb.End();
@@ -205,6 +215,11 @@ namespace PeridotEngine.World
                     PhysicsObjects.Add(physObj);
                 }
             }
+        }
+
+        public class LevelSettings
+        {
+            public bool DrawColliders { get; set; } = true;
         }
     }
 }

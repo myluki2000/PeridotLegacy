@@ -32,7 +32,11 @@ namespace PeridotEngine.UI.DevConsole
         private string inputText = "";
         private string outputText = "";
 
-        private readonly Commands.Command[] commands = { new Commands.EditLvlCommand() };
+        private readonly Commands.Command[] commands =
+        {
+            new Commands.EditLvlCommand(),
+            new PhysShowColliders(), 
+        };
 
         public void Initialize()
         {

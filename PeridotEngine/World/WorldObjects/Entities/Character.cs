@@ -16,17 +16,7 @@ namespace PeridotEngine.World.WorldObjects.Entities
         public Vector2 Velocity { get; set; }
         public Vector2 Acceleration { get; set; }
         public bool HasPhysics { get; set; }
-        public HashSet<Rectangle> BoundingRects {
-            get
-            {
-                HashSet<Rectangle> rects = new HashSet<Rectangle>
-                {
-                    new Rectangle(Position.ToPoint(), Size.ToPoint())
-                };
-
-                return rects;
-            }
-        }
+        public Rectangle BoundingRect => new Rectangle(Position.ToPoint(), Size.ToPoint());
 
         public abstract void Initialize(Level level);
         public abstract void Update(GameTime gameTime);
