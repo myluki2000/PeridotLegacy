@@ -26,11 +26,6 @@ namespace PeridotEngine.World.WorldObjects.Entities
 
                 return rects;
             }
-
-            set
-            {
-
-            }
         }
 
         public abstract void Initialize(Level level);

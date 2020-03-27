@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using PeridotEngine.Graphics;
 using PeridotEngine.Resources;
 
@@ -22,7 +23,25 @@ namespace PeridotEngine.World.WorldObjects.Entities
 
         public override void Update(GameTime gameTime)
         {
+            KeyboardState keyboardState = Keyboard.GetState();
 
+            HandleMovement(keyboardState);
+        }
+
+        private void HandleMovement(KeyboardState keyboardState)
+        {
+            if (keyboardState.IsKeyDown(Keys.A))
+            {
+                Acceleration = new Vector2(-5, Acceleration.Y);
+            }
+            else if (keyboardState.IsKeyDown(Keys.D))
+            {
+                Acceleration = new Vector2(5, Acceleration.Y);
+            }
+            else
+            {
+                Acceleration = new Vector2(0, Acceleration.Y);
+            }
         }
 
         /// <inheritdoc />
@@ -51,7 +70,7 @@ namespace PeridotEngine.World.WorldObjects.Entities
                 ZIndex = sbyte.Parse(xEle.Element("Z-Index").Value),
                 Rotation = float.Parse(xEle.Element("Rotation").Value, CultureInfo.InvariantCulture.NumberFormat),
                 Opacity = float.Parse(xEle.Element("Opacity").Value, CultureInfo.InvariantCulture.NumberFormat),
-        };
+            };
         }
 
 
