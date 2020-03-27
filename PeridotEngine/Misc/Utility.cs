@@ -9,10 +9,33 @@ namespace PeridotEngine.Misc
     class Utility
     {
         private static readonly Texture2D dummyTexture = new Texture2D(Globals.Graphics.GraphicsDevice, 1, 1);
+        private static readonly BasicEffect basicEffect = new BasicEffect(Globals.Graphics.GraphicsDevice);
 
         static Utility()
         {
             dummyTexture.SetData(new Color[] { Color.White });
+
+            basicEffect.VertexColorEnabled = true;
+            basicEffect.Projection = Matrix.CreateOrthographicOffCenter(
+                0, 
+                Globals.Graphics.GraphicsDevice.Viewport.Width,  
+                Globals.Graphics.GraphicsDevice.Viewport.Height,
+                0,
+                0,
+                1
+            );
+        }
+
+        public static void DrawLineStrip(SpriteBatch sb, Vector2[] points, Color color)
+        {
+            VertexPositionColor[] verts = new VertexPositionColor[points.Length];
+            for (int i = 0; i < points.Length; i++)
+            {
+                verts[i] = new VertexPositionColor(new Vector3(points[i], 0), color);
+            }
+
+            basicEffect.CurrentTechnique.Passes[0].Apply();
+            sb.GraphicsDevice.DrawUserPrimitives(PrimitiveType.LineStrip, verts, 0, verts.Length - 1);
         }
 
         public static void DrawRectangle(SpriteBatch sb, Rectangle rect, Color color)

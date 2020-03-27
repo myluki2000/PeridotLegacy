@@ -14,7 +14,7 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace PeridotEngine.World.Physics.Colliders
 {
-    public class RectCollider : ICollider
+    public class RectCollider
     {
         public Rectangle Rect
         {

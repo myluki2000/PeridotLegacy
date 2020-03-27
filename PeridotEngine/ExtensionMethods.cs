@@ -80,5 +80,25 @@ namespace PeridotEngine
 
             return value;
         }
+
+        public static Point TopLeft(this Rectangle value)
+        {
+            return value.Location;
+        }
+
+        public static Point TopRight(this Rectangle value)
+        {
+            return new Point(value.Right, value.Top);
+        }
+
+        public static Point BottomLeft(this Rectangle value)
+        {
+            return new Point(value.Left, value.Bottom);
+        }
+
+        public static Point BottomRight(this Rectangle value)
+        {
+            return new Point(value.Right, value.Bottom);
+        }
     }
 }

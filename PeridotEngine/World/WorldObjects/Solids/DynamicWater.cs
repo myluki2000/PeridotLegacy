@@ -57,6 +57,8 @@ namespace PeridotEngine.World.WorldObjects.Solids
 
         public void Draw(SpriteBatch sb)
         {
+            // TODO: Optimize this: static BasicEffect and don't set the world and projection matrix each draw call
+            
             sb.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
             basicEffect.World = Matrix.Identity;
             basicEffect.Projection = Matrix.CreateOrthographicOffCenter(0.0f,

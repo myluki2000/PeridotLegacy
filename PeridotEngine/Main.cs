@@ -9,6 +9,7 @@ using PeridotEngine.UI.DevConsole;
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using PeridotEngine.Misc;
 using PeridotEngine.World;
 
 namespace PeridotEngine
@@ -127,7 +128,6 @@ namespace PeridotEngine
             devConsole.Draw(spriteBatch);
 
             GraphicsDevice.Present();
-
             base.Draw(gameTime);
         }
     }

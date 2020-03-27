@@ -105,6 +105,7 @@
     <Compile Include="UI\Screen.cs" />
     <Compile Include="UI\ScreenHandler.cs" />
     <Compile Include="Misc\ObservableRangeCollection.cs" />
+    <Compile Include="World\Physics\Colliders\QuadCollider.cs" />
     <Compile Include="World\WorldObjects\Entities\Character.cs" />
     <Compile Include="World\WorldObjects\Entities\IEntity.cs" />
     <Compile Include="World\WorldObjects\Entities\Player.cs" />
