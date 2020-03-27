@@ -15,6 +15,11 @@ namespace PeridotEngine.World.WorldObjects.Entities
         public abstract Level? Level { get; set; }
         public Vector2 Velocity { get; set; }
         public Vector2 Acceleration { get; set; }
+
+        public abstract float MaxSpeed { get; set; }
+
+        /// <inheritdoc />
+        public abstract float Drag { get; set; }
         public bool HasPhysics { get; set; }
         public Rectangle BoundingRect => new Rectangle(Position.ToPoint(), Size.ToPoint());
 

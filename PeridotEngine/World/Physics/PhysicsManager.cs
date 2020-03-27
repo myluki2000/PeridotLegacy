@@ -30,6 +30,11 @@ namespace PeridotEngine.World.Physics
         /// <param name="gameTime">The current game time</param>
         private static void DoObjectPhysicsUpdate(Level level, IPhysicsObject obj, GameTime gameTime)
         {
+            obj.Velocity -= new Vector2(
+                (obj.Acceleration.X == 0) ? Math.Sign(obj.Velocity.X) * obj.Drag : 0,
+                0
+            );
+
             // apply acceleration and gravity
             obj.Velocity += new Vector2(obj.Acceleration.X, obj.Acceleration.Y + (float)(700 * gameTime.ElapsedGameTime.TotalSeconds + 0.01));
 

@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using System.Diagnostics;
 using System.Globalization;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
@@ -14,6 +15,12 @@ namespace PeridotEngine.World.WorldObjects.Entities
     {
         public override string Name { get; set; } = "Player";
         public override Level? Level { get; set; }
+
+        /// <inheritdoc />
+        public override float MaxSpeed { get; set; } = 360.0f;
+
+        /// <inheritdoc />
+        public override float Drag { get; set; } = 20.0f;
 
         public override void Initialize(Level level)
         {
@@ -30,16 +37,32 @@ namespace PeridotEngine.World.WorldObjects.Entities
 
         private void HandleMovement(KeyboardState keyboardState)
         {
+            Drag = 0.0f;
             if (keyboardState.IsKeyDown(Keys.A))
             {
-                Acceleration = new Vector2(-5, Acceleration.Y);
+                if (Velocity.X > -350.0f)
+                {
+                    Acceleration = new Vector2(-20.0f, Acceleration.Y);
+                }
+                else
+                {
+                    Acceleration = new Vector2(0, Acceleration.Y);
+                }
             }
             else if (keyboardState.IsKeyDown(Keys.D))
             {
-                Acceleration = new Vector2(5, Acceleration.Y);
+                if (Velocity.X < 350.0f)
+                {
+                    Acceleration = new Vector2(20.0f, Acceleration.Y);
+                }
+                else
+                {
+                    Acceleration = new Vector2(0, Acceleration.Y);
+                }
             }
             else
             {
+                Drag = 12.0f;
                 Acceleration = new Vector2(0, Acceleration.Y);
             }
         }

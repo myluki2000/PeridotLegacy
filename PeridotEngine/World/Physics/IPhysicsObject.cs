@@ -28,6 +28,8 @@ namespace PeridotEngine.World.Physics
         /// </summary>
         Vector2 Acceleration { get; set; }
 
+        float Drag { get; set; }
+
         /// <summary>
         /// True if object should be affected by physics.
         /// </summary>
