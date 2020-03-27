@@ -46,8 +46,6 @@ namespace PeridotEngine.World.Physics.Colliders
 
             if (drawDragPoints)
             {
-                
-
                 // upper left
                 Utility.DrawRectangle(sb, new Rectangle(Rect.X, Rect.Y, DRAG_POINT_SIZE, DRAG_POINT_SIZE), color);
 
@@ -153,12 +151,6 @@ namespace PeridotEngine.World.Physics.Colliders
             {
                 currentlyDraggingCorner = Corner.NONE;
             }
-
-
-            
-            
-
-
         }
 
         /// <inheritdoc />
