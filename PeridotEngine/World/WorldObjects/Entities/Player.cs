@@ -65,6 +65,11 @@ namespace PeridotEngine.World.WorldObjects.Entities
                 Drag = 12.0f;
                 Acceleration = new Vector2(0, Acceleration.Y);
             }
+
+            if (keyboardState.IsKeyDown(Keys.Space))
+            {
+                 Velocity = new Vector2(Velocity.X, -360.0f);
+            }
         }
 
         /// <inheritdoc />
