@@ -28,6 +28,13 @@ namespace PeridotEngine.Misc
 
         public static void DrawLineStrip(SpriteBatch sb, Vector2[] points, Color color)
         {
+            DrawLineStrip(sb, points, color, Matrix.Identity);
+        }
+
+        public static void DrawLineStrip(SpriteBatch sb, Vector2[] points, Color color, Matrix viewMatrix)
+        {
+            basicEffect.View = viewMatrix;
+
             VertexPositionColor[] verts = new VertexPositionColor[points.Length];
             for (int i = 0; i < points.Length; i++)
             {

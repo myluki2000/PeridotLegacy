@@ -109,7 +109,7 @@ namespace PeridotEngine.World
             {
                 foreach (ICollider collider in Colliders)
                 {
-                    collider.Draw(sb, Color.Green, false);
+                    collider.Draw(sb, Camera, Color.Green, false);
                 }
             }
 

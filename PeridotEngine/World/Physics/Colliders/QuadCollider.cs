@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PeridotEngine.Graphics;
 using PeridotEngine.Misc;
 
 namespace PeridotEngine.World.Physics.Colliders
@@ -132,22 +133,23 @@ namespace PeridotEngine.World.Physics.Colliders
         }
 
         /// <inheritdoc />
-        public void Draw(SpriteBatch sb, Color color, bool drawDragPoints)
+        public void Draw(SpriteBatch sb, Camera camera, Color color, bool drawDragPoints)
         {
             Vector2[] verts =
             {
                 Point1,
                 Point2,
                 Point3,
-                Point4
+                Point4,
+                Point1
             };
-            Utility.DrawLineStrip(sb, verts, color);
+            Utility.DrawLineStrip(sb, verts, color, camera.GetMatrix());
         }
 
         /// <inheritdoc />
         public void HandleDraggingAndResizing(Level level, MouseState lastMouseState, MouseState mouseState)
         {
-            throw new NotImplementedException();
+            // TODO: Implement this
         }
 
         /// <inheritdoc />

@@ -113,6 +113,8 @@ namespace PeridotEngine.Editor.Forms
                     {
                         case "Rectangle":
                             return new RectCollider();
+                        case "Quad":
+                            return new QuadCollider();
                         default:
                             throw new Exception("Unsupported collider selected? Is the implementation missing?");
                     }
@@ -190,6 +192,7 @@ namespace PeridotEngine.Editor.Forms
         private void PopulateDefaultColliders()
         {
             lvColliders.Items.Add("Rectangle");
+            lvColliders.Items.Add("Quad");
         }
 
         private void LvSolids_SelectedIndexChanged(object sender, System.EventArgs e)

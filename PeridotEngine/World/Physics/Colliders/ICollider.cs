@@ -4,6 +4,7 @@ using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PeridotEngine.Graphics;
 
 namespace PeridotEngine.World.Physics.Colliders
 {
@@ -24,7 +25,7 @@ namespace PeridotEngine.World.Physics.Colliders
         /// <param name="sb">A sprite batch.</param>
         /// <param name="color">The color the representation of the collider should be in.</param>
         /// <param name="drawDragPoints">If "drag points" should be drawn, where the user can drag the collider to edit it.</param>
-        void Draw(SpriteBatch sb, Color color, bool drawDragPoints);
+        void Draw(SpriteBatch sb, Camera camera, Color color, bool drawDragPoints);
 
         void HandleDraggingAndResizing(Level level, MouseState lastMouseState, MouseState mouseState);
 

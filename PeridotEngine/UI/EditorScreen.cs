@@ -2,20 +2,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PeridotEngine.Editor.Forms;
-using PeridotEngine.Resources;
 using PeridotEngine.World;
 using PeridotEngine.World.WorldObjects.Solids;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using PeridotEngine.Graphics;
 using PeridotEngine.Misc;
 using PeridotEngine.World.Physics.Colliders;
 using PeridotEngine.World.WorldObjects;
@@ -153,7 +147,7 @@ namespace PeridotEngine.UI
             foreach (ICollider collider in Level.Colliders)
             {
                 // draw the collider with a red color if it is selected and green otherwise
-                collider.Draw(sb, collider == selectedCollider ? Color.Red : Color.Green, collider == selectedCollider);
+                collider.Draw(sb, Level.Camera, collider == selectedCollider ? Color.Red : Color.Green, collider == selectedCollider);
             }
         }
 
@@ -280,22 +274,35 @@ namespace PeridotEngine.UI
         private Point? colliderStart = null;
         private void HandleColliderPlacement(MouseState lastMouseState, MouseState mouseState)
         {
-            if (toolboxForm.SelectedCollider is RectCollider)
+
+            if (lastMouseState.LeftButton == ButtonState.Released
+                && mouseState.LeftButton == ButtonState.Pressed)
             {
-                if (lastMouseState.LeftButton == ButtonState.Released
-                    && mouseState.LeftButton == ButtonState.Pressed)
+                // user starts pressing mouse
+                colliderStart = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2()).ToPoint();
+            }
+            else if (lastMouseState.LeftButton == ButtonState.Pressed
+                     && mouseState.LeftButton == ButtonState.Released)
+            {
+                if (colliderStart != null && toolboxForm.SelectedCollider != null)
                 {
-                    // user starts pressing mouse
-                    colliderStart = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2()).ToPoint();
-                }
-                else if (lastMouseState.LeftButton == ButtonState.Pressed
-                         && mouseState.LeftButton == ButtonState.Released)
-                {
+                    Vector2 mousePosInLevel = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2());
                     // user releases mouse
-                    if (toolboxForm.SelectedCollider is RectCollider collider && colliderStart != null)
+                    if (toolboxForm.SelectedCollider is RectCollider rectCollider)
                     {
-                        collider.Rect = new Rectangle((Point)colliderStart, Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2()).ToPoint() - (Point)colliderStart);
-                        Level.Colliders.Add(collider);
+                        rectCollider.Rect = new Rectangle((Point)colliderStart, mousePosInLevel.ToPoint() - (Point)colliderStart);
+                        Level.Colliders.Add(rectCollider);
+                        colliderStart = null;
+                    }
+                    else if (toolboxForm.SelectedCollider is QuadCollider quadCollider)
+                    {
+                        quadCollider.Point2 = mousePosInLevel;
+                        quadCollider.Point4 = ((Point)colliderStart).ToVector2();
+
+                        quadCollider.Point1 = new Vector2(quadCollider.Point4.X, quadCollider.Point2.Y);
+                        quadCollider.Point3 = new Vector2(quadCollider.Point2.X, quadCollider.Point4.Y);
+
+                        Level.Colliders.Add(quadCollider);
                         colliderStart = null;
                     }
                     else
@@ -304,6 +311,7 @@ namespace PeridotEngine.UI
                     }
                 }
             }
+
         }
 
         private void HandleColliderSelection(MouseState lastMouseState, MouseState mouseState)
@@ -325,7 +333,7 @@ namespace PeridotEngine.UI
 
         private void DrawColliderPreview(SpriteBatch sb)
         {
-            if (colliderStart != null)
+            if (colliderStart != null && toolboxForm.SelectedCollider != null)
             {
                 Utility.DrawOutline(
                     sb,

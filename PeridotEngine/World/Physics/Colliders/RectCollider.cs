@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PeridotEngine.Graphics;
 using PeridotEngine.Misc;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
@@ -14,7 +15,7 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace PeridotEngine.World.Physics.Colliders
 {
-    public class RectCollider
+    public class RectCollider : ICollider
     {
         public Rectangle Rect
         {
@@ -39,7 +40,7 @@ namespace PeridotEngine.World.Physics.Colliders
         }
 
         /// <inheritdoc />
-        public void Draw(SpriteBatch sb, Color color, bool drawDragPoints)
+        public void Draw(SpriteBatch sb, Camera camera, Color color, bool drawDragPoints)
         {
             Utility.DrawOutline(sb, Rect, color, 2);
 
