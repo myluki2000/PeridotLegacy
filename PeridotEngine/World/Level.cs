@@ -160,6 +160,16 @@ namespace PeridotEngine.World
                 level.Entities.Add(entity);
             }
 
+            // do the same for colliders
+            foreach (XElement xEle in rootEle.Element("Colliders").Elements())
+            {
+                Type colliderType = Type.GetType("PeridotEngine.World.Physics.Colliders." + xEle.Name);
+
+                ICollider collider = (ICollider) colliderType.GetMethod("FromXml").Invoke(null, new object[] { xEle });
+
+                level.Colliders.Add(collider);
+            }
+
             return level;
         }
 
