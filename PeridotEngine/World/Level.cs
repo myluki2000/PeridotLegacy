@@ -172,7 +172,10 @@ namespace PeridotEngine.World
                     select solid.ToXml(TextureDictionary)),
                 new XElement("Entities",
                     from entity in Entities
-                    select entity.ToXml(TextureDictionary))
+                    select entity.ToXml(TextureDictionary)),
+                new XElement("Colliders",
+                    from collider in Colliders
+                    select collider.ToXml())
             );
             root.Save(path);
         }

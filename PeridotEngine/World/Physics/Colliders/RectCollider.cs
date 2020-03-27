@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Xml.Linq;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PeridotEngine.Misc;
@@ -157,6 +158,19 @@ namespace PeridotEngine.World.Physics.Colliders
             
 
 
+        }
+
+        /// <inheritdoc />
+        public XElement ToXml()
+        {
+            return new XElement("RectCollider",
+                new XElement("Rect", Rect.ToXml())
+            );
+        }
+
+        public static RectCollider FromXml(XElement xEle)
+        {
+            return new RectCollider() {Rect = new Rectangle().FromXml(xEle.Element("Rect"))};
         }
 
         private enum Corner

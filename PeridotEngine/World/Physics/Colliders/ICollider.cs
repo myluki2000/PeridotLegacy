@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -26,5 +27,11 @@ namespace PeridotEngine.World.Physics.Colliders
         void Draw(SpriteBatch sb, Color color, bool drawDragPoints);
 
         void HandleDraggingAndResizing(Level level, MouseState lastMouseState, MouseState mouseState);
+
+        /// <summary>
+        /// Serializes the collider to an xml format to later be read in again using FromXml().
+        /// </summary>
+        /// <returns></returns>
+        XElement ToXml();
     }
 }
