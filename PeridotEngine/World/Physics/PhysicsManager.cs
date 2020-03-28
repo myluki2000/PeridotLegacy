@@ -54,7 +54,10 @@ namespace PeridotEngine.World.Physics
 
             obj.Position += new Vector2(
                 (!collidingSide.HasFlag(CollidingSide.LEFT) && !collidingSide.HasFlag(CollidingSide.RIGHT)) ? posDelta.X : 0,
-                (!collidingSide.HasFlag(CollidingSide.BOTTOM) && !collidingSide.HasFlag(CollidingSide.TOP)) ? posDelta.Y : (collidingSide.HasFlag(CollidingSide.SLOPE) ? -xHeightDelta : 0)
+                (!collidingSide.HasFlag(CollidingSide.BOTTOM) && !collidingSide.HasFlag(CollidingSide.TOP)) ? posDelta.Y :
+                    (collidingSide.HasFlag(CollidingSide.SLOPE)
+                        && !collidingSide.HasFlag(CollidingSide.LEFT)
+                        && !collidingSide.HasFlag(CollidingSide.RIGHT) ? -xHeightDelta : 0)
             );
         }
 
@@ -84,6 +87,7 @@ namespace PeridotEngine.World.Physics
                 {
                     CollidingSide tmpResult = posDelta.X > 0 ? CollidingSide.RIGHT : CollidingSide.LEFT;
 
+                    // try moving upwards until we don't collide anymore for 4 steps, so that player can walk up slopes
                     for (int i = 0; i < 4; i++)
                     {
                         newRectX = new Rectangle(obj.BoundingRect.Location + new Point(posDelta.X, -i), obj.BoundingRect.Size);
