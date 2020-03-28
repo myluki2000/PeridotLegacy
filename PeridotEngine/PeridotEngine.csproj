@@ -96,9 +96,10 @@
     <Compile Include="Resources\TextureData.cs" />
     <Compile Include="UI\DevConsole\Commands\Command.cs" />
     <Compile Include="UI\DevConsole\Commands\EditLvlCommand.cs" />
+    <Compile Include="UI\DevConsole\Commands\PhysGravityEnabled.cs" />
     <Compile Include="UI\DevConsole\DevConsole.cs" />
     <Compile Include="UI\DevConsole\KeyboardInput.cs" />
-    <Compile Include="UI\DevConsole\PhysShowColliders.cs" />
+    <Compile Include="UI\DevConsole\Commands\PhysShowColliders.cs" />
     <Compile Include="UI\EditorScreen.cs" />
     <Compile Include="UI\LevelScreen.cs" />
     <Compile Include="UI\UIElements\UIElement.cs" />

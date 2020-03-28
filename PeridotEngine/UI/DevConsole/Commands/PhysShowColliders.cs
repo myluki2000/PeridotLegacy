@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using PeridotEngine.UI.DevConsole.Commands;
-using PeridotEngine.World;
-
-namespace PeridotEngine.UI.DevConsole
+﻿namespace PeridotEngine.UI.DevConsole.Commands
 {
     class PhysShowColliders : Command
     {

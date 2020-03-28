@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using PeridotEngine.Graphics;
 using PeridotEngine.Misc;
 using PeridotEngine.Resources;
+using PeridotEngine.UI.DevConsole.Commands;
 
 namespace PeridotEngine.UI.DevConsole
 {
@@ -34,8 +35,9 @@ namespace PeridotEngine.UI.DevConsole
 
         private readonly Commands.Command[] commands =
         {
-            new Commands.EditLvlCommand(),
+            new EditLvlCommand(),
             new PhysShowColliders(), 
+            new PhysGravityEnabled(), 
         };
 
         public void Initialize()

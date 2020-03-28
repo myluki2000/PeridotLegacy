@@ -10,6 +10,8 @@ namespace PeridotEngine.World.Physics
 {
     public static class PhysicsHelper
     {
+        public static bool IsGravityEnabled { get; set; } = true;
+
         public static void UpdatePhysics(Level level, GameTime gameTime)
         {
             // do a physics update for all objects affected by physics
@@ -35,14 +37,15 @@ namespace PeridotEngine.World.Physics
                 0
             );
 
-            // apply acceleration and gravity
-            obj.Velocity += new Vector2(obj.Acceleration.X, obj.Acceleration.Y + (float)(700 * gameTime.ElapsedGameTime.TotalSeconds + 0.01));
+            // apply acceleration and gravity if activated
+            obj.Velocity += new Vector2(obj.Acceleration.X, obj.Acceleration.Y + (IsGravityEnabled ? (float)(700 * gameTime.ElapsedGameTime.TotalSeconds + 0.01) : 0));
 
             // the new position of the object after it has been moved by its velocity
             Point posDelta = (obj.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds).ToPoint();
-            
+
+            int xHeightDelta = 0;
             // apply velocity if object is not colliding with anything
-            CollidingSide collidingSide = IsColliding(level, obj, posDelta);
+            CollidingSide collidingSide = IsColliding(level, obj, ref posDelta, ref xHeightDelta);
 
             obj.Velocity = new Vector2(
                 (!collidingSide.HasFlag(CollidingSide.LEFT) && !collidingSide.HasFlag(CollidingSide.RIGHT)) ? obj.Velocity.X : 0,
@@ -51,7 +54,7 @@ namespace PeridotEngine.World.Physics
 
             obj.Position += new Vector2(
                 (!collidingSide.HasFlag(CollidingSide.LEFT) && !collidingSide.HasFlag(CollidingSide.RIGHT)) ? posDelta.X : 0,
-                (!collidingSide.HasFlag(CollidingSide.BOTTOM) && !collidingSide.HasFlag(CollidingSide.TOP)) ? posDelta.Y : 0
+                (!collidingSide.HasFlag(CollidingSide.BOTTOM) && !collidingSide.HasFlag(CollidingSide.TOP)) ? posDelta.Y : (collidingSide.HasFlag(CollidingSide.SLOPE) ? -xHeightDelta : 0)
             );
         }
 
@@ -62,7 +65,7 @@ namespace PeridotEngine.World.Physics
         /// <param name="obj">The object to check</param>
         /// <param name="posDelta">How much the object moves from its current position if it doesn't collide</param>
         /// <returns>True if colliding, false otherwise</returns>
-        private static CollidingSide IsColliding(Level level, IPhysicsObject obj, Point posDelta)
+        private static CollidingSide IsColliding(Level level, IPhysicsObject obj, ref Point posDelta, ref int xHeightDelta)
         {
             Rectangle newRectX = new Rectangle(obj.BoundingRect.Location + new Point(posDelta.X, 0), obj.BoundingRect.Size);
             Rectangle newRectY = new Rectangle(obj.BoundingRect.Location + new Point(0, posDelta.Y), obj.BoundingRect.Size);
@@ -79,9 +82,25 @@ namespace PeridotEngine.World.Physics
 
                 if (collider.IsColliding(newRectX))
                 {
-                    result |= posDelta.X > 0 ? CollidingSide.RIGHT : CollidingSide.LEFT;
+                    CollidingSide tmpResult = posDelta.X > 0 ? CollidingSide.RIGHT : CollidingSide.LEFT;
+
+                    for (int i = 0; i < 4; i++)
+                    {
+                        newRectX = new Rectangle(obj.BoundingRect.Location + new Point(posDelta.X, -i), obj.BoundingRect.Size);
+                        if (!collider.IsColliding(newRectX))
+                        {
+                            xHeightDelta = i;
+                            tmpResult &= ~CollidingSide.LEFT;
+                            tmpResult &= ~CollidingSide.RIGHT;
+                            tmpResult |= CollidingSide.SLOPE;
+                            break;
+                        }
+                    }
+
+                    result |= tmpResult;
                 }
             }
+
             
 
             return result;
@@ -94,7 +113,8 @@ namespace PeridotEngine.World.Physics
             TOP = 1,
             RIGHT = 2,
             BOTTOM = 4,
-            LEFT = 8
+            LEFT = 8,
+            SLOPE = 16
         }
     }
 }
