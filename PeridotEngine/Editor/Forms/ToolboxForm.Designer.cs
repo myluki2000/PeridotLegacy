@@ -253,7 +253,6 @@ namespace PeridotEngine.Editor.Forms
             // 
             // toolStrip1
             // 
-            this.toolStrip1.ClickThrough = true;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnCursor});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);

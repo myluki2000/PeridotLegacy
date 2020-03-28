@@ -1,4 +1,6 @@
-﻿namespace PeridotEngine.Editor.Forms
+﻿using PeridotEngine.Editor.UI;
+
+namespace PeridotEngine.Editor.Forms
 {
     partial class ToolbarForm
     {
@@ -31,7 +33,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ToolbarForm));
             this.BottomToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStrip1 = new PeridotEngine.Editor.UI.ToolStripEx();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.miNew = new System.Windows.Forms.ToolStripMenuItem();
             this.miLoad = new System.Windows.Forms.ToolStripMenuItem();
@@ -167,7 +169,6 @@
 
         private System.Windows.Forms.ToolStripPanel BottomToolStripPanel;
         private System.Windows.Forms.ToolStripPanel TopToolStripPanel;
-        private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.ToolStripMenuItem miNew;
         private System.Windows.Forms.ToolStripMenuItem miLoad;
@@ -178,5 +179,6 @@
         private System.Windows.Forms.ToolStripPanel LeftToolStripPanel;
         private System.Windows.Forms.ToolStripContentPanel ContentPanel;
         private System.Windows.Forms.ToolStripButton btnEditColliders;
+        private ToolStripEx toolStrip1;
     }
 }
