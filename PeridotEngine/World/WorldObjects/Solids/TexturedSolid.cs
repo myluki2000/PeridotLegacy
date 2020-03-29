@@ -28,7 +28,7 @@ namespace PeridotEngine.World.WorldObjects.Solids
                 sb.Begin(transformMatrix: camera.GetMatrix(new Vector3(ParallaxMultiplier, ParallaxMultiplier, 1)));
                 base.Draw(sb);
                 sb.End();
-                sb.Begin();
+                sb.Begin(transformMatrix: camera.GetMatrix());
             }
             else
             {
