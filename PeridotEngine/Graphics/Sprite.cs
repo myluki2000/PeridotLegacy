@@ -66,19 +66,14 @@ namespace PeridotEngine.Graphics
         {
             if (Texture != null)
             {
-                Rectangle destRect;
-
-                if (Size != null)
-                {
-                    destRect = new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y);
-                }
-                else
-                {
-                    destRect = new Rectangle((int)Position.X, (int)Position.Y, Texture.Texture.Width, Texture.Texture.Height);
-                }
-
-
-                sb.Draw(Texture.Texture, destRect, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, ZIndex.Map(-128, 127, 0, 1));
+                sb.Draw(Texture.Texture, 
+                    new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y),
+                    null,
+                    Color.White,
+                    0,
+                    Vector2.Zero,
+                    SpriteEffects.None,
+                    ZIndex.Map(-128, 127, 0, 1));
             }
             else
             {
