@@ -16,11 +16,11 @@ namespace PeridotEngine.World.WorldObjects.Solids
 {
     /// <summary>
     /// A dynamic water object which can be placed in a level.
+    ///
+    /// TODO: Make this object work with parallax scrolling.
     /// </summary>
     class DynamicWater : ISolid
     {
-        /// <inheritdoc />
-        public float ParallaxMultiplier { get; set; }
         /// <inheritdoc />
         public Vector2 Position { get; set; }
         /// <inheritdoc />

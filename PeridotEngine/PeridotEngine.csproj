@@ -116,6 +116,7 @@
     <Compile Include="World\Physics\PhysicsManager.cs" />
     <Compile Include="World\Level.cs" />
     <Compile Include="World\WorldObjects\Solids\DynamicWater.cs" />
+    <Compile Include="World\WorldObjects\Solids\IParallaxable.cs" />
     <Compile Include="World\WorldObjects\Solids\ISolid.cs" />
     <Compile Include="World\WorldObjects\Solids\TexturedSolid.cs" />
     <Compile Include="World\WorldObjects\IWorldObject.cs" />

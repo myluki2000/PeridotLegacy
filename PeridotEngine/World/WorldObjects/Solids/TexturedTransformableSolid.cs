@@ -37,8 +37,5 @@ namespace PeridotEngine.World.WorldObjects.Solids
         {
             throw new System.NotImplementedException();
         }
-
-        /// <inheritdoc />
-        public float ParallaxMultiplier { get; set; }
     }
 }

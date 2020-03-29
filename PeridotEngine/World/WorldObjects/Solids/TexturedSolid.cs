@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using System;
 using Microsoft.Xna.Framework;
 using PeridotEngine.Graphics;
 using PeridotEngine.Resources;
@@ -8,7 +9,7 @@ using System.Xml.Linq;
 
 namespace PeridotEngine.World.WorldObjects.Solids
 {
-    class TexturedSolid : Sprite, ISolid
+    class TexturedSolid : Sprite, ISolid, IParallaxable
     {
         /// <summary>
         /// The parallax multiplier of the object in the game world.
@@ -29,7 +30,8 @@ namespace PeridotEngine.World.WorldObjects.Solids
                 texPathXEle,
                 new XElement("Rotation", Rotation.ToString(CultureInfo.InvariantCulture)),
                 new XElement("Opacity", Opacity.ToString(CultureInfo.InvariantCulture)),
-                new XElement("Z-Index", ZIndex.ToString(CultureInfo.InvariantCulture))
+                new XElement("Z-Index", ZIndex.ToString(CultureInfo.InvariantCulture)),
+                new XElement("Parallax", ParallaxMultiplier.ToString(CultureInfo.InvariantCulture))
             );
         }
 
@@ -56,6 +58,10 @@ namespace PeridotEngine.World.WorldObjects.Solids
 
             // get opacity
             obj.Opacity = float.Parse(xEle.Element("Opacity").Value, CultureInfo.InvariantCulture.NumberFormat);
+
+            // get parallax multiplier. If no parallax multiplier defined set to 1
+            obj.ParallaxMultiplier = float.Parse(xEle.Element("Parallax")?.Value ?? "1", CultureInfo.InvariantCulture);
+            
 
             return obj;
         }
