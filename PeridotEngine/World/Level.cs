@@ -131,6 +131,11 @@ namespace PeridotEngine.World
             foreach(IEntity obj in Entities)
             {
                 obj.Update(gameTime);
+
+                if (obj is Player)
+                {
+                    Camera.FocusOnPosition(obj.Position + obj.Size / 2);
+                }
             }
 
             if (IsPhysicsEnabled)

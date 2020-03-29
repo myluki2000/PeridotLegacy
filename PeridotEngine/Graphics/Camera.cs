@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using System;
 using Microsoft.Xna.Framework;
 
 namespace PeridotEngine.Graphics
@@ -65,9 +66,30 @@ namespace PeridotEngine.Graphics
         /// Focuses the camera on a position in the world.
         /// </summary>
         /// <param name="focusPos">The position to focus on</param>
-        public void FocusOnPosition(Vector2 focusPos)
+        /// <param name="horizontalAlignment">The horizontal alignment of the position the camera should focus on.</param>
+        /// <param name="verticalAlignment">The vertical alignment of the position the camera should focus on.</param>
+        public void FocusOnPosition(Vector2 focusPos,
+                                    HorizontalAlignment horizontalAlignment = HorizontalAlignment.CENTER,
+                                    VerticalAlignment verticalAlignment = VerticalAlignment.MIDDLE)
         {
-            Translation = new Vector3(-focusPos, 0);
+            Vector2 displacement = new Vector2(0, 0);
+            displacement.X = horizontalAlignment switch
+            {
+                HorizontalAlignment.LEFT => 0,
+                HorizontalAlignment.CENTER => (1920 / 2),
+                HorizontalAlignment.RIGHT => 1920,
+                _ => displacement.X
+            };
+
+            displacement.Y = verticalAlignment switch
+            {
+                VerticalAlignment.TOP => 0,
+                VerticalAlignment.MIDDLE => (1080 / 2),
+                VerticalAlignment.BOTTOM => 1080,
+                _ => displacement.Y
+            };
+
+            Translation = new Vector3(-focusPos + displacement, 0);
         }
 
         public Vector2 ScreenPosToWorldPos(Vector2 screenPos)
@@ -76,6 +98,20 @@ namespace PeridotEngine.Graphics
                 (screenPos.X / Globals.Graphics.PreferredBackBufferWidth) * 1920 - Translation.X,
                 (screenPos.Y / Globals.Graphics.PreferredBackBufferHeight) * 1080 - Translation.Y
             );
+        }
+
+        public enum VerticalAlignment
+        {
+            TOP,
+            MIDDLE,
+            BOTTOM
+        }
+
+        public enum HorizontalAlignment
+        {
+            LEFT,
+            CENTER,
+            RIGHT
         }
     }
 }
