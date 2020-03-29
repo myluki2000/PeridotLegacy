@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms.VisualStyles;
+﻿using System.Linq;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -27,6 +22,8 @@ namespace PeridotEngine.World.Physics.Colliders
         /// <inheritdoc />
         public bool IsColliding(Rectangle otherRect)
         {
+            // performance could maybe be improved by doing a quick check using the surrounding rectangle of the collider first
+
             // note that the first point is the one in the bottom left corner for both our quad and the otherRect
 
             // start with the edges of our quad
@@ -73,8 +70,8 @@ namespace PeridotEngine.World.Physics.Colliders
             };
 
             // TODO: Optimize this by getting both min and max in one go
-            float ourMin = Enumerable.Min(ourDots);
-            float ourMax = Enumerable.Max(ourDots);
+            float ourMin = ourDots.Min();
+            float ourMax = ourDots.Max();
 
             float[] otherDots =
             {
@@ -85,8 +82,8 @@ namespace PeridotEngine.World.Physics.Colliders
             };
 
             // TODO: Optimize this by getting both min and max in one go
-            float otherMin = Enumerable.Min(otherDots);
-            float otherMax = Enumerable.Max(otherDots);
+            float otherMin = otherDots.Min();
+            float otherMax = otherDots.Max();
 
             // edge projection is colliding if intervals overlap each other
             return ourMin <= otherMax && otherMin <= ourMax;
@@ -212,7 +209,6 @@ namespace PeridotEngine.World.Physics.Colliders
             }
             else if (lastMouseState.LeftButton == ButtonState.Pressed && mouseState.LeftButton == ButtonState.Pressed)
             {
-                Rectangle? newRect = null;
                 switch (currentlyDraggingCorner)
                 {
                     case Corner.TOP_LEFT:
