@@ -72,9 +72,11 @@ namespace PeridotEngine.World.Physics
         {
             Rectangle newRectX = new Rectangle(obj.BoundingRect.Location + new Point(posDelta.X, 0), obj.BoundingRect.Size);
             Rectangle newRectY = new Rectangle(obj.BoundingRect.Location + new Point(0, posDelta.Y), obj.BoundingRect.Size);
-
+            Rectangle groundedRect = new Rectangle(obj.BoundingRect.Location + new Point(0, 1), obj.BoundingRect.Size);
 
             CollidingSide result = CollidingSide.NONE;
+
+            obj.IsGrounded = false;
 
             foreach (ICollider collider in level.Colliders)
             {
@@ -102,6 +104,11 @@ namespace PeridotEngine.World.Physics
                     }
 
                     result |= tmpResult;
+                }
+
+                if (collider.IsColliding(groundedRect))
+                {
+                    obj.IsGrounded = true;
                 }
             }
 

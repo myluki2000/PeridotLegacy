@@ -22,6 +22,9 @@ namespace PeridotEngine.World.WorldObjects.Entities
         /// <inheritdoc />
         public abstract float Drag { get; set; }
         public bool HasPhysics { get; set; }
+
+        /// <inheritdoc />
+        public bool IsGrounded { get; set; }
         public Rectangle BoundingRect => new Rectangle(Position.ToPoint(), Size.ToPoint());
 
         public abstract void Initialize(Level level);

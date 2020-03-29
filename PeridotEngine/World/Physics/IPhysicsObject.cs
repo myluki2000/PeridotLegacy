@@ -34,5 +34,9 @@ namespace PeridotEngine.World.Physics
         /// True if object should be affected by physics.
         /// </summary>
         bool HasPhysics { get; set; }
+        /// <summary>
+        /// True if object is currently on the ground, false otherwise.
+        /// </summary>
+        bool IsGrounded { get; set; }
     }
 }

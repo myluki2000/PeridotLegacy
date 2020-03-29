@@ -31,7 +31,6 @@ namespace PeridotEngine.World.WorldObjects.Entities
         public override void Update(GameTime gameTime)
         {
             KeyboardState keyboardState = Keyboard.GetState();
-
             HandleMovement(keyboardState);
         }
 
@@ -66,7 +65,7 @@ namespace PeridotEngine.World.WorldObjects.Entities
                 Acceleration = new Vector2(0, Acceleration.Y);
             }
 
-            if (keyboardState.IsKeyDown(Keys.Space))
+            if (keyboardState.IsKeyDown(Keys.Space) && IsGrounded)
             {
                  Velocity = new Vector2(Velocity.X, -360.0f);
             }
