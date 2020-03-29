@@ -23,6 +23,7 @@ namespace PeridotEngine.UI
     {
         private readonly ToolbarForm toolbarForm = new ToolbarForm();
         private readonly ToolboxForm toolboxForm = new ToolboxForm();
+        private readonly PropertiesForm propertiesForm = new PropertiesForm();
 
         private readonly string levelPath;
 
@@ -86,6 +87,8 @@ namespace PeridotEngine.UI
             toolboxForm.ObjectHeightChanged += SelectedObjectHeightChanged;
             toolboxForm.ObjectZIndexChanged += SelectedObjectZIndexChanged;
             toolboxForm.PopulateSolidsFromTextureDirectory(Level.TextureDirectory);
+
+            propertiesForm.Show();
         }
 
         public override void Draw(SpriteBatch sb)
@@ -243,6 +246,7 @@ namespace PeridotEngine.UI
             if (entities.Any())
             {
                 selectedObject = entities.First();
+                propertiesForm.SelectedObject = selectedObject;
                 PopulateValuesFromSelectedObject();
                 return;
             }
@@ -252,6 +256,7 @@ namespace PeridotEngine.UI
             if (solids.Any())
             {
                 selectedObject = solids.First();
+                propertiesForm.SelectedObject = selectedObject;
                 PopulateValuesFromSelectedObject();
                 return;
             }
