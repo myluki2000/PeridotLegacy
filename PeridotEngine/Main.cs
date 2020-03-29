@@ -106,10 +106,13 @@ namespace PeridotEngine
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                     Exit();
 
-                ScreenHandler.Update(gameTime);
+                if (!devConsole.IsVisible)
+                {
+                    ScreenHandler.Update(gameTime);
+                }
 
                 devConsole.Update(gameTime);
-
+                
                 Window.Title = (1.0d / gameTime.ElapsedGameTime.TotalSeconds).ToString(CultureInfo.InvariantCulture);
 
                 base.Update(gameTime);
