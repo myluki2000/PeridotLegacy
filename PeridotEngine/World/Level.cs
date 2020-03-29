@@ -10,7 +10,12 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
+using Microsoft.CodeAnalysis.Scripting.Hosting;
 using PeridotEngine.World.WorldObjects.Solids;
 using Microsoft.Xna.Framework;
 using PeridotEngine.Graphics;
@@ -50,6 +55,10 @@ namespace PeridotEngine.World
 
         public Camera Camera { get; set; } = new Camera();
 
+        public Script? Script { get; set; }
+
+        public event EventHandler<GameTime> OnUpdate;
+
         /// <summary>
         /// Create a new empty level.
         /// </summary>
@@ -57,7 +66,6 @@ namespace PeridotEngine.World
         {
             this.Solids = new ObservableRangeCollection<ISolid>();
             this.Entities = new ObservableRangeCollection<IEntity>();
-
             this.Solids.CollectionChanged += OnSolidsChanged;
             this.Entities.CollectionChanged += OnEntitiesChanged;
         }
@@ -78,12 +86,14 @@ namespace PeridotEngine.World
         /// </summary>
         public void Initialize()
         {
-            foreach(ISolid solid in Solids)
+            foreach (ISolid solid in Solids)
                 solid.Initialize(this);
-            
+
 
             foreach (IEntity entity in Entities)
                 entity.Initialize(this);
+
+            Script?.RunAsync(globals: this);
         }
 
         /// <summary>
@@ -97,10 +107,10 @@ namespace PeridotEngine.World
             combinedObjects.AddRange(Entities);
 
             combinedObjects.Sort((x, y) => x.ZIndex.CompareTo(y.ZIndex));
-            
+
             sb.Begin(transformMatrix: Camera.GetMatrix());
 
-            foreach(IWorldObject obj in combinedObjects)
+            foreach (IWorldObject obj in combinedObjects)
             {
                 obj.Draw(sb, Camera);
             }
@@ -123,12 +133,12 @@ namespace PeridotEngine.World
         /// <param name="gameTime">The current game time</param>
         public void Update(GameTime gameTime)
         {
-            foreach(ISolid obj in Solids)
+            foreach (ISolid obj in Solids)
             {
                 obj.Update(gameTime);
             }
 
-            foreach(IEntity obj in Entities)
+            foreach (IEntity obj in Entities)
             {
                 obj.Update(gameTime);
 
@@ -142,11 +152,27 @@ namespace PeridotEngine.World
             {
                 PhysicsHelper.UpdatePhysics(this, gameTime);
             }
+
+            OnUpdate?.Invoke(this, gameTime);
         }
 
         public static Level FromFile(string path)
         {
             Level level = new Level();
+
+            string scriptPath = Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path) + ".csx");
+            if (File.Exists(scriptPath))
+            {
+                // get GameTime's assembly (MonoGame.Framework) to load that assembly, because we need it for almost everything
+                ScriptOptions scriptOptions = ScriptOptions.Default.AddReferences(typeof(GameTime).Assembly);
+                level.Script = CSharpScript.Create(
+                    File.ReadAllText(scriptPath),
+                    globalsType: typeof(Level),
+                    options: scriptOptions);
+
+                level.Script.Compile();
+
+            }
 
             XElement rootEle = XElement.Load(path);
 
@@ -180,7 +206,7 @@ namespace PeridotEngine.World
             {
                 Type colliderType = Type.GetType("PeridotEngine.World.Physics.Colliders." + xEle.Name);
 
-                ICollider collider = (ICollider) colliderType.GetMethod("FromXml").Invoke(null, new object[] { xEle });
+                ICollider collider = (ICollider)colliderType.GetMethod("FromXml").Invoke(null, new object[] { xEle });
 
                 level.Colliders.Add(collider);
             }
@@ -213,7 +239,7 @@ namespace PeridotEngine.World
         private void OnEntitiesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             PhysicsObjects.Clear();
-            foreach(IEntity entity in Entities)
+            foreach (IEntity entity in Entities)
             {
                 if (entity is IPhysicsObject physObj)
                 {
