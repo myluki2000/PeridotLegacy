@@ -123,16 +123,22 @@ namespace PeridotEngine.UI
             // handle collider specific edit moves when in collider edit mode, handle default edit moves otherwise
             if (toolbarForm.BtnEditCollidersChecked)
             {
-                HandleColliderPlacement(lastMouseState, mouseState);
-                HandleColliderSelection(lastMouseState, mouseState);
-
-                selectedCollider?.HandleDraggingAndResizing(Level, lastMouseState, mouseState);
+                if (mouseState.IsInWindow())
+                {
+                    HandleColliderPlacement(lastMouseState, mouseState);
+                    HandleColliderSelection(lastMouseState, mouseState);
+                    
+                    selectedCollider?.HandleDraggingAndResizing(Level, lastMouseState, mouseState);
+                }
             }
             else
             {
-                HandleObjectPlacement(lastMouseState, mouseState);
-                HandleObjectSelection(lastMouseState, mouseState);
-                HandleObjectDrag(lastMouseState, mouseState);
+                if (mouseState.IsInWindow())
+                {
+                    HandleObjectPlacement(lastMouseState, mouseState);
+                    HandleObjectSelection(lastMouseState, mouseState);
+                    HandleObjectDrag(lastMouseState, mouseState);
+                }
                 HandleObjectDeletion(lastKeyboardState, keyboardState);
             }
 
@@ -274,7 +280,6 @@ namespace PeridotEngine.UI
         private Point? colliderStart = null;
         private void HandleColliderPlacement(MouseState lastMouseState, MouseState mouseState)
         {
-
             if (lastMouseState.LeftButton == ButtonState.Released
                 && mouseState.LeftButton == ButtonState.Pressed)
             {

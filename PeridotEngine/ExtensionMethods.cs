@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace PeridotEngine
 {
@@ -99,6 +100,17 @@ namespace PeridotEngine
         public static Point BottomRight(this Rectangle value)
         {
             return new Point(value.Right, value.Bottom);
+        }
+
+        /// <summary>
+        /// Boolean that indicates if mouse position is inside the game window.
+        /// </summary>
+        /// <param name="value">This mouse state.</param>
+        /// <returns>Returns true if mouse is in game window, false otherwise.</returns>
+        public static bool IsInWindow(this MouseState value)
+        {
+            return value.X >= 0 && value.X < Globals.Graphics.GraphicsDevice.Viewport.Width
+                                && value.Y >= 0 && value.Y < Globals.Graphics.GraphicsDevice.Viewport.Height;
         }
     }
 }
