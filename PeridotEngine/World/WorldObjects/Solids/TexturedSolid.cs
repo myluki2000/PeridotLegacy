@@ -6,6 +6,7 @@ using PeridotEngine.Graphics;
 using PeridotEngine.Resources;
 using System.Globalization;
 using System.Xml.Linq;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace PeridotEngine.World.WorldObjects.Solids
 {
@@ -17,6 +18,23 @@ namespace PeridotEngine.World.WorldObjects.Solids
         public float ParallaxMultiplier { get; set; } = 1.0f;
 
         public void Update(GameTime gameTime) { }
+
+        /// <inheritdoc />
+        public void Draw(SpriteBatch sb, Camera camera)
+        {
+            if (ParallaxMultiplier != 1.0f)
+            {
+                sb.End();
+                sb.Begin(transformMatrix: camera.GetMatrix(new Vector3(ParallaxMultiplier, ParallaxMultiplier, 1)));
+                base.Draw(sb);
+                sb.End();
+                sb.Begin();
+            }
+            else
+            {
+                base.Draw(sb);
+            }
+        }
 
         /// <inheritdoc />
         public XElement ToXml(LazyLoadingTextureDictionary textureDictionary)

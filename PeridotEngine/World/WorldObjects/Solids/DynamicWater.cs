@@ -55,7 +55,7 @@ namespace PeridotEngine.World.WorldObjects.Solids
             }
         }
 
-        public void Draw(SpriteBatch sb)
+        public void Draw(SpriteBatch sb, Camera camera)
         {
             // TODO: Optimize this: static BasicEffect and don't set the world and projection matrix each draw call
             

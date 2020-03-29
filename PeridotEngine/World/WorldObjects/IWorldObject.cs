@@ -3,6 +3,7 @@
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PeridotEngine.Graphics;
 using PeridotEngine.Resources;
 
 namespace PeridotEngine.World.WorldObjects
@@ -38,7 +39,8 @@ namespace PeridotEngine.World.WorldObjects
         /// Draws the object to the specified SpriteBatch.
         /// </summary>
         /// <param name="sb">The SpriteBatch.</param>
-        void Draw(SpriteBatch sb);
+        /// <param name="camera">The camera of the level.</param>
+        void Draw(SpriteBatch sb, Camera camera);
 
         /// <summary>
         /// Serializes this object to xml.

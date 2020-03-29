@@ -6,6 +6,7 @@ using PeridotEngine.Resources;
 using PeridotEngine.World.Physics;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace PeridotEngine.World.WorldObjects.Entities
 {
@@ -25,6 +26,12 @@ namespace PeridotEngine.World.WorldObjects.Entities
 
         public abstract void Initialize(Level level);
         public abstract void Update(GameTime gameTime);
+
+        /// <inheritdoc />
+        public void Draw(SpriteBatch sb, Camera camera)
+        {
+            base.Draw(sb);
+        }
 
         /// <inheritdoc />
         public abstract XElement ToXml(LazyLoadingTextureDictionary textureDictionary);

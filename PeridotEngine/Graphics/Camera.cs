@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework;
 
 namespace PeridotEngine.Graphics
 {
+    /// <summary>
+    /// TODO: Optimize matrix calculations by caching view matrix.
+    /// </summary>
     public class Camera
     {
         /// <summary>

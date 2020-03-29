@@ -102,7 +102,7 @@ namespace PeridotEngine.World
 
             foreach(IWorldObject obj in combinedObjects)
             {
-                obj.Draw(sb);
+                obj.Draw(sb, Camera);
             }
 
             if (Settings.DrawColliders)

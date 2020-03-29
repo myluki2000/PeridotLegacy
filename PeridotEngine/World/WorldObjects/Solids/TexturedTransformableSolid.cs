@@ -27,7 +27,7 @@ namespace PeridotEngine.World.WorldObjects.Solids
         }
 
         /// <inheritdoc />
-        public void Draw(SpriteBatch sb)
+        public void Draw(SpriteBatch sb, Camera camera)
         {
             throw new System.NotImplementedException();
         }
