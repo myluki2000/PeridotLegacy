@@ -36,8 +36,9 @@ namespace PeridotEngine.UI.DevConsole
         private readonly Commands.Command[] commands =
         {
             new EditLvlCommand(),
-            new PhysShowColliders(), 
-            new PhysGravityEnabled(), 
+            new PhysShowCollidersCommand(), 
+            new PhysGravityEnabledCommand(), 
+            new FullscreenCommand(), 
         };
 
         public void Initialize()

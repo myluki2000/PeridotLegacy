@@ -58,7 +58,7 @@ namespace PeridotEngine
             ScreenHandler.SelectedScreen = new LevelScreen(Level.FromFile(@"World\level.plvl"));
 
             IsMouseVisible = true;
-
+            
             Globals.Graphics.PreferredBackBufferWidth = ConfigManager.CurrentConfig.WindowSize.X;
             Globals.Graphics.PreferredBackBufferHeight = ConfigManager.CurrentConfig.WindowSize.Y;
             Globals.Graphics.ApplyChanges();

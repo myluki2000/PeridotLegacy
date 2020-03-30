@@ -1,6 +1,6 @@
 ﻿namespace PeridotEngine.UI.DevConsole.Commands
 {
-    class PhysShowColliders : Command
+    class PhysShowCollidersCommand : Command
     {
         /// <inheritdoc />
         public string CommandString => "phys_show_colliders";

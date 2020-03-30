@@ -7,7 +7,7 @@ using PeridotEngine.World.Physics;
 
 namespace PeridotEngine.UI.DevConsole.Commands
 {
-    class PhysGravityEnabled : Command
+    class PhysGravityEnabledCommand : Command
     {
         /// <inheritdoc />
         public string CommandString => "phys_gravity_enabled";
