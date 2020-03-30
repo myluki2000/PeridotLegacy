@@ -7,15 +7,12 @@ using PeridotEngine.World.WorldObjects;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Xml.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
-using Microsoft.CodeAnalysis.Scripting.Hosting;
 using PeridotEngine.World.WorldObjects.Solids;
 using Microsoft.Xna.Framework;
 using PeridotEngine.Graphics;
@@ -54,6 +51,7 @@ namespace PeridotEngine.World
         public LevelSettings Settings { get; set; } = new LevelSettings();
 
         public Camera Camera { get; set; } = new Camera();
+        public bool CameraShouldFollowPlayer { get; set; } = true;
 
         public Script? Script { get; set; }
 
@@ -108,11 +106,23 @@ namespace PeridotEngine.World
 
             combinedObjects.Sort((x, y) => x.ZIndex.CompareTo(y.ZIndex));
 
-            sb.Begin(transformMatrix: Camera.GetMatrix());
+            sb.Begin(transformMatrix: Camera.GetMatrix(), blendState: BlendState.AlphaBlend);
 
             foreach (IWorldObject obj in combinedObjects)
             {
-                obj.Draw(sb, Camera);
+                if (obj is IParallaxable parallaxObj)
+                {
+                    sb.End();
+                    sb.Begin(transformMatrix: Camera.GetMatrix(new Vector3(parallaxObj.ParallaxMultiplier, parallaxObj.ParallaxMultiplier, 1)),
+                             blendState: BlendState.AlphaBlend);
+                    obj.Draw(sb, Camera);
+                    sb.End();
+                    sb.Begin(transformMatrix: Camera.GetMatrix(), blendState: BlendState.AlphaBlend);
+                }
+                else
+                {
+                    obj.Draw(sb, Camera);
+                }
             }
 
             if (Settings.DrawColliders)
@@ -142,7 +152,7 @@ namespace PeridotEngine.World
             {
                 obj.Update(gameTime);
 
-                if (obj is Player)
+                if (CameraShouldFollowPlayer && obj is Player)
                 {
                     Camera.FocusOnPosition(obj.Position + obj.Size / 2);
                 }

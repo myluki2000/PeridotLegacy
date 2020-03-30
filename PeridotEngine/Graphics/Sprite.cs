@@ -33,7 +33,7 @@ namespace PeridotEngine.Graphics
         /// <summary>
         /// The opacity of the sprite on a scale from 0.0 - 1.0. Default: 1.0
         /// </summary>
-        public float Opacity { get; set; } = 1;
+        public float Opacity { get; set; } = 1.0f;
 
         /// <summary>
         /// Create a new empty sprite object.
@@ -69,7 +69,7 @@ namespace PeridotEngine.Graphics
                 sb.Draw(Texture.Texture, 
                     new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y),
                     null,
-                    Color.White,
+                    Color.White * Opacity,
                     0,
                     Vector2.Zero,
                     SpriteEffects.None,

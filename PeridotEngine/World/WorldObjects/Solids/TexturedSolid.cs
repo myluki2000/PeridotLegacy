@@ -22,18 +22,7 @@ namespace PeridotEngine.World.WorldObjects.Solids
         /// <inheritdoc />
         public void Draw(SpriteBatch sb, Camera camera)
         {
-            if (ParallaxMultiplier != 1.0f)
-            {
-                sb.End();
-                sb.Begin(transformMatrix: camera.GetMatrix(new Vector3(ParallaxMultiplier, ParallaxMultiplier, 1)));
-                base.Draw(sb);
-                sb.End();
-                sb.Begin(transformMatrix: camera.GetMatrix());
-            }
-            else
-            {
-                base.Draw(sb);
-            }
+            base.Draw(sb);
         }
 
         /// <inheritdoc />

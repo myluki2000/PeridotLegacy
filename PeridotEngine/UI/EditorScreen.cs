@@ -10,6 +10,7 @@ using PeridotEngine.World;
 using PeridotEngine.World.WorldObjects.Solids;
 using System.IO;
 using System.Linq;
+using PeridotEngine.Graphics;
 using PeridotEngine.Misc;
 using PeridotEngine.World.Physics.Colliders;
 using PeridotEngine.World.WorldObjects;
@@ -70,6 +71,8 @@ namespace PeridotEngine.UI
 
             // disable physics updating for this level
             level.IsPhysicsEnabled = false;
+            // disable camera following player
+            level.CameraShouldFollowPlayer = false;
 
             level.Initialize();
         }
@@ -239,8 +242,8 @@ namespace PeridotEngine.UI
             // cursor is selected
             if (toolboxForm.SelectedObject != null) return;
 
-            Vector2 mousePosWorldSpace = Mouse.GetState().Position.ToVector2().Transform(Matrix.Invert(Level.Camera.GetMatrix()));
-
+            Vector2 mousePosWorldSpace = Level.Camera.ScreenPosToWorldPos(Mouse.GetState().Position.ToVector2());
+            Console.WriteLine(mousePosWorldSpace);
             IEnumerable<IEntity> entities = Level.Entities.Where(x => new Rectangle(x.Position.ToPoint(), x.Size.ToPoint()).Contains(mousePosWorldSpace));
 
             if (entities.Any())
