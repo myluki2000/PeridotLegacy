@@ -110,7 +110,7 @@ namespace PeridotEngine.World
 
             foreach (IWorldObject obj in combinedObjects)
             {
-                if (obj is IParallaxable parallaxObj)
+                if (obj is IParallaxable parallaxObj && parallaxObj.ParallaxMultiplier != 1.0f)
                 {
                     sb.End();
                     sb.Begin(transformMatrix: Camera.GetMatrix(new Vector3(parallaxObj.ParallaxMultiplier, parallaxObj.ParallaxMultiplier, 1)),

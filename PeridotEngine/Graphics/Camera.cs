@@ -5,19 +5,40 @@ using Microsoft.Xna.Framework;
 
 namespace PeridotEngine.Graphics
 {
-    /// <summary>
-    /// TODO: Optimize matrix calculations by caching view matrix.
-    /// </summary>
     public class Camera
     {
         /// <summary>
         /// The translation of the camera view.
         /// </summary>
-        public Vector3 Translation { get; set; }
+        public Vector3 Translation
+        {
+            get => translation;
+            set
+            {
+                translation = value;
+                viewMatrixValid = false;
+            }
+        }
+
         /// <summary>
         /// The scale of the camera view.
         /// </summary>
-        public Vector3 Scale { get; set; }
+        public Vector3 Scale
+        {
+            get => scale;
+            set
+            {
+                scale = value;
+                viewMatrixValid = false;
+            }
+        }
+
+        private Vector3 translation;
+        private Vector3 scale;
+
+        private Matrix viewMatrix;
+        private bool viewMatrixValid = false;
+        
 
         /// <summary>
         /// Create a new camera object with default values. Translation = 0, Scale = 1
@@ -26,6 +47,7 @@ namespace PeridotEngine.Graphics
         {
             Translation = new Vector3(0, 0, 0);
             Scale = new Vector3(1, 1, 1);
+            viewMatrix = GetMatrix();
         }
 
         /// <summary>
@@ -42,10 +64,16 @@ namespace PeridotEngine.Graphics
         /// <returns>Returns a matrix which represents the camera view</returns>
         public Matrix GetMatrix()
         {
-            return Matrix.CreateTranslation(Translation) *
-                Matrix.CreateScale(Scale) *
-                Matrix.CreateScale((float)Globals.Graphics.PreferredBackBufferHeight / 1080);
-                //Matrix.CreateTranslation(new Vector3((float)(Globals.Graphics.GraphicsDevice.Viewport.Width / 2), (float)(Globals.Graphics.GraphicsDevice.Viewport.Height / 2), 0));
+            if (!viewMatrixValid)
+            {
+                viewMatrix = Matrix.CreateTranslation(Translation)
+                             * Matrix.CreateScale(Scale)
+                             * Matrix.CreateScale((float)Globals.Graphics.PreferredBackBufferHeight / 1080);
+                viewMatrixValid = true;
+            }
+
+            return viewMatrix;
+
         }
 
         /// <summary>
@@ -58,7 +86,6 @@ namespace PeridotEngine.Graphics
             return Matrix.CreateTranslation(Translation * new Vector3(1 / parallax.X, 1, 1)) *
                 Matrix.CreateScale(Scale) *
                 Matrix.CreateScale((float)Globals.Graphics.PreferredBackBufferHeight / 1080);
-                //Matrix.CreateTranslation(new Vector3((float)(Globals.Graphics.GraphicsDevice.Viewport.Width / 2), (float)(Globals.Graphics.GraphicsDevice.Viewport.Height / 2), 0));
         }
 
         /// <summary>
