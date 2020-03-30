@@ -8,7 +8,7 @@ namespace PeridotEngine.Resources
     public sealed class TextureData : TextureDataBase
     {
         /// <summary>
-        /// Gets the width of the texture object. This does not necessarily maatch the width in pixels of the texture.
+        /// Gets the width of the texture object. This does not necessarily match the width in pixels of the texture.
         /// </summary>
         public override int Width
         {
@@ -16,7 +16,7 @@ namespace PeridotEngine.Resources
             set => width = value;
         }
         /// <summary>
-        /// Gets the height of the texture object. This does not necessarily maatch the height in pixels of the texture.
+        /// Gets the height of the texture object. This does not necessarily match the height in pixels of the texture.
         /// </summary>
         public override int Height
         {

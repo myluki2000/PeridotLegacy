@@ -13,7 +13,7 @@ namespace PeridotEngine.Graphics
         /// <summary>
         /// The texture of this sprite. Gets drawn to the screen when Sprite.Draw() is called. If null a dummy outline is drawn.
         /// </summary>
-        public TextureData? Texture { get; set; }
+        public TextureDataBase? Texture { get; set; }
         /// <summary>
         /// The position of the sprite in the current matrix.
         /// </summary>
@@ -34,6 +34,9 @@ namespace PeridotEngine.Graphics
         /// The opacity of the sprite on a scale from 0.0 - 1.0. Default: 1.0
         /// </summary>
         public float Opacity { get; set; } = 1.0f;
+
+        private int currentFrameIndex = 0;
+        private float timeOnFrame;
 
         /// <summary>
         /// Create a new empty sprite object.
@@ -58,6 +61,19 @@ namespace PeridotEngine.Graphics
             RotateRandomly();
         }
 
+        public void Update(GameTime gameTime)
+        {
+            if(Texture is AnimatedTextureData animatedTexture)
+            {
+                timeOnFrame += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (timeOnFrame >= animatedTexture.FrameDurations[currentFrameIndex])
+                {
+                    timeOnFrame = 0;
+                    currentFrameIndex = ++currentFrameIndex % animatedTexture.FrameCount;
+                }
+            }
+        }
+
         /// <summary>
         /// Draw the sprite to the screen.
         /// </summary>
@@ -66,9 +82,12 @@ namespace PeridotEngine.Graphics
         {
             if (Texture != null)
             {
+                int frameWidth = Texture.Texture.Width / (Texture is AnimatedTextureData animatedTexture
+                    ? animatedTexture.FrameCount
+                    : 1);
                 sb.Draw(Texture.Texture, 
                     new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y),
-                    null,
+                    new Rectangle(currentFrameIndex * frameWidth, 0, frameWidth, Texture.Texture.Height),
                     Color.White * Opacity,
                     0,
                     Vector2.Zero,

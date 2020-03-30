@@ -17,8 +17,6 @@ namespace PeridotEngine.World.WorldObjects.Solids
         /// </summary>
         public float ParallaxMultiplier { get; set; } = 1.0f;
 
-        public void Update(GameTime gameTime) { }
-
         /// <inheritdoc />
         public void Draw(SpriteBatch sb, Camera camera)
         {
