@@ -1,23 +1,24 @@
-﻿#nullable enable
-
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace PeridotEngine.Resources
 {
-    public sealed class TextureData : TextureDataBase
+    public sealed class AnimatedTextureData : TextureDataBase
     {
-        /// <summary>
-        /// Gets the width of the texture object. This does not necessarily maatch the width in pixels of the texture.
-        /// </summary>
+        public int FrameCount { get; }
+        public int[] FrameDurations { get; }
+
         public override int Width
         {
-            get => width ?? Texture.Width;
+            get => width ?? Texture.Width / FrameCount;
             set => width = value;
         }
-        /// <summary>
-        /// Gets the height of the texture object. This does not necessarily maatch the height in pixels of the texture.
-        /// </summary>
+
         public override int Height
         {
             get => height ?? Texture.Height;
@@ -27,14 +28,16 @@ namespace PeridotEngine.Resources
         private int? width = null;
         private int? height = null;
 
-        public TextureData(string name, Texture2D texture, bool hasRandomTextureRotation)
+        public AnimatedTextureData(string name, Texture2D texture, bool hasRandomTextureRotation, int frameCount, int[] frameDurations)
         {
             this.Name = name;
             this.Texture = texture;
             this.HasRandomTextureRotation = hasRandomTextureRotation;
+            this.FrameCount = frameCount;
+            this.FrameDurations = frameDurations;
         }
 
-        public static TextureData FromXml(XElement xEle)
+        public static AnimatedTextureData FromXml(XElement xEle)
         {
             string randomTextureRotString = xEle.Element("RandomTextureRotation").Value.ToUpper();
             bool randomTextureRot;
@@ -52,10 +55,18 @@ namespace PeridotEngine.Resources
                     throw new System.Exception("Error while parsing texture data: Invalid xml value for random texture rotation for texture " + xEle.Element("Name").Value);
             }
 
-            TextureData tex = new TextureData(
+            int frameCount = int.Parse(xEle.Element("FrameCount").Value);
+            
+
+            string durString = xEle.Element("FrameDurations").Value;
+            int[] frameDurations = durString.Split(',').Select(x => int.Parse(x.Trim())).ToArray();
+
+            AnimatedTextureData tex = new AnimatedTextureData(
                 xEle.Element("Name").Value,
                 TextureManager.LoadRawTexture(xEle.Element("ImagePath").Value),
-                randomTextureRot
+                randomTextureRot,
+                frameCount,
+                frameDurations
             );
 
             // set texture size if set in .ptex file

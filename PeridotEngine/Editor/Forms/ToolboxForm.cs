@@ -158,10 +158,9 @@ namespace PeridotEngine.Editor.Forms
 
             foreach (string filePath in Directory.GetFiles(directory, "*.ptex"))
             {
-                System.Diagnostics.Debug.WriteLine(filePath);
                 XElement xEle = XElement.Load(filePath);
 
-                TextureData tex = TextureManager.LoadTexture(xEle.Element("ImagePath").Value);
+                TextureDataBase tex = TextureManager.LoadTexture(xEle.Element("ImagePath").Value);
 
                 MemoryStream ms = new MemoryStream();
                 tex.Texture.SaveAsPng(ms, tex.Texture.Width, tex.Texture.Height);

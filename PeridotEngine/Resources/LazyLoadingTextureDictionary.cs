@@ -10,9 +10,9 @@ namespace PeridotEngine.Resources
     /// <summary>
     /// A dictionary for textures, which will automatically load a texture if it is not already in the dictionary.
     /// </summary>
-    public class LazyLoadingTextureDictionary : Dictionary<string, TextureData>
+    public class LazyLoadingTextureDictionary : Dictionary<string, TextureDataBase>
     {
-        public new TextureData this[string key]
+        public new TextureDataBase this[string key]
         {
             get
             {

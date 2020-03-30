@@ -1,8 +1,11 @@
 ﻿#nullable enable
 
+using System;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Xml.Linq;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace PeridotEngine.Resources
 {
@@ -27,46 +30,19 @@ namespace PeridotEngine.Resources
         /// </summary>
         /// <param name="contentPath">The relative or absolute path without a file extension</param>
         /// <returns>A TextureData object containing the texture and its metadata</returns>
-        public static TextureData LoadTexture(string contentPath)
+        public static TextureDataBase LoadTexture(string contentPath)
         {
             XElement rootEle = XElement.Load(contentPath + ".ptex");
 
-            string randomTextureRotString = rootEle.Element("RandomTextureRotation").Value.ToUpper();
-            bool randomTextureRot;
-
-            // check and throw exception in case the file is broken
-            switch(randomTextureRotString)
+            switch (rootEle.Name.LocalName)
             {
-                case "TRUE":
-                    randomTextureRot = true;
-                    break;
-                case "FALSE":
-                    randomTextureRot = false;
-                    break;
+                case "Texture":
+                    return TextureData.FromXml(rootEle);
+                case "AnimatedTexture":
+                    return AnimatedTextureData.FromXml(rootEle);
                 default:
-                    throw new System.Exception("Error while parsing texture data: Invalid xml element value in file " + contentPath);
+                    throw new Exception("TextureData type mentioned in texture xml file " + contentPath + " not supported.");
             }
-
-
-
-            TextureData newTexture = new TextureData(rootEle.Element("Name").Value,
-                                                     LoadRawTexture(contentPath),
-                                                     randomTextureRot);
-
-            XElement xEleWidth = rootEle.Element("Width");
-            // set texture size if set in .ptex file
-            if (xEleWidth != null)
-            {
-                newTexture.Width = int.Parse(xEleWidth.Value);
-            }
-
-            XElement xEleHeight = rootEle.Element("Height");
-            if(xEleHeight != null)
-            {
-                newTexture.Height = int.Parse(xEleHeight.Value);
-            }
-
-            return newTexture;
         }
     }
 }

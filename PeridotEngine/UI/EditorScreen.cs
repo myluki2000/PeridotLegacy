@@ -243,7 +243,7 @@ namespace PeridotEngine.UI
             if (toolboxForm.SelectedObject != null) return;
 
             Vector2 mousePosWorldSpace = Level.Camera.ScreenPosToWorldPos(Mouse.GetState().Position.ToVector2());
-            Console.WriteLine(mousePosWorldSpace);
+            
             IEnumerable<IEntity> entities = Level.Entities.Where(x => new Rectangle(x.Position.ToPoint(), x.Size.ToPoint()).Contains(mousePosWorldSpace));
 
             if (entities.Any())
