@@ -23,7 +23,7 @@ namespace PeridotEngine
 
         private readonly PresentationParameters? presentationParameters = null;
 
-        private readonly DevConsole devConsole = new DevConsole();
+        
 
         public Main()
         {
@@ -62,8 +62,6 @@ namespace PeridotEngine
             Globals.Graphics.PreferredBackBufferWidth = ConfigManager.CurrentConfig.WindowSize.X;
             Globals.Graphics.PreferredBackBufferHeight = ConfigManager.CurrentConfig.WindowSize.Y;
             Globals.Graphics.ApplyChanges();
-
-            devConsole.Initialize();
 
             base.Initialize();
         }
@@ -106,13 +104,8 @@ namespace PeridotEngine
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                     Exit();
 
-                if (!devConsole.IsVisible)
-                {
-                    ScreenHandler.Update(gameTime);
-                }
+                ScreenHandler.Update(gameTime);
 
-                devConsole.Update(gameTime);
-                
                 Window.Title = (1.0d / gameTime.ElapsedGameTime.TotalSeconds).ToString(CultureInfo.InvariantCulture);
 
                 base.Update(gameTime);
@@ -128,7 +121,6 @@ namespace PeridotEngine
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             ScreenHandler.Draw(spriteBatch);
-            devConsole.Draw(spriteBatch);
 
             GraphicsDevice.Present();
             base.Draw(gameTime);

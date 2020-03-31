@@ -41,11 +41,6 @@ namespace PeridotEngine.UI.DevConsole
             new FullscreenCommand(), 
         };
 
-        public void Initialize()
-        {
-
-        }
-
         ushort counter = 0;
         public void Draw(SpriteBatch sb)
         {

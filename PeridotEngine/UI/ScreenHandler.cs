@@ -7,8 +7,10 @@ namespace PeridotEngine.UI
 {
     static class ScreenHandler
     {
-        private static Screen selectedScreen;
-        internal static Screen SelectedScreen
+        private static Screen? selectedScreen;
+        private static readonly DevConsole.DevConsole devConsole = new DevConsole.DevConsole();
+
+        internal static Screen? SelectedScreen
         {
             get => selectedScreen;
 
@@ -17,21 +19,25 @@ namespace PeridotEngine.UI
                 selectedScreen = value;
                 
                 // init screen
-                if(selectedScreen != null)
-                    selectedScreen.Initialize();
+                selectedScreen?.Initialize();
             }
         }
 
         public static void Draw(SpriteBatch sb)
         {
-            if (selectedScreen != null)
-                selectedScreen.Draw(sb);
+            selectedScreen?.Draw(sb);
+
+            devConsole.Draw(sb);
         }
 
         public static void Update(GameTime gameTime)
         {
-            if (selectedScreen != null)
-                selectedScreen.Update(gameTime);
+            if (!devConsole.IsVisible)
+            {
+                selectedScreen?.Update(gameTime);
+            }
+
+            devConsole.Update(gameTime);
         }
     }
 }

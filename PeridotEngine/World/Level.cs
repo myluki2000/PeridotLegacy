@@ -87,7 +87,6 @@ namespace PeridotEngine.World
             foreach (ISolid solid in Solids)
                 solid.Initialize(this);
 
-
             foreach (IEntity entity in Entities)
                 entity.Initialize(this);
 
@@ -200,7 +199,7 @@ namespace PeridotEngine.World
 
                 level.Solids.Add(solid);
             }
-
+            
             // do the same for entities
             foreach (XElement xEle in rootEle.Element("Entities").Elements())
             {
