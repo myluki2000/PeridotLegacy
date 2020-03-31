@@ -21,30 +21,12 @@ namespace PeridotEngine
     {
         private SpriteBatch? spriteBatch;
 
-        private readonly PresentationParameters? presentationParameters = null;
-
-        
-
         public Main()
         {
             Globals.Graphics = new GraphicsDeviceManager(this);
             EventInput.Initialize(Window);
             Globals.Content = Content;
             Content.RootDirectory = "Content";
-        }
-
-        public Main(IntPtr windowHandle, int width, int height) : this()
-        {
-            presentationParameters = new PresentationParameters()
-            {
-                BackBufferWidth = width,
-                BackBufferHeight = height,
-                BackBufferFormat = SurfaceFormat.Color,
-                DepthStencilFormat = DepthFormat.Depth24,
-                DeviceWindowHandle = windowHandle,
-                PresentationInterval = PresentInterval.Immediate,
-                IsFullScreen = false
-            };
         }
 
         /// <summary>
@@ -74,11 +56,6 @@ namespace PeridotEngine
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            if (presentationParameters != null)
-            {
-                Globals.Graphics.GraphicsDevice.Reset(presentationParameters);
-            }
 
             FontManager.LoadFonts(Content);
         }
