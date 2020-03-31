@@ -62,35 +62,35 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Editor\Forms\PropertiesForm.cs">
+    <Compile Include="Engine\Editor\Forms\PropertiesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Editor\Forms\PropertiesForm.Designer.cs">
+    <Compile Include="Engine\Editor\Forms\PropertiesForm.Designer.cs">
       <DependentUpon>PropertiesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editor\Forms\ToolbarForm.cs">
+    <Compile Include="Engine\Editor\Forms\ToolbarForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Editor\Forms\ToolbarForm.Designer.cs">
+    <Compile Include="Engine\Editor\Forms\ToolbarForm.Designer.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editor\Forms\ToolboxForm.cs">
+    <Compile Include="Engine\Editor\Forms\ToolboxForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Editor\Forms\ToolboxForm.Designer.cs">
+    <Compile Include="Engine\Editor\Forms\ToolboxForm.Designer.cs">
       <DependentUpon>ToolboxForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editor\UI\ToolStripEx.cs">
+    <Compile Include="Engine\Editor\UI\ToolStripEx.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="Globals.cs" />
-    <Compile Include="Graphics\Camera.cs" />
-    <Compile Include="Graphics\Particles\Particle.cs" />
-    <Compile Include="Graphics\Particles\ParticleSystem.cs" />
-    <Compile Include="Graphics\Sprite.cs" />
-    <Compile Include="Graphics\TransformableSprite.cs" />
-    <Compile Include="Misc\Utility.cs" />
+    <Compile Include="Utility\ExtensionMethods.cs" />
+    <Compile Include="Engine\Globals.cs" />
+    <Compile Include="Engine\Graphics\Camera.cs" />
+    <Compile Include="Engine\Graphics\Particles\Particle.cs" />
+    <Compile Include="Engine\Graphics\Particles\ParticleSystem.cs" />
+    <Compile Include="Engine\Graphics\Sprite.cs" />
+    <Compile Include="Engine\Graphics\TransformableSprite.cs" />
+    <Compile Include="Utility\Utility.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,41 +99,41 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\AnimatedTextureData.cs" />
-    <Compile Include="Resources\ConfigManager.cs" />
-    <Compile Include="Resources\FontManager.cs" />
-    <Compile Include="Resources\TextureDataBase.cs" />
-    <Compile Include="Resources\LazyLoadingTextureDictionary.cs" />
-    <Compile Include="Resources\TextureManager.cs" />
-    <Compile Include="Resources\TextureData.cs" />
-    <Compile Include="UI\DevConsole\Commands\Command.cs" />
-    <Compile Include="UI\DevConsole\Commands\EditLvlCommand.cs" />
-    <Compile Include="UI\DevConsole\Commands\FullscreenCommand.cs" />
-    <Compile Include="UI\DevConsole\Commands\PhysGravityEnabledCommand.cs" />
-    <Compile Include="UI\DevConsole\DevConsole.cs" />
-    <Compile Include="UI\DevConsole\KeyboardInput.cs" />
-    <Compile Include="UI\DevConsole\Commands\PhysShowCollidersCommand.cs" />
-    <Compile Include="UI\EditorScreen.cs" />
-    <Compile Include="UI\LevelScreen.cs" />
-    <Compile Include="UI\UIElements\UIElement.cs" />
-    <Compile Include="UI\Screen.cs" />
-    <Compile Include="UI\ScreenHandler.cs" />
-    <Compile Include="Misc\ObservableRangeCollection.cs" />
-    <Compile Include="World\Physics\Colliders\QuadCollider.cs" />
-    <Compile Include="World\WorldObjects\Entities\Character.cs" />
-    <Compile Include="World\WorldObjects\Entities\IEntity.cs" />
-    <Compile Include="World\WorldObjects\Entities\Player.cs" />
-    <Compile Include="World\Physics\Colliders\RectCollider.cs" />
-    <Compile Include="World\Physics\Colliders\ICollider.cs" />
-    <Compile Include="World\Physics\IPhysicsObject.cs" />
-    <Compile Include="World\Physics\PhysicsManager.cs" />
-    <Compile Include="World\Level.cs" />
-    <Compile Include="World\WorldObjects\Solids\DynamicWater.cs" />
-    <Compile Include="World\WorldObjects\Solids\IParallaxable.cs" />
-    <Compile Include="World\WorldObjects\Solids\ISolid.cs" />
-    <Compile Include="World\WorldObjects\Solids\TexturedSolid.cs" />
-    <Compile Include="World\WorldObjects\IWorldObject.cs" />
-    <Compile Include="World\WorldObjects\Solids\TexturedTransformableSolid.cs" />
+    <Compile Include="Engine\Resources\AnimatedTextureData.cs" />
+    <Compile Include="Engine\Resources\ConfigManager.cs" />
+    <Compile Include="Engine\Resources\FontManager.cs" />
+    <Compile Include="Engine\Resources\TextureDataBase.cs" />
+    <Compile Include="Engine\Resources\LazyLoadingTextureDictionary.cs" />
+    <Compile Include="Engine\Resources\TextureManager.cs" />
+    <Compile Include="Engine\Resources\TextureData.cs" />
+    <Compile Include="Engine\UI\DevConsole\Commands\Command.cs" />
+    <Compile Include="Engine\UI\DevConsole\Commands\EditLvlCommand.cs" />
+    <Compile Include="Engine\UI\DevConsole\Commands\FullscreenCommand.cs" />
+    <Compile Include="Engine\UI\DevConsole\Commands\PhysGravityEnabledCommand.cs" />
+    <Compile Include="Engine\UI\DevConsole\DevConsole.cs" />
+    <Compile Include="Engine\UI\DevConsole\KeyboardInput.cs" />
+    <Compile Include="Engine\UI\DevConsole\Commands\PhysShowCollidersCommand.cs" />
+    <Compile Include="Engine\UI\EditorScreen.cs" />
+    <Compile Include="Engine\UI\LevelScreen.cs" />
+    <Compile Include="Engine\UI\UIElements\UIElement.cs" />
+    <Compile Include="Engine\UI\Screen.cs" />
+    <Compile Include="Engine\UI\ScreenHandler.cs" />
+    <Compile Include="Utility\ObservableRangeCollection.cs" />
+    <Compile Include="Engine\World\Physics\Colliders\QuadCollider.cs" />
+    <Compile Include="Engine\World\WorldObjects\Entities\Character.cs" />
+    <Compile Include="Engine\World\WorldObjects\Entities\IEntity.cs" />
+    <Compile Include="Engine\World\WorldObjects\Entities\Player.cs" />
+    <Compile Include="Engine\World\Physics\Colliders\RectCollider.cs" />
+    <Compile Include="Engine\World\Physics\Colliders\ICollider.cs" />
+    <Compile Include="Engine\World\Physics\IPhysicsObject.cs" />
+    <Compile Include="Engine\World\Physics\PhysicsManager.cs" />
+    <Compile Include="Engine\World\Level.cs" />
+    <Compile Include="Engine\World\WorldObjects\Solids\DynamicWater.cs" />
+    <Compile Include="Engine\World\WorldObjects\Solids\IParallaxable.cs" />
+    <Compile Include="Engine\World\WorldObjects\Solids\ISolid.cs" />
+    <Compile Include="Engine\World\WorldObjects\Solids\TexturedSolid.cs" />
+    <Compile Include="Engine\World\WorldObjects\IWorldObject.cs" />
+    <Compile Include="Engine\World\WorldObjects\Solids\TexturedTransformableSolid.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeAnalysis, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -210,13 +210,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Editor\Forms\PropertiesForm.resx">
+    <EmbeddedResource Include="Engine\Editor\Forms\PropertiesForm.resx">
       <DependentUpon>PropertiesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Editor\Forms\ToolbarForm.resx">
+    <EmbeddedResource Include="Engine\Editor\Forms\ToolbarForm.resx">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Editor\Forms\ToolboxForm.resx">
+    <EmbeddedResource Include="Engine\Editor\Forms\ToolboxForm.resx">
       <DependentUpon>ToolboxForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

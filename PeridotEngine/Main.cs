@@ -3,14 +3,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using PeridotEngine.Resources;
-using PeridotEngine.UI;
-using PeridotEngine.UI.DevConsole;
 using System;
 using System.Diagnostics;
 using System.Globalization;
-using PeridotEngine.Misc;
-using PeridotEngine.World;
+using PeridotEngine.Engine.Resources;
+using PeridotEngine.Engine.UI;
+using PeridotEngine.Engine.UI.DevConsole;
+using PeridotEngine.Engine.World;
 
 namespace PeridotEngine
 {
