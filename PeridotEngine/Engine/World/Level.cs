@@ -55,6 +55,7 @@ namespace PeridotEngine.Engine.World
         public Script? Script { get; set; }
 
         public event EventHandler<GameTime> OnUpdate;
+        public event EventHandler<SpriteBatch> OnDraw;
 
         /// <summary>
         /// Create a new empty level.
@@ -133,6 +134,7 @@ namespace PeridotEngine.Engine.World
 
             sb.End();
 
+            OnDraw?.Invoke(this, sb);
         }
 
         /// <summary>
