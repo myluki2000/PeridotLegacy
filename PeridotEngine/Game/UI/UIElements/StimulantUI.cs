@@ -13,7 +13,10 @@ namespace PeridotEngine.Game.UI.UIElements
         /// <inheritdoc />
         public override void Draw(SpriteBatch sb)
         {
-            
+            if (Visible)
+            {
+                
+            }
         }
     }
 }
