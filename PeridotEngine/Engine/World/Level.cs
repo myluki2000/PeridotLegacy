@@ -194,6 +194,12 @@ namespace PeridotEngine.Engine.World
             {
                 Type solidType = Type.GetType("PeridotEngine.Engine.World.WorldObjects.Solids." + xEle.Element("Type").Value);
 
+                // if solid is not implemented by engine check if it's implemented by the game
+                if (solidType == null)
+                {
+                    solidType = Type.GetType("PeridotEngine.Game.World.WorldObjects.Solids." + xEle.Element("Type").Value);
+                }
+
                 ISolid solid = (ISolid)solidType.GetMethod("FromXml").Invoke(null, new object[] { xEle, level.TextureDictionary });
 
                 level.Solids.Add(solid);
@@ -204,6 +210,12 @@ namespace PeridotEngine.Engine.World
             {
                 Type entityType = Type.GetType("PeridotEngine.Engine.World.WorldObjects.Entities." + xEle.Element("Type").Value);
 
+                // if entity is not implemented by engine check if it's implemented by the game
+                if (entityType == null)
+                {
+                    entityType = Type.GetType("PeridotEngine.Game.World.WorldObjects.Entities." + xEle.Element("Type").Value);
+                }
+
                 IEntity entity = (IEntity)entityType.GetMethod("FromXml").Invoke(null, new object[] { xEle, level.TextureDictionary });
 
                 level.Entities.Add(entity);
@@ -213,6 +225,12 @@ namespace PeridotEngine.Engine.World
             foreach (XElement xEle in rootEle.Element("Colliders").Elements())
             {
                 Type colliderType = Type.GetType("PeridotEngine.Engine.World.Physics.Colliders." + xEle.Name);
+
+                // if collider is not implemented by engine check if it's implemented by the game
+                if (colliderType == null)
+                {
+                    colliderType = Type.GetType("PeridotEngine.Game.World.Physics.Colliders." + xEle.Name);
+                }
 
                 ICollider collider = (ICollider)colliderType.GetMethod("FromXml").Invoke(null, new object[] { xEle });
 
