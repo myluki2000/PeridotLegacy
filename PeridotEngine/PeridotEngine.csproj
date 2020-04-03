@@ -83,6 +83,9 @@
     <Compile Include="Engine\Editor\UI\ToolStripEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Game\UI\StandardLevelScreen.cs" />
+    <Compile Include="Game\UI\UIElements\StimulantUI.cs" />
+    <Compile Include="Game\World\WorldObjects\Entities\StimulantsPlayer.cs" />
     <Compile Include="Utility\ExtensionMethods.cs" />
     <Compile Include="Engine\Globals.cs" />
     <Compile Include="Engine\Graphics\Camera.cs" />
