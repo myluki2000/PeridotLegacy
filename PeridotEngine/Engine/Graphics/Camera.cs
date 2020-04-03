@@ -125,6 +125,11 @@ namespace PeridotEngine.Engine.Graphics
             );
         }
 
+        public static Matrix GetViewportMatrix()
+        {
+            return Matrix.CreateScale((float) Globals.Graphics.PreferredBackBufferHeight / 1080);
+        }
+
         public enum VerticalAlignment
         {
             TOP,

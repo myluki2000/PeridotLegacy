@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PeridotEngine.Engine.Graphics;
 using PeridotEngine.Engine.UI.UIElements;
 
 namespace PeridotEngine.Engine.UI
@@ -19,7 +20,7 @@ namespace PeridotEngine.Engine.UI
 
         public void DrawUI(SpriteBatch sb)
         {
-            sb.Begin();
+            sb.Begin(transformMatrix: Camera.GetViewportMatrix());
             foreach(UIElement element in UIElements)
             {
                 element.Draw(sb);
