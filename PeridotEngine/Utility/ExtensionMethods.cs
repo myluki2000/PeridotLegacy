@@ -44,40 +44,36 @@ namespace PeridotEngine.Utility
             return Matrix.Invert(value);
         }
 
-        public static XElement[] ToXml(this Vector2 value)
+        public static XElement ToXml(this Vector2 value, string name)
         {
-            return new XElement[]
-            {
-                new XElement("X", value.X.ToString(System.Globalization.CultureInfo.InvariantCulture)),
-                new XElement("Y", value.Y.ToString(System.Globalization.CultureInfo.InvariantCulture)),
-            };
+            return new XElement(name,
+                new XAttribute("X", value.X.ToString(System.Globalization.CultureInfo.InvariantCulture)),
+                new XAttribute("Y", value.Y.ToString(System.Globalization.CultureInfo.InvariantCulture)));
         }
 
         public static Vector2 FromXml(this Vector2 value, XElement xEle)
         {
-            value.X = float.Parse(xEle.Element("X").Value, CultureInfo.InvariantCulture.NumberFormat);
-            value.Y = float.Parse(xEle.Element("Y").Value, CultureInfo.InvariantCulture.NumberFormat);
+            value.X = float.Parse(xEle.Attribute("X").Value, CultureInfo.InvariantCulture.NumberFormat);
+            value.Y = float.Parse(xEle.Attribute("Y").Value, CultureInfo.InvariantCulture.NumberFormat);
 
             return value;
         }
 
-        public static XElement[] ToXml(this Rectangle value)
+        public static XElement ToXml(this Rectangle value, string name)
         {
-            return new XElement[]
-            {
-                new XElement("X", value.X.ToString(System.Globalization.CultureInfo.InvariantCulture)),
-                new XElement("Y", value.Y.ToString(System.Globalization.CultureInfo.InvariantCulture)),
-                new XElement("W", value.Width.ToString(System.Globalization.CultureInfo.InvariantCulture)),
-                new XElement("H", value.Height.ToString(System.Globalization.CultureInfo.InvariantCulture)),
-            };
+            return new XElement(name,
+                new XAttribute("X", value.X.ToString(System.Globalization.CultureInfo.InvariantCulture)),
+                new XAttribute("Y", value.Y.ToString(System.Globalization.CultureInfo.InvariantCulture)),
+                new XAttribute("W", value.Width.ToString(System.Globalization.CultureInfo.InvariantCulture)),
+                new XAttribute("H", value.Height.ToString(System.Globalization.CultureInfo.InvariantCulture)));
         }
 
         public static Rectangle FromXml(this Rectangle value, XElement xEle)
         {
-            value.X = int.Parse(xEle.Element("X").Value, CultureInfo.InvariantCulture.NumberFormat);
-            value.Y = int.Parse(xEle.Element("Y").Value, CultureInfo.InvariantCulture.NumberFormat);
-            value.Width = int.Parse(xEle.Element("W").Value, CultureInfo.InvariantCulture.NumberFormat);
-            value.Height = int.Parse(xEle.Element("H").Value, CultureInfo.InvariantCulture.NumberFormat);
+            value.X = int.Parse(xEle.Attribute("X").Value, CultureInfo.InvariantCulture.NumberFormat);
+            value.Y = int.Parse(xEle.Attribute("Y").Value, CultureInfo.InvariantCulture.NumberFormat);
+            value.Width = int.Parse(xEle.Attribute("W").Value, CultureInfo.InvariantCulture.NumberFormat);
+            value.Height = int.Parse(xEle.Attribute("H").Value, CultureInfo.InvariantCulture.NumberFormat);
 
             return value;
         }

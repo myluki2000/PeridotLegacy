@@ -30,8 +30,8 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
 
             return new XElement("Solid",
                 new XElement("Type", this.GetType().Name),
-                new XElement("Position", Position.ToXml()),
-                new XElement("Size", Size.ToXml()),
+                Position.ToXml("Position"),
+                Size.ToXml("Size"),
                 texPathXEle,
                 new XElement("Rotation", Rotation.ToString(CultureInfo.InvariantCulture)),
                 new XElement("Opacity", Opacity.ToString(CultureInfo.InvariantCulture)),

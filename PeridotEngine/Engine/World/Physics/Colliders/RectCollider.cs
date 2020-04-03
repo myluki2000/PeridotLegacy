@@ -153,8 +153,7 @@ namespace PeridotEngine.Engine.World.Physics.Colliders
         public XElement ToXml()
         {
             return new XElement("RectCollider",
-                new XElement("Rect", Rect.ToXml())
-            );
+                Rect.ToXml("Rect"));
         }
 
         public static RectCollider FromXml(XElement xEle)

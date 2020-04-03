@@ -76,8 +76,8 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
 
             return new XElement("Entity",
                 new XElement("Type", this.GetType().Name),
-                new XElement("Position", Position.ToXml()),
-                new XElement("Size", Size.ToXml()),
+                Position.ToXml("Position"),
+                Size.ToXml("Size"),
                 texPathXEle,
                 new XElement("Rotation", Rotation.ToString(CultureInfo.InvariantCulture)),
                 new XElement("Opacity", Opacity.ToString(CultureInfo.InvariantCulture)),

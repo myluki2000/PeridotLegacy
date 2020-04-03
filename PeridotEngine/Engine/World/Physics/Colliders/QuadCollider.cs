@@ -238,10 +238,10 @@ namespace PeridotEngine.Engine.World.Physics.Colliders
         public XElement ToXml()
         {
             return new XElement("QuadCollider",
-                new XElement("P1", Point1.ToXml()),
-                new XElement("P2", Point2.ToXml()),
-                new XElement("P3", Point3.ToXml()),
-                new XElement("P4", Point4.ToXml())
+                Point1.ToXml("P1"),
+                Point2.ToXml("P2"),
+                Point3.ToXml("P3"),
+                Point4.ToXml("P4")
             );
         }
 
