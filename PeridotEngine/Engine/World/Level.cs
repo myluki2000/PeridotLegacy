@@ -192,12 +192,12 @@ namespace PeridotEngine.Engine.World
             // and let it initialize itself with the provided xml.
             foreach (XElement xEle in rootEle.Element("Solids").Elements())
             {
-                Type solidType = Type.GetType("PeridotEngine.Engine.World.WorldObjects.Solids." + xEle.Element("Type").Value);
+                Type solidType = Type.GetType("PeridotEngine.Engine.World.WorldObjects.Solids." + xEle.Name.LocalName);
 
                 // if solid is not implemented by engine check if it's implemented by the game
                 if (solidType == null)
                 {
-                    solidType = Type.GetType("PeridotEngine.Game.World.WorldObjects.Solids." + xEle.Element("Type").Value);
+                    solidType = Type.GetType("PeridotEngine.Game.World.WorldObjects.Solids." + xEle.Name.LocalName);
                 }
 
                 ISolid solid = (ISolid)solidType.GetMethod("FromXml").Invoke(null, new object[] { xEle, level.TextureDictionary });
@@ -208,12 +208,12 @@ namespace PeridotEngine.Engine.World
             // do the same for entities
             foreach (XElement xEle in rootEle.Element("Entities").Elements())
             {
-                Type entityType = Type.GetType("PeridotEngine.Engine.World.WorldObjects.Entities." + xEle.Element("Type").Value);
+                Type entityType = Type.GetType("PeridotEngine.Engine.World.WorldObjects.Entities." + xEle.Name.LocalName);
 
                 // if entity is not implemented by engine check if it's implemented by the game
                 if (entityType == null)
                 {
-                    entityType = Type.GetType("PeridotEngine.Game.World.WorldObjects.Entities." + xEle.Element("Type").Value);
+                    entityType = Type.GetType("PeridotEngine.Game.World.WorldObjects.Entities." + xEle.Name.LocalName);
                 }
 
                 IEntity entity = (IEntity)entityType.GetMethod("FromXml").Invoke(null, new object[] { xEle, level.TextureDictionary });
@@ -224,12 +224,12 @@ namespace PeridotEngine.Engine.World
             // do the same for colliders
             foreach (XElement xEle in rootEle.Element("Colliders").Elements())
             {
-                Type colliderType = Type.GetType("PeridotEngine.Engine.World.Physics.Colliders." + xEle.Name);
+                Type colliderType = Type.GetType("PeridotEngine.Engine.World.Physics.Colliders." + xEle.Name.LocalName);
 
                 // if collider is not implemented by engine check if it's implemented by the game
                 if (colliderType == null)
                 {
-                    colliderType = Type.GetType("PeridotEngine.Game.World.Physics.Colliders." + xEle.Name);
+                    colliderType = Type.GetType("PeridotEngine.Game.World.Physics.Colliders." + xEle.Name.LocalName);
                 }
 
                 ICollider collider = (ICollider)colliderType.GetMethod("FromXml").Invoke(null, new object[] { xEle });

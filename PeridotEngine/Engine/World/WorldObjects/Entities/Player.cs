@@ -74,8 +74,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
         {
             XElement? texPathXEle = Texture != null ? new XElement("TexturePath", textureDictionary.GetTexturePathByName(Texture.Name)) : null;
 
-            return new XElement("Entity",
-                new XElement("Type", this.GetType().Name),
+            return new XElement(this.GetType().Name,
                 Position.ToXml("Position"),
                 Size.ToXml("Size"),
                 texPathXEle,

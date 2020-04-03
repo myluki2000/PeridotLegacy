@@ -28,8 +28,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         {
             XElement? texPathXEle = Texture != null ? new XElement("TexturePath", textureDictionary.GetTexturePathByName(Texture.Name)) : null;
 
-            return new XElement("Solid",
-                new XElement("Type", this.GetType().Name),
+            return new XElement(this.GetType().Name,
                 Position.ToXml("Position"),
                 Size.ToXml("Size"),
                 texPathXEle,

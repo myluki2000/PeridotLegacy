@@ -133,6 +133,13 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public XElement ToXml(LazyLoadingTextureDictionary textureDictionary)
         {
+            // TODO: Implement this
+            throw new NotImplementedException();
+        }
+
+        public static DynamicWater FromXml(XElement xEle, LazyLoadingTextureDictionary textures)
+        {
+            // TODO: Implement this
             throw new NotImplementedException();
         }
 

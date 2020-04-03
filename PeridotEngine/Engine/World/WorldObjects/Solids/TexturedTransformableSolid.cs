@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System;
+using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.Engine.Graphics;
@@ -35,7 +36,14 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public XElement ToXml(LazyLoadingTextureDictionary textureDictionary)
         {
-            throw new System.NotImplementedException();
+            // TODO: Implement this
+            throw new NotImplementedException();
+        }
+
+        public static TexturedTransformableSolid FromXml(XElement xEle, LazyLoadingTextureDictionary textures)
+        {
+            // TODO: Implement this
+            throw new NotImplementedException();
         }
     }
 }
