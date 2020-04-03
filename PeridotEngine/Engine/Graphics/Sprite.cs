@@ -52,18 +52,26 @@ namespace PeridotEngine.Engine.Graphics
         /// <param name="texture">The texture of the sprite</param>
         /// <param name="position">The position of the sprite</param>
         /// <param name="size">The size of the sprite.</param>
-        public Sprite(TextureData texture, Vector2 position, Vector2 size)
+        public Sprite(TextureDataBase texture, Vector2 position, Vector2? size = null)
         {
             this.Texture = texture;
             this.Position = position;
-            this.Size = size;
+
+            if (size == null)
+            {
+                this.Size = new Vector2(texture.Width, texture.Height);
+            }
+            else
+            {
+                this.Size = (Vector2)size;
+            }
 
             RotateRandomly();
         }
 
         public void Update(GameTime gameTime)
         {
-            if(Texture is AnimatedTextureData animatedTexture)
+            if (Texture is AnimatedTextureData animatedTexture)
             {
                 timeOnFrame += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                 if (timeOnFrame >= animatedTexture.FrameDurations[currentFrameIndex])
@@ -85,7 +93,7 @@ namespace PeridotEngine.Engine.Graphics
                 int frameWidth = Texture.Texture.Width / (Texture is AnimatedTextureData animatedTexture
                     ? animatedTexture.FrameCount
                     : 1);
-                sb.Draw(Texture.Texture, 
+                sb.Draw(Texture.Texture,
                     new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y),
                     new Rectangle(currentFrameIndex * frameWidth, 0, frameWidth, Texture.Texture.Height),
                     Color.White * Opacity,
@@ -105,7 +113,7 @@ namespace PeridotEngine.Engine.Graphics
         /// </summary>
         private void RotateRandomly()
         {
-            if(Texture != null)
+            if (Texture != null)
             {
                 if (Texture.HasRandomTextureRotation)
                 {
