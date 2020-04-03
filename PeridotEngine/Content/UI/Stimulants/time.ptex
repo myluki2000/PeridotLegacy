@@ -1,0 +1,7 @@
+<Texture>
+	<Name>Building1</Name>
+	<ImagePath>Content/UI/Stimulants/time</ImagePath>
+	<RandomTextureRotation>FALSE</RandomTextureRotation>
+	<Width>200</Width>
+	<Height>200</Height>
+</Texture>
