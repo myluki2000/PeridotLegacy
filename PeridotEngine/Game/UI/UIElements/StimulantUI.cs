@@ -8,14 +8,15 @@ namespace PeridotEngine.Game.UI.UIElements
 {
     class StimulantUI : UIElement
     {
-        private Sprite timeStimulantSprite;
+        private readonly Sprite timeStimulantSprite;
 
         public StimulantUI()
         {
-            /*timeStimulantSprite = new Sprite(
+            timeStimulantSprite = new Sprite(
                 TextureManager.LoadTexture("Content/UI/Stimulants/time"),
-                new Vector2(0, 0)
-            );*/
+                new Vector2(30, 1080 - 130),
+                new Vector2(100, 100)
+            );
         }
 
         /// <inheritdoc />
@@ -23,7 +24,7 @@ namespace PeridotEngine.Game.UI.UIElements
         {
             if (Visible)
             {
-                
+               timeStimulantSprite.Draw(sb); 
             }
         }
     }

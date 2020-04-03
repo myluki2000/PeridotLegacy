@@ -10,13 +10,14 @@ using PeridotEngine.Engine.Resources;
 using PeridotEngine.Engine.UI;
 using PeridotEngine.Engine.UI.DevConsole;
 using PeridotEngine.Engine.World;
+using PeridotEngine.Game.UI;
 
 namespace PeridotEngine
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Main : Game
+    public class Main : Microsoft.Xna.Framework.Game
     {
         private SpriteBatch? spriteBatch;
 
@@ -36,7 +37,7 @@ namespace PeridotEngine
         /// </summary>
         protected override void Initialize()
         {
-            ScreenHandler.SelectedScreen = new LevelScreen(Level.FromFile(@"World\level.plvl"));
+            ScreenHandler.SelectedScreen = new StandardLevelScreen(Level.FromFile(@"World\level.plvl"));
 
             IsMouseVisible = true;
             
