@@ -54,8 +54,8 @@ namespace PeridotEngine.Engine.World
 
         public Script? Script { get; set; }
 
-        public event EventHandler<GameTime> OnUpdate;
-        public event EventHandler<SpriteBatch> OnDraw;
+        public event EventHandler<GameTime>? OnUpdate;
+        public event EventHandler<SpriteBatch>? OnDraw;
 
         /// <summary>
         /// Create a new empty level.
@@ -66,17 +66,6 @@ namespace PeridotEngine.Engine.World
             this.Entities = new ObservableRangeCollection<IEntity>();
             this.Solids.CollectionChanged += OnSolidsChanged;
             this.Entities.CollectionChanged += OnEntitiesChanged;
-        }
-
-        /// <summary>
-        /// Create a level containing the specified WorldObjects and entities.
-        /// </summary>
-        /// <param name="solids">The WorldObjects</param>
-        /// <param name="entities">The entities</param>
-        public Level(Collection<ISolid> solids, Collection<IEntity> entities)
-        {
-            this.Solids.AddRange(solids);
-            this.Entities.AddRange(entities);
         }
 
         /// <summary>
