@@ -1,4 +1,6 @@
-﻿namespace PeridotEngine.Engine.UI.DevConsole.Commands
+﻿using PeridotEngine.Engine.Editor;
+
+namespace PeridotEngine.Engine.UI.DevConsole.Commands
 {
     class EditLvlCommand : Command
     {

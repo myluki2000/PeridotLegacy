@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PeridotEngine.Engine.Editor.Forms;
+using PeridotEngine.Engine.UI;
 using PeridotEngine.Engine.World;
 using PeridotEngine.Engine.World.Physics.Colliders;
 using PeridotEngine.Engine.World.WorldObjects;
@@ -17,7 +18,7 @@ using PeridotEngine.Utility;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 
-namespace PeridotEngine.Engine.UI
+namespace PeridotEngine.Engine.Editor
 {
     class EditorScreen : Screen
     {
@@ -264,6 +265,7 @@ namespace PeridotEngine.Engine.UI
             }
 
             selectedObject = null;
+            propertiesForm.SelectedObject = null;
         }
 
         private void HandleObjectDeletion(KeyboardState lastKeyboardState, KeyboardState keyboardState)

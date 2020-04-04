@@ -113,7 +113,7 @@
     <Compile Include="Engine\UI\DevConsole\DevConsole.cs" />
     <Compile Include="Engine\UI\DevConsole\KeyboardInput.cs" />
     <Compile Include="Engine\UI\DevConsole\Commands\PhysShowCollidersCommand.cs" />
-    <Compile Include="Engine\UI\EditorScreen.cs" />
+    <Compile Include="Engine\Editor\EditorScreen.cs" />
     <Compile Include="Engine\UI\LevelScreen.cs" />
     <Compile Include="Engine\UI\UIElements\UIElement.cs" />
     <Compile Include="Engine\UI\Screen.cs" />
