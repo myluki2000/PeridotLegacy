@@ -21,13 +21,39 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
     class DynamicWater : ISolid
     {
         /// <inheritdoc />
-        public Vector2 Position { get; set; }
+        public Vector2 Position
+        {
+            get => position;
+            set
+            {
+                position = value;
+                GenerateWaterPoints();
+            }
+        }
+
         /// <inheritdoc />
-        public Vector2 Size { get; set; }
+        public Vector2 Size
+        {
+            get => size;
+            set
+            {
+                size = value;
+                GenerateWaterPoints();
+            }
+        }
+
         /// <inheritdoc />
         public sbyte ZIndex { get; set; }
 
-        public int Resolution { get; set; } = 10;
+        public int Resolution
+        {
+            get => resolution;
+            set
+            {
+                resolution = value;
+                GenerateWaterPoints();
+            }
+        }
 
         private const float SPRING_CONSTANT = 0.02f;
         private const float AMPLIFICATION = 2.0f;
@@ -44,11 +70,20 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
             VertexColorEnabled = true
         };
 
+        private Vector2 position;
+        private Vector2 size;
+        private int resolution = 10;
+
         public void Initialize(Level level)
         {
             parentLevel = level;
+            GenerateWaterPoints();
+        }
 
-            for(int i = 0; i < (int)(Size.X / Resolution); i++)
+        private void GenerateWaterPoints()
+        {
+            waterPoints.Clear();
+            for (int i = 0; i < (int)(Size.X / Resolution); i++)
             {
                 waterPoints.Add(new WaterPoint() { NormalPositionY = Size.Y, Position = new Vector2(i * Resolution, Size.Y) });
             }
