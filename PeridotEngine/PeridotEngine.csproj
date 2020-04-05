@@ -68,6 +68,12 @@
     <Compile Include="Engine\Editor\Forms\PropertiesForm.Designer.cs">
       <DependentUpon>PropertiesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\Editor\Forms\TextureSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Editor\Forms\TextureSelectionForm.Designer.cs">
+      <DependentUpon>TextureSelectionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Engine\Editor\Forms\ToolbarForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +89,7 @@
     <Compile Include="Engine\Editor\UI\ToolStripEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Engine\World\WorldObjects\Solids\ITextured.cs" />
     <Compile Include="Utility\ExtensionMethods.cs" />
     <Compile Include="Engine\Globals.cs" />
     <Compile Include="Engine\Graphics\Camera.cs" />
@@ -212,6 +219,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Engine\Editor\Forms\PropertiesForm.resx">
       <DependentUpon>PropertiesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Editor\Forms\TextureSelectionForm.resx">
+      <DependentUpon>TextureSelectionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Editor\Forms\ToolbarForm.resx">
       <DependentUpon>ToolbarForm.cs</DependentUpon>

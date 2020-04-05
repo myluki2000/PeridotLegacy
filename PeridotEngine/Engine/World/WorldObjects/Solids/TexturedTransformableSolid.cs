@@ -7,7 +7,7 @@ using PeridotEngine.Engine.Resources;
 
 namespace PeridotEngine.Engine.World.WorldObjects.Solids
 {
-    class TexturedTransformableSolid : TransformableSprite, ISolid
+    class TexturedTransformableSolid : TransformableSprite, ISolid, ITextured
     {
         /// <inheritdoc />
         public Vector2 Position { get; set; }

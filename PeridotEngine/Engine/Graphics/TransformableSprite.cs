@@ -15,7 +15,7 @@ namespace PeridotEngine.Engine.Graphics
         /// <summary>
         /// The texture of this sprite. Gets drawn to the screen when Sprite.Draw() is called. If null a dummy outline is drawn.
         /// </summary>
-        public TextureData? Texture { get; set; }
+        public TextureDataBase? Texture { get; set; }
         /// <summary>
         /// The position of the top-left corner of the sprite.
         /// </summary>

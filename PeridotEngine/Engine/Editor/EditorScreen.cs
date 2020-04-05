@@ -23,7 +23,7 @@ namespace PeridotEngine.Engine.Editor
     class EditorScreen : Screen
     {
         private readonly ToolbarForm toolbarForm = new ToolbarForm();
-        private readonly ToolboxForm toolboxForm = new ToolboxForm();
+        private readonly ToolboxForm toolboxForm;
         private readonly PropertiesForm propertiesForm = new PropertiesForm();
 
         private readonly string levelPath;
@@ -75,6 +75,8 @@ namespace PeridotEngine.Engine.Editor
             level.CameraShouldFollowPlayer = false;
 
             level.Initialize();
+
+            toolboxForm = new ToolboxForm(level.TextureDirectory);
         }
 
         public override void Initialize()
@@ -89,7 +91,6 @@ namespace PeridotEngine.Engine.Editor
             toolboxForm.ObjectWidthChanged += SelectedObjectWidthChanged;
             toolboxForm.ObjectHeightChanged += SelectedObjectHeightChanged;
             toolboxForm.ObjectZIndexChanged += SelectedObjectZIndexChanged;
-            toolboxForm.PopulateSolidsFromTextureDirectory(Level.TextureDirectory);
 
             propertiesForm.Show();
         }

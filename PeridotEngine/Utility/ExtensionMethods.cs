@@ -1,7 +1,12 @@
-﻿using System.Globalization;
+﻿using System.Drawing;
+using System.Globalization;
+using System.IO;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Point = Microsoft.Xna.Framework.Point;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace PeridotEngine.Utility
 {
@@ -107,6 +112,18 @@ namespace PeridotEngine.Utility
         {
             return value.X >= 0 && value.X < Globals.Graphics.GraphicsDevice.Viewport.Width
                                 && value.Y >= 0 && value.Y < Globals.Graphics.GraphicsDevice.Viewport.Height;
+        }
+
+        public static Image ToImage(this Texture2D value)
+        {
+            return value.ToImage(value.Width, value.Height);
+        }
+
+        public static Image ToImage(this Texture2D value, int width, int height)
+        {
+            using MemoryStream ms = new MemoryStream();
+            value.SaveAsPng(ms, width, height);
+            return Image.FromStream(ms);
         }
     }
 }

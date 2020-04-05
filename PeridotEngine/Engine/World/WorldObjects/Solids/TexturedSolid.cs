@@ -10,7 +10,7 @@ using PeridotEngine.Utility;
 
 namespace PeridotEngine.Engine.World.WorldObjects.Solids
 {
-    class TexturedSolid : Sprite, ISolid, IParallaxable
+    class TexturedSolid : Sprite, ISolid, IParallaxable, ITextured
     {
         /// <summary>
         /// The parallax multiplier of the object in the game world.

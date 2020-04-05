@@ -3,6 +3,8 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
@@ -11,6 +13,7 @@ using PeridotEngine.Engine.World.Physics.Colliders;
 using PeridotEngine.Engine.World.WorldObjects;
 using PeridotEngine.Engine.World.WorldObjects.Entities;
 using PeridotEngine.Engine.World.WorldObjects.Solids;
+using PeridotEngine.Utility;
 
 namespace PeridotEngine.Engine.Editor.Forms
 {
@@ -58,47 +61,29 @@ namespace PeridotEngine.Engine.Editor.Forms
         {
             get
             {
-                Vector2 size = new Vector2((int) nudWidth.Value, (int) nudHeight.Value);
+                IWorldObject? obj = null;
                 if (lvSolids.SelectedItems.Count > 0)
+                    obj = (IWorldObject) Activator.CreateInstance((Type)lvSolids.SelectedItems[0].Tag);
+
+                if (lvEntities.SelectedItems.Count > 0)
+                    obj = (IWorldObject) Activator.CreateInstance((Type) lvEntities.SelectedItems[0].Tag);
+
+
+                if (obj != null)
                 {
-
-                    if ((string)lvSolids.SelectedItems[0].Text == "Dynamic Water")
-                    {
-                        DynamicWater obj = new DynamicWater()
-                        {
-                            Size = size
-                        };
-
-                        return obj;
-                    }
-                    else
-                    {
-                        return new TexturedSolid()
-                        {
-                            Texture = (TextureData)lvSolids.SelectedItems[0].Tag,
-                            Size = size
-                        };
-                    }
-
+                    obj.Size = new Vector2(ObjectWidth, ObjectHeight);
                 }
-                else if (lvEntities.SelectedItems.Count > 0)
+
+                if (obj is ITextured texturedObj)
                 {
-                    String s = lvEntities.SelectedItems[0].Text;
-                    switch (s)
-                    {
-                        case "Player":
-                            return new Player() {Size = size};
+                    if (SelectedTexture == null) return null;
+                    texturedObj.Texture = SelectedTexture;
+                }
 
-                        default:
-                            return null;
-                    }
-                }
-                else
-                {
-                    return null;
-                }
+                return obj;
             }
         }
+
         /// <summary>
         /// Returns the selected collider or null if none is selected.
         /// </summary>
@@ -107,23 +92,26 @@ namespace PeridotEngine.Engine.Editor.Forms
             get
             {
                 if (lvColliders.SelectedItems.Count > 0)
-                {
-                    switch (lvColliders.SelectedItems[0].Text)
-                    {
-                        case "Rectangle":
-                            return new RectCollider();
-                        case "Quad":
-                            return new QuadCollider();
-                        default:
-                            throw new Exception("Unsupported collider selected? Is the implementation missing?");
-                    }
-                }
-                else
-                {
-                    return null;
-                }
+                    return (ICollider) Activator.CreateInstance((Type) lvColliders.SelectedItems[0].Tag);
+
+                return null;
             }
         }
+
+        /// <summary>
+        /// The selected texture that will be used as the texture of newly placed (textured) objects.
+        /// </summary>
+        public TextureDataBase? SelectedTexture
+        {
+            get => selectedTexture;
+            private set
+            {
+                selectedTexture = value;
+                pbSelectedTexture.Image = selectedTexture?.Texture.ToImage(250, 250);
+                lblTexturePath.Text = selectedTexture?.Name;
+            }
+        }
+        private TextureDataBase? selectedTexture = null;
 
         public event EventHandler<sbyte>? ObjectZIndexChanged;
         public event EventHandler<int>? ObjectWidthChanged;
@@ -131,80 +119,74 @@ namespace PeridotEngine.Engine.Editor.Forms
 
         private bool colliderEditMode;
 
-        public ToolboxForm()
+        private readonly string textureDirectory;
+
+        public ToolboxForm(string textureDirectory)
         {
             InitializeComponent();
-            PopulateDefaultSolids();
-            PopulateDefaultEntities();
-            PopulateDefaultColliders();
+
+            this.textureDirectory = textureDirectory;
+
+            PopulateSolids();
+            PopulateEntities();
+            PopulateColliders();
         }
 
-        /// <summary>
-        /// Populates the solids list with textures from a directory. 
-        /// </summary>
-        /// <param name="directory">The directory to populate from</param>
-        public void PopulateSolidsFromTextureDirectory(string directory)
+        private void PopulateSolids()
         {
-            // cancel loading if there is no texture directory to load
-            if (directory == null || !Directory.Exists(directory))
-            {
-                return;
-            }
-
-            ImageList il = new ImageList();
-
-            lvSolids.LargeImageList = il;
-
-            foreach (string filePath in Directory.GetFiles(directory, "*.ptex"))
-            {
-                XElement xEle = XElement.Load(filePath);
-
-                TextureDataBase tex = TextureManager.LoadTexture(xEle.Element("ImagePath").Value);
-
-                MemoryStream ms = new MemoryStream();
-                tex.Texture.SaveAsPng(ms, tex.Texture.Width, tex.Texture.Height);
-
-                il.Images.Add(tex.Name, Image.FromStream(ms));
-
-                ListViewItem lvItem = new ListViewItem()
-                {
-                    Text = tex.Name,
-                    Tag = tex,
-                    ImageKey = tex.Name
-                };
-
-                lvSolids.Items.Add(lvItem);
-            }
+            lvSolids.Items.AddRange(
+                Assembly.GetExecutingAssembly().GetTypes()
+                    .Where(x => x.IsClass
+                        && !x.IsAbstract
+                        && !x.IsNestedPrivate
+                        && (x.Namespace == "PeridotEngine.Engine.World.WorldObjects.Solids"
+                            || x.Namespace == "PeridotEngine.Game.World.WorldObjects.Solids"))
+                    .Select(x => new ListViewItem()
+                    {
+                        Text = x.Name,
+                        Tag = x
+                    })
+                    .ToArray()
+            );
         }
 
-        private void PopulateDefaultSolids()
+        private void PopulateEntities()
         {
-            lvSolids.Items.Add("Dynamic Water");
+            lvEntities.Items.AddRange(
+                Assembly.GetExecutingAssembly().GetTypes()
+                    .Where(x => x.IsClass
+                        && !x.IsAbstract
+                        && !x.IsNestedPrivate
+                        && (x.Namespace == "PeridotEngine.Engine.World.WorldObjects.Entities"
+                            || x.Namespace == "PeridotEngine.Game.World.WorldObjects.Entities"))
+                    .Select(x => new ListViewItem()
+                    {
+                        Text = x.Name,
+                        Tag = x
+                    })
+                    .ToArray()
+            );
         }
 
-        private void PopulateDefaultEntities()
+        private void PopulateColliders()
         {
-            lvEntities.Items.Add("Player");
+            lvColliders.Items.AddRange(
+                Assembly.GetExecutingAssembly().GetTypes()
+                    .Where(x => x.IsClass
+                        && !x.IsAbstract
+                        && !x.IsNestedPrivate
+                        && (x.Namespace == "PeridotEngine.Engine.World.Physics.Colliders"
+                            || x.Namespace == "PeridotEngine.Game.World.Physics.Colliders"))
+                    .Select(x => new ListViewItem()
+                    {
+                        Text = x.Name,
+                        Tag = x
+                    })
+                    .ToArray()
+            );
         }
 
-        private void PopulateDefaultColliders()
-        {
-            lvColliders.Items.Add("Rectangle");
-            lvColliders.Items.Add("Quad");
-        }
-
-        private void LvSolids_SelectedIndexChanged(object sender, System.EventArgs e)
-        {
-            if(lvSolids.SelectedItems.Count > 0 && lvSolids.SelectedItems[0].Tag != null)
-            {
-                TextureData selectedTexture = (TextureData)lvSolids.SelectedItems[0].Tag;
-
-                nudWidth.Value = selectedTexture.Width;
-                nudHeight.Value = selectedTexture.Height;
-            }
-        }
-
-        private void BtnCursor_Click(object sender, System.EventArgs e)
+        private void BtnCursor_Click(object sender, EventArgs e)
         {
             lvSolids.SelectedIndices.Clear();
             lvEntities.SelectedIndices.Clear();
@@ -224,6 +206,22 @@ namespace PeridotEngine.Engine.Editor.Forms
         private void NudHeight_ValueChanged(object sender, EventArgs e)
         {
             ObjectHeightChanged?.Invoke(this, (int) nudHeight.Value);
+        }
+
+        private void BtnSelectTexture_Click(object sender, EventArgs e)
+        {
+            using TextureSelectionForm textureSelectionForm = new TextureSelectionForm(textureDirectory);
+            DialogResult result = textureSelectionForm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                SelectedTexture = textureSelectionForm.SelectedTexture;
+
+                if (SelectedTexture != null)
+                {
+                    ObjectWidth = SelectedTexture.Width;
+                    ObjectHeight = SelectedTexture.Height;
+                }
+            }
         }
     }
 }

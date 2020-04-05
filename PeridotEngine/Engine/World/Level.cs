@@ -88,6 +88,7 @@ namespace PeridotEngine.Engine.World
         /// <param name="sb">The SpriteBatch</param>
         public void Draw(SpriteBatch sb)
         {
+            // TODO: Cache this
             List<IWorldObject> combinedObjects = new List<IWorldObject>(Solids.Count + Entities.Count);
             combinedObjects.AddRange(Solids);
             combinedObjects.AddRange(Entities);
