@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.Engine.Graphics;
 using PeridotEngine.Engine.Resources;
+using PeridotEngine.Utility;
 
 namespace PeridotEngine.Engine.World.WorldObjects.Solids
 {
@@ -133,14 +134,21 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public XElement ToXml(LazyLoadingTextureDictionary textureDictionary)
         {
-            // TODO: Implement this
-            throw new NotImplementedException();
+            return new XElement("DynamicWater",
+                Position.ToXml("Position"),
+                Size.ToXml("Size"),
+                new XElement("Z-Index", ZIndex)
+            );
         }
 
         public static DynamicWater FromXml(XElement xEle, LazyLoadingTextureDictionary textures)
         {
-            // TODO: Implement this
-            throw new NotImplementedException();
+            return new DynamicWater()
+            {
+                Position = new Vector2().FromXml(xEle.Element("Position")),
+                Size = new Vector2().FromXml(xEle.Element("Size")),
+                ZIndex = sbyte.Parse(xEle.Element("Z-Index").Value)
+        };
         }
 
         public void Update(GameTime gameTime)
