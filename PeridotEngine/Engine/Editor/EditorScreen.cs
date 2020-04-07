@@ -9,12 +9,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PeridotEngine.Engine.Editor.Forms;
 using PeridotEngine.Engine.UI;
+using PeridotEngine.Engine.Utility;
 using PeridotEngine.Engine.World;
 using PeridotEngine.Engine.World.Physics.Colliders;
 using PeridotEngine.Engine.World.WorldObjects;
 using PeridotEngine.Engine.World.WorldObjects.Entities;
 using PeridotEngine.Engine.World.WorldObjects.Solids;
-using PeridotEngine.Utility;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 
@@ -311,11 +311,11 @@ namespace PeridotEngine.Engine.Editor
                     }
                     else if (toolboxForm.SelectedCollider is QuadCollider quadCollider)
                     {
-                        quadCollider.Point2 = mousePosInLevel;
-                        quadCollider.Point4 = ((Point)colliderStart).ToVector2();
+                        quadCollider.Quad.Point2 = mousePosInLevel;
+                        quadCollider.Quad.Point4 = ((Point)colliderStart).ToVector2();
 
-                        quadCollider.Point1 = new Vector2(quadCollider.Point4.X, quadCollider.Point2.Y);
-                        quadCollider.Point3 = new Vector2(quadCollider.Point2.X, quadCollider.Point4.Y);
+                        quadCollider.Quad.Point1 = new Vector2(quadCollider.Quad.Point4.X, quadCollider.Quad.Point2.Y);
+                        quadCollider.Quad.Point3 = new Vector2(quadCollider.Quad.Point2.X, quadCollider.Quad.Point4.Y);
 
                         Level.Colliders.Add(quadCollider);
                         colliderStart = null;

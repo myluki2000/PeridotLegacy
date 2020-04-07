@@ -5,7 +5,7 @@ using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using PeridotEngine.Engine.Resources;
-using PeridotEngine.Utility;
+using PeridotEngine.Engine.Utility;
 
 namespace PeridotEngine.Engine.World.WorldObjects.Entities
 {

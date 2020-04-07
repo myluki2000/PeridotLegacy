@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using PeridotEngine.Engine.Resources;
-using PeridotEngine.Utility;
+using PeridotEngine.Engine.Utility;
 
 namespace PeridotEngine.Engine.Editor.Forms
 {

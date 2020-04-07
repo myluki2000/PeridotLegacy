@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.Engine.Graphics;
 using PeridotEngine.Engine.Resources;
-using PeridotEngine.Utility;
+using PeridotEngine.Engine.Utility;
 
 namespace PeridotEngine.Engine.World.WorldObjects.Solids
 {

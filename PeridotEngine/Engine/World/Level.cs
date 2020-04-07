@@ -18,7 +18,7 @@ using PeridotEngine.Engine.World.Physics.Colliders;
 using PeridotEngine.Engine.World.WorldObjects;
 using PeridotEngine.Engine.World.WorldObjects.Entities;
 using PeridotEngine.Engine.World.WorldObjects.Solids;
-using PeridotEngine.Utility;
+using PeridotEngine.Engine.Utility;
 
 namespace PeridotEngine.Engine.World
 {

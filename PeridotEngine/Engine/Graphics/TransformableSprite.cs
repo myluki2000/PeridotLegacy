@@ -6,7 +6,7 @@ using System.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.Engine.Resources;
-using PeridotEngine.Utility;
+using PeridotEngine.Engine.Utility;
 
 namespace PeridotEngine.Engine.Graphics
 {
