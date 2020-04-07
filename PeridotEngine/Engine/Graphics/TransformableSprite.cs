@@ -82,7 +82,6 @@ namespace PeridotEngine.Engine.Graphics
             basicEffect.TextureEnabled = true;
             basicEffect.Texture = Texture.Texture;
 
-            // TODO: convert this to array for extra performance. We know how many verts we have
             VertexPositionTexture[] verts = new VertexPositionTexture[6]
             {
                 new VertexPositionTexture() {Position = new Vector3(TopLeft, 0).Transform(TopLeftMatrix), TextureCoordinate = new Vector2(0, 0)},

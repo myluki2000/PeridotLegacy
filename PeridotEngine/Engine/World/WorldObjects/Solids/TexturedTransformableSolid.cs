@@ -4,29 +4,47 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.Engine.Graphics;
 using PeridotEngine.Engine.Resources;
+using PeridotEngine.Engine.Utility;
 
 namespace PeridotEngine.Engine.World.WorldObjects.Solids
 {
-    class TexturedTransformableSolid : TransformableSprite, ISolid, ITextured, IParallaxable
+    class TexturedTransformableSolid : ISolid, ITextured, IParallaxable
     {
-        private Vector2 size;
-
         /// <inheritdoc />
-        public Vector2 Position { get; set; }
-
-        /// <inheritdoc />
-        public Vector2 Size
-        {
-            get => size;
+        public Vector2 Position {
+            get
+            {
+                throw new NotImplementedException();
+            }
             set
             {
-                size = value;
-
+                throw new NotImplementedException();
             }
         }
 
         /// <inheritdoc />
+        public Vector2 Size
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        /// <inheritdoc />
+        public sbyte ZIndex { get; set; }
+
+        public Quad Quad { get; set; } = new Quad();
+
+        /// <inheritdoc />
         public float ParallaxMultiplier { get; set; }
+
+        /// <inheritdoc />
+        public TextureDataBase Texture { get; set; }
 
         /// <inheritdoc />
         public void Initialize(Level level) { }
@@ -37,7 +55,13 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public void Draw(SpriteBatch sb, Camera camera)
         {
-            base.Draw(sb, camera.GetMatrix(new Vector3(ParallaxMultiplier, ParallaxMultiplier, 1)));
+            //base.Draw(sb, camera.GetMatrix(new Vector3(ParallaxMultiplier, ParallaxMultiplier, 1)));
+        }
+
+        /// <inheritdoc />
+        public bool Contains(Point point)
+        {
+            return Quad.Contains(point);
         }
 
         /// <inheritdoc />
@@ -52,6 +76,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
             // TODO: Implement this
             throw new NotImplementedException();
         }
+
 
         
     }

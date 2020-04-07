@@ -27,7 +27,12 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
         public Rectangle BoundingRect => new Rectangle(Position.ToPoint(), Size.ToPoint());
 
         public abstract void Initialize(Level level);
-        public abstract void Update(GameTime gameTime);
+        public new abstract void Update(GameTime gameTime);
+
+        public virtual bool Contains(Point point)
+        {
+            return BoundingRect.Contains(point);
+        }
 
         /// <inheritdoc />
         public void Draw(SpriteBatch sb, Camera camera)

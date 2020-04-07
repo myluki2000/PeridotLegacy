@@ -24,6 +24,12 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         }
 
         /// <inheritdoc />
+        public bool Contains(Point point)
+        {
+            return new Rectangle(Position.ToPoint(), Size.ToPoint()).Contains(point);
+        }
+
+        /// <inheritdoc />
         public XElement ToXml(LazyLoadingTextureDictionary textureDictionary)
         {
             XElement? texPathXEle = Texture != null ? new XElement("TexturePath", textureDictionary.GetTexturePathByName(Texture.Name)) : null;

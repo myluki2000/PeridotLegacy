@@ -215,7 +215,7 @@ namespace PeridotEngine.Engine.Editor
             {
                 // check if mouse pos is in selected object
                 Vector2 mouseWorldCoords = mouseState.Position.ToVector2().Transform(Level.Camera.GetMatrix().Invert());
-                if (new Rectangle(selectedObject.Position.ToPoint(), selectedObject.Size.ToPoint()).Contains(mouseWorldCoords))
+                if (selectedObject.Contains(mouseWorldCoords.ToPoint()))
                 {
                     // dragging starts
                     dragging = true;
@@ -244,22 +244,22 @@ namespace PeridotEngine.Engine.Editor
             if (toolboxForm.SelectedObject != null) return;
 
             Vector2 mousePosWorldSpace = Level.Camera.ScreenPosToWorldPos(Mouse.GetState().Position.ToVector2());
-            
-            IEnumerable<IEntity> entities = Level.Entities.Where(x => new Rectangle(x.Position.ToPoint(), x.Size.ToPoint()).Contains(mousePosWorldSpace));
 
-            if (entities.Any())
+            IEntity entity = Level.Entities.FirstOrDefault(x => x.Contains(mousePosWorldSpace.ToPoint()));
+
+            if (entity != null)
             {
-                selectedObject = entities.First();
+                selectedObject = entity;
                 propertiesForm.SelectedObject = selectedObject;
                 PopulateValuesFromSelectedObject();
                 return;
             }
 
-            IEnumerable<ISolid> solids = Level.Solids.Where(x => new Rectangle(x.Position.ToPoint(), x.Size.ToPoint()).Contains(mousePosWorldSpace));
+            ISolid solid = Level.Solids.FirstOrDefault(x => x.Contains(mousePosWorldSpace.ToPoint()));
 
-            if (solids.Any())
+            if (solid != null)
             {
-                selectedObject = solids.First();
+                selectedObject = solid;
                 propertiesForm.SelectedObject = selectedObject;
                 PopulateValuesFromSelectedObject();
                 return;
