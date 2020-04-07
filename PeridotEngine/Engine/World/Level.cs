@@ -102,7 +102,7 @@ namespace PeridotEngine.Engine.World
                 if (obj is IParallaxable parallaxObj && parallaxObj.ParallaxMultiplier != 1.0f)
                 {
                     sb.End();
-                    sb.Begin(transformMatrix: Camera.GetMatrix(new Vector3(parallaxObj.ParallaxMultiplier, parallaxObj.ParallaxMultiplier, 1)),
+                    sb.Begin(transformMatrix: Camera.GetMatrix(parallaxObj.ParallaxMultiplier),
                              blendState: BlendState.AlphaBlend);
                     obj.Draw(sb, Camera);
                     sb.End();

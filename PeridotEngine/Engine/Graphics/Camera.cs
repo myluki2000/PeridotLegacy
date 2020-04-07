@@ -80,11 +80,23 @@ namespace PeridotEngine.Engine.Graphics
         /// </summary>
         /// <param name="parallax">The parallax factor</param>
         /// <returns>The matrix representing the camera view</returns>
-        public Matrix GetMatrix(Vector3 parallax)
+        public Matrix GetMatrix(Vector2 parallax)
         {
             return Matrix.CreateTranslation(Translation * new Vector3(1 / parallax.X, 1 / parallax.Y, 1)) *
                 Matrix.CreateScale(Scale) *
                 Matrix.CreateScale((float)Globals.Graphics.PreferredBackBufferHeight / 1080);
+        }
+
+        /// <summary>
+        /// Returns a matrix of the camera view with the parallax factor factored in.
+        /// </summary>
+        /// <param name="parallax">The parallax factor</param>
+        /// <returns>The matrix representing the camera view</returns>
+        public Matrix GetMatrix(float parallax)
+        {
+            return Matrix.CreateTranslation(Translation * new Vector3(1 / parallax, 1 / parallax, 1)) *
+                   Matrix.CreateScale(Scale) *
+                   Matrix.CreateScale((float)Globals.Graphics.PreferredBackBufferHeight / 1080);
         }
 
         /// <summary>

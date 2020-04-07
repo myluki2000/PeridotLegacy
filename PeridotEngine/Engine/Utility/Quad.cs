@@ -15,6 +15,18 @@ namespace PeridotEngine.Engine.Utility
         public Vector2 Point3 { get; set; }
         public Vector2 Point4 { get; set; }
 
+        /// <inheritdoc />
+        public Quad() { }
+
+        /// <inheritdoc />
+        public Quad(Vector2 point1, Vector2 point2, Vector2 point3, Vector2 point4)
+        {
+            Point1 = point1;
+            Point2 = point2;
+            Point3 = point3;
+            Point4 = point4;
+        }
+
         public bool Intersects(Rectangle otherRect)
         {
             // performance could maybe be improved by doing a quick check using the surrounding rectangle of the collider first
