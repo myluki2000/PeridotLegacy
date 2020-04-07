@@ -89,15 +89,16 @@
     <Compile Include="Engine\Editor\UI\ToolStripEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Engine\Utility\Quad.cs" />
     <Compile Include="Engine\World\WorldObjects\Solids\ITextured.cs" />
-    <Compile Include="Utility\ExtensionMethods.cs" />
+    <Compile Include="Engine\Utility\ExtensionMethods.cs" />
     <Compile Include="Engine\Globals.cs" />
     <Compile Include="Engine\Graphics\Camera.cs" />
     <Compile Include="Engine\Graphics\Particles\Particle.cs" />
     <Compile Include="Engine\Graphics\Particles\ParticleSystem.cs" />
     <Compile Include="Engine\Graphics\Sprite.cs" />
     <Compile Include="Engine\Graphics\TransformableSprite.cs" />
-    <Compile Include="Utility\Utility.cs" />
+    <Compile Include="Engine\Utility\Utility.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,7 +126,7 @@
     <Compile Include="Engine\UI\UIElements\UIElement.cs" />
     <Compile Include="Engine\UI\Screen.cs" />
     <Compile Include="Engine\UI\ScreenHandler.cs" />
-    <Compile Include="Utility\ObservableRangeCollection.cs" />
+    <Compile Include="Engine\Utility\ObservableRangeCollection.cs" />
     <Compile Include="Engine\World\Physics\Colliders\QuadCollider.cs" />
     <Compile Include="Engine\World\WorldObjects\Entities\Character.cs" />
     <Compile Include="Engine\World\WorldObjects\Entities\IEntity.cs" />

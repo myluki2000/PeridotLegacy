@@ -7,30 +7,37 @@ using PeridotEngine.Engine.Resources;
 
 namespace PeridotEngine.Engine.World.WorldObjects.Solids
 {
-    class TexturedTransformableSolid : TransformableSprite, ISolid, ITextured
+    class TexturedTransformableSolid : TransformableSprite, ISolid, ITextured, IParallaxable
     {
+        private Vector2 size;
+
         /// <inheritdoc />
         public Vector2 Position { get; set; }
 
         /// <inheritdoc />
-        public Vector2 Size { get; set; }
-
-        /// <inheritdoc />
-        public void Initialize(Level level)
+        public Vector2 Size
         {
-            throw new System.NotImplementedException();
+            get => size;
+            set
+            {
+                size = value;
+
+            }
         }
 
         /// <inheritdoc />
-        public void Update(GameTime gameTime)
-        {
-            throw new System.NotImplementedException();
-        }
+        public float ParallaxMultiplier { get; set; }
+
+        /// <inheritdoc />
+        public void Initialize(Level level) { }
+
+        /// <inheritdoc />
+        public void Update(GameTime gameTime) { }
 
         /// <inheritdoc />
         public void Draw(SpriteBatch sb, Camera camera)
         {
-            throw new System.NotImplementedException();
+            base.Draw(sb, camera.GetMatrix(new Vector3(ParallaxMultiplier, ParallaxMultiplier, 1)));
         }
 
         /// <inheritdoc />
@@ -45,5 +52,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
             // TODO: Implement this
             throw new NotImplementedException();
         }
+
+        
     }
 }

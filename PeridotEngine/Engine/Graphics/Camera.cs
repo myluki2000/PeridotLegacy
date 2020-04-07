@@ -82,7 +82,7 @@ namespace PeridotEngine.Engine.Graphics
         /// <returns>The matrix representing the camera view</returns>
         public Matrix GetMatrix(Vector3 parallax)
         {
-            return Matrix.CreateTranslation(Translation * new Vector3(1 / parallax.X, 1, 1)) *
+            return Matrix.CreateTranslation(Translation * new Vector3(1 / parallax.X, 1 / parallax.Y, 1)) *
                 Matrix.CreateScale(Scale) *
                 Matrix.CreateScale((float)Globals.Graphics.PreferredBackBufferHeight / 1080);
         }

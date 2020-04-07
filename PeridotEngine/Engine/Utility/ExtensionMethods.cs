@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
-namespace PeridotEngine.Utility
+namespace PeridotEngine.Engine.Utility
 {
     public static class ExtensionMethods
     {

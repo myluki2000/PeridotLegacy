@@ -95,7 +95,7 @@ namespace PeridotEngine.Engine.World
 
             combinedObjects.Sort((x, y) => x.ZIndex.CompareTo(y.ZIndex));
 
-            sb.Begin(transformMatrix: Camera.GetMatrix(), blendState: BlendState.AlphaBlend);
+            sb.Begin(transformMatrix: Camera.GetMatrix(), blendState: BlendState.AlphaBlend, rasterizerState: RasterizerState.CullNone);
 
             foreach (IWorldObject obj in combinedObjects)
             {
@@ -106,7 +106,7 @@ namespace PeridotEngine.Engine.World
                              blendState: BlendState.AlphaBlend);
                     obj.Draw(sb, Camera);
                     sb.End();
-                    sb.Begin(transformMatrix: Camera.GetMatrix(), blendState: BlendState.AlphaBlend);
+                    sb.Begin(transformMatrix: Camera.GetMatrix(), blendState: BlendState.AlphaBlend, rasterizerState: RasterizerState.CullNone);
                 }
                 else
                 {
