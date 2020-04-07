@@ -27,14 +27,21 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public Vector2 Size
         {
-            get;
-            set;
+            get => size;
+            set
+            {
+                Quad.Point2 = Quad.Point4 + (Quad.Point2 - Quad.Point4) / size * value;
+                Quad.Point3 = Quad.Point4 + (Quad.Point3 - Quad.Point4) / size * value;
+                Quad.Point1 = Quad.Point4 + (Quad.Point1 - Quad.Point4) / size * value;
+
+                size = value;
+            }
         }
 
         /// <inheritdoc />
         public sbyte ZIndex { get; set; }
 
-        public Quad Quad { get; set; } = new Quad(new Vector2(0, 50), new Vector2(50, 50), new Vector2(50, 0), new Vector2(0, 0));
+        public Quad Quad { get; set; } = new Quad(new Vector2(0, 100), new Vector2(100, 100), new Vector2(100, 0), new Vector2(0, 0));
 
         public float ParallaxMultiplierTopLeft { get; set; } = 1.0f;
         public float ParallaxMultiplierTopRight { get; set; } = 1.0f;
@@ -45,6 +52,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         public TextureDataBase Texture { get; set; }
 
         private readonly BasicEffect basicEffect = new BasicEffect(Globals.Graphics.GraphicsDevice);
+        private Vector2 size = new Vector2(100, 100);
 
         /// <inheritdoc />
         public void Initialize(Level level) { }
