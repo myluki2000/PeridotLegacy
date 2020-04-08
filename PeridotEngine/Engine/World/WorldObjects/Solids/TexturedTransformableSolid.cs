@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Globalization;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -41,6 +43,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public sbyte ZIndex { get; set; }
 
+        [TypeConverter(typeof(ExpandableObjectConverter))]
         public Quad Quad { get; set; } = new Quad(new Vector2(0, 100), new Vector2(100, 100), new Vector2(100, 0), new Vector2(0, 0));
 
         public float ParallaxMultiplierTopLeft { get; set; } = 1.0f;
@@ -51,8 +54,13 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public TextureDataBase Texture { get; set; }
 
-        private readonly BasicEffect basicEffect = new BasicEffect(Globals.Graphics.GraphicsDevice);
+        private static readonly QuadEffect quadEffect;
         private Vector2 size = new Vector2(100, 100);
+
+        static TexturedTransformableSolid()
+        {
+            quadEffect = new QuadEffect(Globals.Content.Load<Effect>("QuadEffect"));
+        }
 
         /// <inheritdoc />
         public void Initialize(Level level) { }
@@ -63,9 +71,10 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public void Draw(SpriteBatch sb, Camera camera)
         {
+            // TODO: Make z-index work
+
             sb.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-            basicEffect.World = Matrix.Identity;
-            basicEffect.Projection = Matrix.CreateOrthographicOffCenter(
+            quadEffect.WorldViewProj = Matrix.CreateOrthographicOffCenter(
                 0.0f,
                 Globals.Graphics.PreferredBackBufferWidth,
                 Globals.Graphics.PreferredBackBufferHeight,
@@ -73,22 +82,22 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                 0.0f, 
                 1.0f
             );
-            basicEffect.View = Matrix.Identity;
 
-            basicEffect.TextureEnabled = true;
-            basicEffect.Texture = Texture.Texture;
+            quadEffect.Texture = Texture.Texture;
 
-            VertexPositionTexture[] verts = new VertexPositionTexture[6]
+            float[] qs = CalcQn(Quad.Point1, Quad.Point2, Quad.Point3, Quad.Point4);
+
+            VertexPositionTexture3D[] verts = new VertexPositionTexture3D[6]
             {
-                new VertexPositionTexture() {Position = new Vector3(Quad.Point4, 0).Transform(camera.GetMatrix(ParallaxMultiplierTopLeft)), TextureCoordinate = new Vector2(0, 0)},
-                new VertexPositionTexture() {Position = new Vector3(Quad.Point3, 0).Transform(camera.GetMatrix(ParallaxMultiplierTopRight)), TextureCoordinate = new Vector2(1, 0)},
-                new VertexPositionTexture() {Position = new Vector3(Quad.Point2, 0).Transform(camera.GetMatrix(ParallaxMultiplierBottomRight)), TextureCoordinate = new Vector2(1, 1)},
-                new VertexPositionTexture() {Position = new Vector3(Quad.Point4, 0).Transform(camera.GetMatrix(ParallaxMultiplierTopLeft)), TextureCoordinate = new Vector2(0, 0)},
-                new VertexPositionTexture() {Position = new Vector3(Quad.Point2, 0).Transform(camera.GetMatrix(ParallaxMultiplierBottomRight)), TextureCoordinate = new Vector2(1, 1)},
-                new VertexPositionTexture() {Position = new Vector3(Quad.Point1, 0).Transform(camera.GetMatrix(ParallaxMultiplierBottomLeft)), TextureCoordinate = new Vector2(0, 1)}
+                new VertexPositionTexture3D() {Position = new Vector3(Quad.Point4, 0).Transform(camera.GetMatrix(ParallaxMultiplierTopLeft)), TexCoord = new Vector3(0 * qs[3], 0 * qs[3], qs[3])},
+                new VertexPositionTexture3D() {Position = new Vector3(Quad.Point3, 0).Transform(camera.GetMatrix(ParallaxMultiplierTopRight)), TexCoord = new Vector3(1 * qs[2], 0 * qs[2], qs[2])},
+                new VertexPositionTexture3D() {Position = new Vector3(Quad.Point2, 0).Transform(camera.GetMatrix(ParallaxMultiplierBottomRight)), TexCoord = new Vector3(1 * qs[1], 1 * qs[1], qs[1])},
+                new VertexPositionTexture3D() {Position = new Vector3(Quad.Point4, 0).Transform(camera.GetMatrix(ParallaxMultiplierTopLeft)), TexCoord = new Vector3(0 * qs[3], 0 * qs[3], qs[3])},
+                new VertexPositionTexture3D() {Position = new Vector3(Quad.Point2, 0).Transform(camera.GetMatrix(ParallaxMultiplierBottomRight)), TexCoord = new Vector3(1 * qs[1], 1 * qs[1], qs[1])},
+                new VertexPositionTexture3D() {Position = new Vector3(Quad.Point1, 0).Transform(camera.GetMatrix(ParallaxMultiplierBottomLeft)), TexCoord = new Vector3(0 * qs[0], 1 * qs[0], qs[0])}
             };
 
-            foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
+            foreach (EffectPass pass in quadEffect.Techniques[0].Passes)
             {
                 pass.Apply();
                 sb.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, verts, 0, verts.Length, Utility.Utility.GetIndicesArray(verts), 0, verts.Length / 3);
@@ -104,17 +113,106 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public XElement ToXml(LazyLoadingTextureDictionary textureDictionary)
         {
-            // TODO: Implement this
-            throw new NotImplementedException();
+            XElement? texPathXEle = Texture != null ? new XElement("TexturePath", textureDictionary.GetTexturePathByName(Texture.Name)) : null;
+
+            return new XElement(this.GetType().Name,
+                Quad.ToXml("Quad"),
+                texPathXEle,
+                new XElement("Z-Index", ZIndex.ToString(CultureInfo.InvariantCulture)),
+                new XElement("ParallaxTopLeft", ParallaxMultiplierTopLeft.ToString(CultureInfo.InvariantCulture)),
+                new XElement("ParallaxTopRight", ParallaxMultiplierTopRight.ToString(CultureInfo.InvariantCulture)),
+                new XElement("ParallaxBottomLeft", ParallaxMultiplierBottomLeft.ToString(CultureInfo.InvariantCulture)),
+                new XElement("ParallaxBottomRight", ParallaxMultiplierBottomRight.ToString(CultureInfo.InvariantCulture))
+            );
         }
 
         public static TexturedTransformableSolid FromXml(XElement xEle, LazyLoadingTextureDictionary textures)
         {
-            // TODO: Implement this
-            throw new NotImplementedException();
+            return new TexturedTransformableSolid()
+            {
+                Texture = textures[xEle.Element("TexturePath").Value],
+                Quad = Quad.FromXml(xEle.Element("Quad")),
+                ZIndex = sbyte.Parse(xEle.Element("Z-Index").Value),
+                ParallaxMultiplierTopLeft = float.Parse(xEle.Element("ParallaxTopLeft").Value),
+                ParallaxMultiplierTopRight = float.Parse(xEle.Element("ParallaxTopRight").Value),
+                ParallaxMultiplierBottomLeft = float.Parse(xEle.Element("ParallaxBottomLeft").Value),
+                ParallaxMultiplierBottomRight = float.Parse(xEle.Element("ParallaxBottomRight").Value)
+            };
         }
 
+        private float[] CalcQn(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3)
+        {
+            float[] result = {1.0f, 1.0f, 1.0f, 1.0f};
 
+            float ax = p2.X - p0.X;
+            float ay = p2.Y - p0.Y;
+            float bx = p3.X - p1.X;
+            float by = p3.Y - p1.Y;
 
+            float cross = ax * by - ay * bx;
+
+            if (cross != 0)
+            {
+                float cy = p0.Y - p1.Y;
+                float cx = p0.X - p1.X;
+
+                float s = (ax * cy - ay * cx) / cross;
+
+                if (s > 0 && s < 1)
+                {
+                    float t = (bx * cy - by * cx) / cross;
+
+                    if (t > 0 && t < 1)
+                    {
+                        
+                        result[0] = 1 / (1 - t);
+                        result[1] = 1 / (1 - s);
+                        result[2] = 1 / t;
+                        result[3] = 1 / s;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private class QuadEffect : Effect
+        {
+            private readonly EffectParameter worldViewProjParam;
+            private readonly EffectParameter textureParam;
+
+            public Matrix WorldViewProj
+            {
+                get => worldViewProjParam.GetValueMatrix();
+                set => worldViewProjParam.SetValue(value);
+            }
+
+            public Texture2D Texture
+            {
+                get => textureParam.GetValueTexture2D();
+                set => textureParam.SetValue(value);
+            }
+
+            /// <inheritdoc />
+            public QuadEffect(Effect cloneSource) : base(cloneSource)
+            {
+                worldViewProjParam = Parameters["WorldViewProj"];
+                textureParam = Parameters["Texture"];
+            }
+        }
+
+        private struct VertexPositionTexture3D : IVertexType
+        {
+            public Vector3 Position;
+            public Vector3 TexCoord;
+
+            /// <inheritdoc />
+            private static readonly VertexDeclaration VertexDeclaration = new VertexDeclaration(
+                new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
+                new VertexElement(sizeof(float) * 3, VertexElementFormat.Vector3, VertexElementUsage.TextureCoordinate, 0)
+            );
+
+            VertexDeclaration IVertexType.VertexDeclaration => VertexDeclaration;
+        }
     }
 }

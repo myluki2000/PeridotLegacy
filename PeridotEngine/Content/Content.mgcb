@@ -13,3 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Macros.fxh
+/copy:Macros.fxh
+
+#begin QuadEffect.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:QuadEffect.fx
+
