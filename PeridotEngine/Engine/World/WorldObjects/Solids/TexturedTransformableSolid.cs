@@ -85,16 +85,21 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
 
             quadEffect.Texture = Texture.Texture;
 
-            float[] qs = CalcQn(Quad.Point1, Quad.Point2, Quad.Point3, Quad.Point4);
+            Vector2 p1 = Quad.Point1.Transform(camera.GetMatrix(ParallaxMultiplierBottomLeft));
+            Vector2 p2 = Quad.Point2.Transform(camera.GetMatrix(ParallaxMultiplierBottomRight));
+            Vector2 p3 = Quad.Point3.Transform(camera.GetMatrix(ParallaxMultiplierTopRight));
+            Vector2 p4 = Quad.Point4.Transform(camera.GetMatrix(ParallaxMultiplierTopLeft));
+
+            float[] qs = CalcQn(p1, p2, p3, p4);
 
             VertexPositionTexture3D[] verts = new VertexPositionTexture3D[6]
             {
-                new VertexPositionTexture3D() {Position = new Vector3(Quad.Point4, 0).Transform(camera.GetMatrix(ParallaxMultiplierTopLeft)), TexCoord = new Vector3(0 * qs[3], 0 * qs[3], qs[3])},
-                new VertexPositionTexture3D() {Position = new Vector3(Quad.Point3, 0).Transform(camera.GetMatrix(ParallaxMultiplierTopRight)), TexCoord = new Vector3(1 * qs[2], 0 * qs[2], qs[2])},
-                new VertexPositionTexture3D() {Position = new Vector3(Quad.Point2, 0).Transform(camera.GetMatrix(ParallaxMultiplierBottomRight)), TexCoord = new Vector3(1 * qs[1], 1 * qs[1], qs[1])},
-                new VertexPositionTexture3D() {Position = new Vector3(Quad.Point4, 0).Transform(camera.GetMatrix(ParallaxMultiplierTopLeft)), TexCoord = new Vector3(0 * qs[3], 0 * qs[3], qs[3])},
-                new VertexPositionTexture3D() {Position = new Vector3(Quad.Point2, 0).Transform(camera.GetMatrix(ParallaxMultiplierBottomRight)), TexCoord = new Vector3(1 * qs[1], 1 * qs[1], qs[1])},
-                new VertexPositionTexture3D() {Position = new Vector3(Quad.Point1, 0).Transform(camera.GetMatrix(ParallaxMultiplierBottomLeft)), TexCoord = new Vector3(0 * qs[0], 1 * qs[0], qs[0])}
+                new VertexPositionTexture3D() {Position = new Vector3(p4, 0), TexCoord = new Vector3(0 * qs[3], 0 * qs[3], qs[3])},
+                new VertexPositionTexture3D() {Position = new Vector3(p3, 0), TexCoord = new Vector3(1 * qs[2], 0 * qs[2], qs[2])},
+                new VertexPositionTexture3D() {Position = new Vector3(p2, 0), TexCoord = new Vector3(1 * qs[1], 1 * qs[1], qs[1])},
+                new VertexPositionTexture3D() {Position = new Vector3(p4, 0), TexCoord = new Vector3(0 * qs[3], 0 * qs[3], qs[3])},
+                new VertexPositionTexture3D() {Position = new Vector3(p2, 0), TexCoord = new Vector3(1 * qs[1], 1 * qs[1], qs[1])},
+                new VertexPositionTexture3D() {Position = new Vector3(p1, 0), TexCoord = new Vector3(0 * qs[0], 1 * qs[0], qs[0])}
             };
 
             foreach (EffectPass pass in quadEffect.Techniques[0].Passes)
