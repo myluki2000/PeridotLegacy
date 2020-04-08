@@ -167,6 +167,12 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         }
 
         /// <inheritdoc />
+        public void DrawOutline(SpriteBatch sb, Color color, Camera camera)
+        {
+            Utility.Utility.DrawRectangle(sb, new Rectangle(Position.ToPoint(), Size.ToPoint()), color);
+        }
+
+        /// <inheritdoc />
         public bool Contains(Point point)
         {
             return new Rectangle(Position.ToPoint(), Size.ToPoint()).Contains(point);

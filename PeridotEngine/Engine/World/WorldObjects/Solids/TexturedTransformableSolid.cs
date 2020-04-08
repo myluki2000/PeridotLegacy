@@ -110,6 +110,12 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         }
 
         /// <inheritdoc />
+        public void DrawOutline(SpriteBatch sb, Color color, Camera camera)
+        {
+            Quad.Draw(sb, color, camera);
+        }
+
+        /// <inheritdoc />
         public bool Contains(Point point)
         {
             return Quad.Contains(point);
@@ -118,7 +124,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public XElement ToXml(LazyLoadingTextureDictionary textureDictionary)
         {
-            XElement? texPathXEle = Texture != null ? new XElement("TexturePath", textureDictionary.GetTexturePathByName(Texture.Name)) : null;
+            XElement texPathXEle = Texture != null ? new XElement("TexturePath", textureDictionary.GetTexturePathByName(Texture.Name)) : null;
 
             return new XElement(this.GetType().Name,
                 Quad.ToXml("Quad"),

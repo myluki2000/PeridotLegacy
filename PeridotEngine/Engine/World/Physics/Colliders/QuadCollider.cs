@@ -32,16 +32,7 @@ namespace PeridotEngine.Engine.World.Physics.Colliders
         /// <inheritdoc />
         public void Draw(SpriteBatch sb, Camera camera, Color color, bool drawDragPoints)
         {
-            Vector2[] verts =
-            {
-                Quad.Point1,
-                Quad.Point2,
-                Quad.Point3,
-                Quad.Point4,
-                Quad.Point1
-            };
-
-            Utility.Utility.DrawLineStrip(sb, verts, color, camera.GetMatrix());
+            Quad.Draw(sb, color, camera);
 
             if (drawDragPoints)
             {

@@ -1,10 +1,14 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using PeridotEngine.Engine.Graphics;
 
 namespace PeridotEngine.Engine.Utility
 {
@@ -92,6 +96,20 @@ namespace PeridotEngine.Engine.Utility
             if (c > 0) pos++;
 
             return !(pos <= 0 && neg <= 0);
+        }
+
+        public void Draw(SpriteBatch sb, Color color, Camera? camera = null)
+        {
+            Vector2[] verts =
+            {
+                Point1,
+                Point2,
+                Point3,
+                Point4,
+                Point1
+            };
+
+            Utility.DrawLineStrip(sb, verts, color, camera?.GetMatrix() ?? Matrix.Identity);
         }
 
         public XElement ToXml(string name)

@@ -41,6 +41,12 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
         }
 
         /// <inheritdoc />
+        public virtual void DrawOutline(SpriteBatch sb, Color color, Camera camera)
+        {
+            Utility.Utility.DrawRectangle(sb, BoundingRect, color);
+        }
+
+        /// <inheritdoc />
         public abstract XElement ToXml(LazyLoadingTextureDictionary textureDictionary);
     }
 }

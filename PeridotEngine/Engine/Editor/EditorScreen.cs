@@ -169,9 +169,7 @@ namespace PeridotEngine.Engine.Editor
 
         private void DrawSelectionBox(SpriteBatch sb)
         {
-            if (selectedObject == null) return;
-
-            Utility.Utility.DrawOutline(sb, new Rectangle(selectedObject.Position.ToPoint(), selectedObject.Size.ToPoint()), Color.Red, 2);
+            selectedObject?.DrawOutline(sb, Color.Red, Level.Camera);
         }
 
         private void DrawPreview(SpriteBatch sb)

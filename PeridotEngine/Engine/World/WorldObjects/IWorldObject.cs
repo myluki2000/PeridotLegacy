@@ -42,6 +42,13 @@ namespace PeridotEngine.Engine.World.WorldObjects
         /// <param name="camera">The camera of the level.</param>
         void Draw(SpriteBatch sb, Camera camera);
 
+        /// <summary>
+        /// Draws an outline around the object.
+        /// </summary>
+        /// <param name="sb">The SpriteBatch.</param>
+        /// <param name="camera">The camera of the level.</param>
+        void DrawOutline(SpriteBatch sb, Color color, Camera camera);
+
         bool Contains(Point point);
 
         /// <summary>
