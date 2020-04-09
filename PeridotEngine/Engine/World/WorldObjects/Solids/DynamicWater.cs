@@ -65,9 +65,10 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         private Level? parentLevel;
 
         private readonly List<WaterPoint> waterPoints = new List<WaterPoint>();
-        private readonly BasicEffect basicEffect = new BasicEffect(Globals.Graphics.GraphicsDevice)
+        private static readonly BasicEffect basicEffect = new BasicEffect(Globals.Graphics.GraphicsDevice)
         {
-            VertexColorEnabled = true
+            VertexColorEnabled = true,
+            World = Matrix.Identity
         };
 
         private Vector2 position;
@@ -91,26 +92,20 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
 
         public void Draw(SpriteBatch sb, Camera camera)
         {
-            // TODO: Optimize this: static BasicEffect and don't set the world and projection matrix each draw call
-            
             sb.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-            basicEffect.World = Matrix.Identity;
             basicEffect.Projection = Matrix.CreateOrthographicOffCenter(0.0f,
-                                                                        Globals.Graphics.PreferredBackBufferWidth,
-                                                                        Globals.Graphics.PreferredBackBufferHeight,
-                                                                        0.0f,
-                                                                        0.0f,
-                                                                        1.0f);
-
-
-            Debug.Assert(parentLevel != null, nameof(parentLevel) + " != null");
-            basicEffect.View = parentLevel.Camera.GetMatrix();
+                Globals.Graphics.PreferredBackBufferWidth,
+                Globals.Graphics.PreferredBackBufferHeight,
+                0.0f,
+                0.0f,
+                1.0f);
+            basicEffect.View = parentLevel?.Camera.GetMatrix() ?? Matrix.Identity;
 
             List<VertexPositionColor> verts = new List<VertexPositionColor>();
 
-            for(int i = waterPoints.Count - 1; i >= 0; i--)
+            for (int i = waterPoints.Count - 1; i >= 0; i--)
             {
-                if(i != 0)
+                if (i != 0)
                 {
                     // bottom left
                     verts.Add(new VertexPositionColor()
@@ -134,7 +129,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                     });
                 }
 
-                if(i != waterPoints.Count - 1)
+                if (i != waterPoints.Count - 1)
                 {
                     // top right
                     verts.Add(new VertexPositionColor()
@@ -159,7 +154,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                 }
             }
 
-            foreach(EffectPass pass in basicEffect.CurrentTechnique.Passes)
+            foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
                 sb.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, verts.ToArray(), 0, verts.Count, Utility.Utility.GetIndicesArray(verts), 0, verts.Count / 3);
@@ -195,12 +190,12 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                 Position = new Vector2().FromXml(xEle.Element("Position")),
                 Size = new Vector2().FromXml(xEle.Element("Size")),
                 ZIndex = sbyte.Parse(xEle.Element("Z-Index").Value)
-        };
+            };
         }
 
         public void Update(GameTime gameTime)
         {
-            for(int i = 0; i < waterPoints.Count; i++)
+            for (int i = 0; i < waterPoints.Count; i++)
             {
                 // calculate force to base position
                 // force to later calculate the acceleration
@@ -211,22 +206,24 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                 force += -SPRING_CONSTANT * deltaY;
 
                 // calculate force from neighboring point (left)
-                if(i == 0)
+                if (i == 0)
                 {
                     // edge case left side
                     force += SPRING_CONSTANT * (waterPoints.Last().Position.Y - waterPoints[i].Position.Y);
-                } else
+                }
+                else
                 {
                     // standard case
                     force += SPRING_CONSTANT * (waterPoints[i - 1].Position.Y - waterPoints[i].Position.Y);
                 }
 
                 // calculate force from neighboring point (right)
-                if(i == waterPoints.Count - 1)
+                if (i == waterPoints.Count - 1)
                 {
                     // edge case right side
                     force += SPRING_CONSTANT * (waterPoints.Last().Position.Y - waterPoints[i].Position.Y);
-                } else
+                }
+                else
                 {
                     // standard case
                     force += SPRING_CONSTANT * (waterPoints[i + 1].Position.Y - waterPoints[i].Position.Y);
@@ -274,6 +271,6 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
             public float VelocityY { get; set; }
         }
 
-        
+
     }
 }
