@@ -133,8 +133,8 @@ namespace PeridotEngine.Engine.Graphics
         {
             // TODO: This doesn't work with a non-default scale
             return new Vector2(
-                (screenPos.X / Globals.Graphics.PreferredBackBufferWidth) * 1920 - Translation.X,
-                (screenPos.Y / Globals.Graphics.PreferredBackBufferHeight) * 1080 - Translation.Y
+                (screenPos.X / Globals.Graphics.PreferredBackBufferWidth) * 1920 / Scale.X - Translation.X,
+                (screenPos.Y / Globals.Graphics.PreferredBackBufferHeight) * 1080 / Scale.Y - Translation.Y
             );
         }
 
