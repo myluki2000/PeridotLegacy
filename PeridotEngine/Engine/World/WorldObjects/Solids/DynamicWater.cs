@@ -83,7 +83,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         private void GenerateWaterPoints()
         {
             waterPoints.Clear();
-            for (int i = 0; i < (int)(Size.X / Resolution); i++)
+            for (int i = 0; i < (int)(Size.X / Resolution) + 1; i++)
             {
                 waterPoints.Add(new WaterPoint() { NormalPositionY = Size.Y, Position = new Vector2(i * Resolution, Size.Y) });
             }
@@ -169,7 +169,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public void DrawOutline(SpriteBatch sb, Color color, Camera camera)
         {
-            Utility.Utility.DrawOutline(sb, new Rectangle(Position.ToPoint(), Size.ToPoint()), color, 1);
+            Utility.Utility.DrawOutline(sb, new Rectangle(Position.ToPoint(), Size.ToPoint()), color, 2);
         }
 
         /// <inheritdoc />

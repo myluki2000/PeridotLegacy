@@ -26,7 +26,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public void DrawOutline(SpriteBatch sb, Color color, Camera camera)
         {
-            Utility.Utility.DrawOutline(sb, new Rectangle(Position.ToPoint(), Size.ToPoint()), color, 1);
+            Utility.Utility.DrawOutline(sb, new Rectangle(Position.ToPoint(), Size.ToPoint()), color, 2);
         }
 
         /// <inheritdoc />
