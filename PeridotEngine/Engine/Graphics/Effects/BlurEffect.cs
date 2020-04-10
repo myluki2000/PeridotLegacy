@@ -61,7 +61,7 @@ namespace PeridotEngine.Engine.Graphics.Effects
         }
 
         /// <inheritdoc />
-        public BlurEffect(Effect cloneSource) : base(cloneSource)
+        public BlurEffect() : base(Globals.Content.Load<Effect>("BlurEffect"))
         {
             textureParam = Parameters["Texture"];
             matrixParam = Parameters["MatrixTransform"];

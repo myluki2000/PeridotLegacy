@@ -28,7 +28,7 @@ namespace PeridotEngine.Engine.Graphics.Effects
         }
 
         /// <inheritdoc />
-        public QuadEffect(Effect cloneSource) : base(cloneSource)
+        public QuadEffect() : base(Globals.Content.Load<Effect>("QuadEffect"))
         {
             worldViewProjParam = Parameters["WorldViewProj"];
             textureParam = Parameters["Texture"];
