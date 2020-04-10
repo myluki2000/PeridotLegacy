@@ -34,7 +34,7 @@ namespace PeridotEngine.Engine.UI
             scene = new RenderTarget2D(Globals.Graphics.GraphicsDevice, Globals.Graphics.PreferredBackBufferWidth, Globals.Graphics.PreferredBackBufferHeight);
             glowMap = new RenderTarget2D(Globals.Graphics.GraphicsDevice, Globals.Graphics.PreferredBackBufferWidth, Globals.Graphics.PreferredBackBufferHeight);
 
-            blurEffect = new BlurEffect(Globals.Content.Load<Effect>("BlurEffect"));
+            blurEffect = new BlurEffect();
         }
 
         public static void Draw(SpriteBatch sb)

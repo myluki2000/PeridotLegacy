@@ -19,11 +19,11 @@
 /processorParam:DebugMode=Auto
 /build:BlurEffect.fx
 
-#begin CustomSpriteShader.fx
+#begin CustomSpriteEffect.fx
 /importer:EffectImporter
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
-/build:CustomSpriteShader.fx;CustomSpriteEffect.fx
+/build:CustomSpriteEffect.fx
 
 #begin Macros.fxh
 /copy:Macros.fxh

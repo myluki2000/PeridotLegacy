@@ -60,7 +60,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
 
         static TexturedTransformableSolid()
         {
-            quadEffect = new QuadEffect(Globals.Content.Load<Effect>("QuadEffect"));
+            quadEffect = new QuadEffect();
         }
 
         /// <inheritdoc />

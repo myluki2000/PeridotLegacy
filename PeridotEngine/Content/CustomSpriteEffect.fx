@@ -15,7 +15,7 @@ DECLARE_TEXTURE(GlowMap, 1);
 BEGIN_CONSTANTS
 MATRIX_CONSTANTS
 
-    float4x4 MatrixTransform    _vs(c0) _cb(c0);
+    float4x4 MatrixTransform;
 
 END_CONSTANTS
 
@@ -50,6 +50,8 @@ FSOutput SpritePixelShader(VSOutput input)
 	FSOutput fout;
     fout.Color = SAMPLE_TEXTURE(Texture, input.texCoord) * input.color;
 	fout.Glow = SAMPLE_TEXTURE(GlowMap, input.texCoord);
+	
+	return fout;
 }
 
 TECHNIQUE( SpriteBatch, SpriteVertexShader, SpritePixelShader );
