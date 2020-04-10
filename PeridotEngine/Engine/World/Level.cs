@@ -93,10 +93,12 @@ namespace PeridotEngine.Engine.World
             combinedObjects.AddRange(Solids);
             combinedObjects.AddRange(Entities);
 
+            // TODO: Use z-index of draw call instead
             combinedObjects.Sort((x, y) => x.ZIndex.CompareTo(y.ZIndex));
 
             sb.Begin(transformMatrix: Camera.GetMatrix(), blendState: BlendState.AlphaBlend, rasterizerState: RasterizerState.CullNone);
 
+            // TODO: Optimize this by first drawing all non-parallax objects, to improve batching
             foreach (IWorldObject obj in combinedObjects)
             {
                 if (obj is IParallaxable parallaxObj && parallaxObj.ParallaxMultiplier != 1.0f)

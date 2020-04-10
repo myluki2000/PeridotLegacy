@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.Engine.Graphics;
+using PeridotEngine.Engine.Graphics.Effects;
 using PeridotEngine.Engine.Resources;
 using PeridotEngine.Engine.Utility;
 
@@ -84,6 +85,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
             );
 
             quadEffect.Texture = Texture.Texture;
+            quadEffect.GlowMap = Texture.GlowMap;
 
             Vector2 p1 = Quad.Point1.Transform(camera.GetMatrix(ParallaxMultiplierBottomLeft));
             Vector2 p2 = Quad.Point2.Transform(camera.GetMatrix(ParallaxMultiplierBottomRight));
@@ -185,31 +187,6 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
             }
 
             return result;
-        }
-
-        private class QuadEffect : Effect
-        {
-            private readonly EffectParameter worldViewProjParam;
-            private readonly EffectParameter textureParam;
-
-            public Matrix WorldViewProj
-            {
-                get => worldViewProjParam.GetValueMatrix();
-                set => worldViewProjParam.SetValue(value);
-            }
-
-            public Texture2D Texture
-            {
-                get => textureParam.GetValueTexture2D();
-                set => textureParam.SetValue(value);
-            }
-
-            /// <inheritdoc />
-            public QuadEffect(Effect cloneSource) : base(cloneSource)
-            {
-                worldViewProjParam = Parameters["WorldViewProj"];
-                textureParam = Parameters["Texture"];
-            }
         }
 
         private struct VertexPositionTexture3D : IVertexType

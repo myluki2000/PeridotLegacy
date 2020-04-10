@@ -13,6 +13,10 @@ namespace PeridotEngine.Engine.Resources
         /// </summary>
         public virtual Texture2D Texture { get; protected set; }
         /// <summary>
+        /// The glow map of the texture.
+        /// </summary>
+        public virtual Texture2D GlowMap { get; protected set; }
+        /// <summary>
         /// If set to true the texture will be randomly rotated for each sprite it is used on.
         /// </summary>
         public virtual bool HasRandomTextureRotation { get; protected set; }

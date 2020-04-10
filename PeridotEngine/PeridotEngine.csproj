@@ -89,6 +89,8 @@
     <Compile Include="Engine\Editor\UI\ToolStripEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Engine\Graphics\Effects\BlurEffect.cs" />
+    <Compile Include="Engine\Graphics\Effects\QuadEffect.cs" />
     <Compile Include="Engine\Utility\Quad.cs" />
     <Compile Include="Engine\World\WorldObjects\Solids\ITextured.cs" />
     <Compile Include="Engine\Utility\ExtensionMethods.cs" />

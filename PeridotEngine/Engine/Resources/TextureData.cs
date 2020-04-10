@@ -58,6 +58,13 @@ namespace PeridotEngine.Engine.Resources
                 randomTextureRot
             );
 
+            // load glow map if texture has one
+            if (xEle.Element("GlowPath") != null)
+            {
+                tex.GlowMap = TextureManager.LoadRawTexture(xEle.Element("GlowPath").Value);
+            }
+
+
             // set texture size if set in .ptex file
             XElement xEleWidth = xEle.Element("Width");
             if (xEleWidth != null)

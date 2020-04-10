@@ -6,10 +6,12 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using PeridotEngine.Engine.Graphics.Effects;
 using PeridotEngine.Engine.Resources;
 using PeridotEngine.Engine.UI;
 using PeridotEngine.Engine.UI.DevConsole;
 using PeridotEngine.Engine.World;
+using PeridotEngine.Engine.World.WorldObjects.Solids;
 
 namespace PeridotEngine
 {
@@ -36,13 +38,21 @@ namespace PeridotEngine
         /// </summary>
         protected override void Initialize()
         {
+            IsMouseVisible = true;
+
+            Globals.Graphics.GraphicsProfile = GraphicsProfile.HiDef;
+            Globals.Graphics.ApplyChanges();
+
             ScreenHandler.SelectedScreen = new LevelScreen(Level.FromFile(@"World\level.plvl"));
 
-            IsMouseVisible = true;
-            
             Globals.Graphics.PreferredBackBufferWidth = ConfigManager.CurrentConfig.WindowSize.X;
             Globals.Graphics.PreferredBackBufferHeight = ConfigManager.CurrentConfig.WindowSize.Y;
+            Globals.Graphics.PreferMultiSampling = false;
             Globals.Graphics.ApplyChanges();
+
+            
+
+            ScreenHandler.Initialize();
 
             base.Initialize();
         }
@@ -82,8 +92,6 @@ namespace PeridotEngine
 
                 ScreenHandler.Update(gameTime);
 
-                Window.Title = (1.0d / gameTime.ElapsedGameTime.TotalSeconds).ToString(CultureInfo.InvariantCulture);
-
                 base.Update(gameTime);
             }
         }
@@ -94,11 +102,10 @@ namespace PeridotEngine
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
             ScreenHandler.Draw(spriteBatch);
 
-            GraphicsDevice.Present();
+            Window.Title = (1000.0f / gameTime.ElapsedGameTime.TotalMilliseconds).ToString("0.00");
+
             base.Draw(gameTime);
         }
     }
