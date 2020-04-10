@@ -1,7 +1,6 @@
 #include "Macros.fxh"
 
 DECLARE_TEXTURE(Texture, 0);
-DECLARE_TEXTURE(GlowMap, 1);
 
 BEGIN_CONSTANTS
 
@@ -23,12 +22,6 @@ struct VSOutput
 	float3 TexCoord : TEXCOORD0;
 };
 
-struct FSOutput
-{
-	float4 Color : SV_Target0;
-	float4 Glow : SV_Target1;
-};
-
 VSOutput VShader(VSInput vin)
 {
 	VSOutput vout;
@@ -39,14 +32,9 @@ VSOutput VShader(VSInput vin)
 	return vout;
 }
 
-FSOutput FShader(VSOutput pin)
+float4 FShader(VSOutput pin) : SV_Target0
 {
-	FSOutput fout;
-	
-	fout.Color = SAMPLE_TEXTURE(Texture, pin.TexCoord.xy / pin.TexCoord.z);
-	fout.Glow = SAMPLE_TEXTURE(GlowMap, pin.TexCoord.xy / pin.TexCoord.z);
-
-	return fout;
+	return SAMPLE_TEXTURE(Texture, pin.TexCoord.xy / pin.TexCoord.z);
 }
 
 TECHNIQUE(QuadEffect, VShader, FShader);

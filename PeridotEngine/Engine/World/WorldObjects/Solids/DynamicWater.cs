@@ -92,6 +92,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
 
         public void Draw(SpriteBatch sb, Camera camera)
         {
+            sb.GraphicsDevice.BlendState = BlendState.AlphaBlend;
             sb.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
             basicEffect.Projection = Matrix.CreateOrthographicOffCenter(0.0f,
                 Globals.Graphics.PreferredBackBufferWidth,
@@ -111,21 +112,21 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                     verts.Add(new VertexPositionColor()
                     {
                         Position = new Vector3(Position.X + waterPoints[i].Position.X - Resolution, Position.Y + Size.Y, 0),
-                        Color = Color.LightBlue
+                        Color = Color.Blue
                     });
 
                     // bottom right
                     verts.Add(new VertexPositionColor()
                     {
                         Position = new Vector3(Position.X + waterPoints[i].Position.X, Position.Y + Size.Y, 0),
-                        Color = Color.LightBlue
+                        Color = Color.Blue
                     });
 
                     // top right
                     verts.Add(new VertexPositionColor()
                     {
                         Position = new Vector3(Position.X + waterPoints[i].Position.X, Position.Y + Size.Y - waterPoints[i].Position.Y + WaveFunction(i), 0),
-                        Color = Color.LightBlue
+                        Color = Color.Blue
                     });
                 }
 
@@ -135,21 +136,21 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                     verts.Add(new VertexPositionColor()
                     {
                         Position = new Vector3(Position.X + waterPoints[i].Position.X, Position.Y + Size.Y - waterPoints[i].Position.Y + WaveFunction(i), 0),
-                        Color = Color.LightBlue
+                        Color = Color.Blue
                     });
 
                     // bottom right
                     verts.Add(new VertexPositionColor()
                     {
                         Position = new Vector3(Position.X + waterPoints[i].Position.X, Position.Y + Size.Y, 0),
-                        Color = Color.LightBlue
+                        Color = Color.Blue
                     });
 
                     // top right of next one
                     verts.Add(new VertexPositionColor()
                     {
                         Position = new Vector3(Position.X + waterPoints[i + 1].Position.X, Position.Y + Size.Y - waterPoints[i + 1].Position.Y + WaveFunction(i + 1), 0),
-                        Color = Color.LightBlue
+                        Color = Color.Blue
                     });
                 }
             }
@@ -160,6 +161,9 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                 sb.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, verts.ToArray(), 0, verts.Count, Utility.Utility.GetIndicesArray(verts), 0, verts.Count / 3);
             }
         }
+
+        /// <inheritdoc />
+        public void DrawGlowMap(SpriteBatch sb, Camera camera) { }
 
         /// <inheritdoc />
         public void DrawOutline(SpriteBatch sb, Color color, Camera camera)

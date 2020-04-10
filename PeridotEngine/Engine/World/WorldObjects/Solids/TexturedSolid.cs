@@ -23,6 +23,11 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
             base.Draw(sb);
         }
 
+        public void DrawGlowMap(SpriteBatch sb, Camera camera)
+        {
+            base.DrawGlowMap(sb);
+        }
+
         /// <inheritdoc />
         public void DrawOutline(SpriteBatch sb, Color color, Camera camera)
         {

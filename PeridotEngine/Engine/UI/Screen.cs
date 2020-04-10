@@ -18,6 +18,8 @@ namespace PeridotEngine.Engine.UI
 
         public abstract void Draw(SpriteBatch sb);
 
+        public virtual void DrawGlowMap(SpriteBatch sb) { }
+
         public void DrawUI(SpriteBatch sb)
         {
             sb.Begin(transformMatrix: Camera.GetViewportMatrix());

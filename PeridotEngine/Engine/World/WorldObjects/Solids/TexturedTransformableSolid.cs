@@ -72,6 +72,17 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public void Draw(SpriteBatch sb, Camera camera)
         {
+            Draw(sb, camera, Texture.Texture);
+        }
+
+        /// <inheritdoc />
+        public void DrawGlowMap(SpriteBatch sb, Camera camera)
+        {
+            Draw(sb, camera, Texture.GlowMap);
+        }
+
+        public void Draw(SpriteBatch sb, Camera camera, Texture2D tex)
+        {
             // TODO: Make z-index work
 
             sb.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
@@ -80,12 +91,11 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                 Globals.Graphics.PreferredBackBufferWidth,
                 Globals.Graphics.PreferredBackBufferHeight,
                 0.0f,
-                0.0f, 
+                0.0f,
                 1.0f
             );
 
-            quadEffect.Texture = Texture.Texture;
-            quadEffect.GlowMap = Texture.GlowMap;
+            quadEffect.Texture = tex;
 
             Vector2 p1 = Quad.Point1.Transform(camera.GetMatrix(ParallaxMultiplierBottomLeft));
             Vector2 p2 = Quad.Point2.Transform(camera.GetMatrix(ParallaxMultiplierBottomRight));

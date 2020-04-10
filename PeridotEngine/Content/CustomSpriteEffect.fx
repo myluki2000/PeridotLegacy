@@ -9,7 +9,6 @@
 
 
 DECLARE_TEXTURE(Texture, 0);
-DECLARE_TEXTURE(GlowMap, 1);
 
 
 BEGIN_CONSTANTS
@@ -27,12 +26,6 @@ struct VSOutput
     float2 texCoord		: TEXCOORD0;
 };
 
-struct FSOutput
-{
-	float4 Color		: SV_Target0;
-	float4 Glow			: SV_Target1;
-};
-
 VSOutput SpriteVertexShader(	float4 position	: SV_Position,
 								float4 color	: COLOR0,
 								float2 texCoord	: TEXCOORD0)
@@ -45,13 +38,9 @@ VSOutput SpriteVertexShader(	float4 position	: SV_Position,
 }
 
 
-FSOutput SpritePixelShader(VSOutput input)
+float4 SpritePixelShader(VSOutput input) : SV_Target0
 {
-	FSOutput fout;
-    fout.Color = SAMPLE_TEXTURE(Texture, input.texCoord) * input.color;
-	fout.Glow = SAMPLE_TEXTURE(GlowMap, input.texCoord);
-	
-	return fout;
+    return SAMPLE_TEXTURE(Texture, input.texCoord) * input.color;
 }
 
 TECHNIQUE( SpriteBatch, SpriteVertexShader, SpritePixelShader );

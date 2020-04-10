@@ -55,8 +55,6 @@ namespace PeridotEngine.Engine.World
         public event EventHandler<GameTime>? OnUpdate;
         public event EventHandler<SpriteBatch>? OnDraw;
 
-        private CustomSpriteEffect spriteEffect = new CustomSpriteEffect();
-
         /// <summary>
         /// Create a new empty level.
         /// </summary>
@@ -91,24 +89,23 @@ namespace PeridotEngine.Engine.World
                 if (parallaxValue != lastParallaxValue)
                 {
                     // if it isn't the first time we begin a new SpriteBatch we'll first have to end the old one
-                    if(!float.IsNaN(lastParallaxValue)) sb.End();
+                    if (!float.IsNaN(lastParallaxValue)) sb.End();
 
                     Matrix transformMatrix = parallaxValue != 1.0f ? Camera.GetMatrix(parallaxValue) : Camera.GetMatrix();
 
-                    spriteEffect.TransformMatrix = transformMatrix;
                     sb.Begin(blendState: BlendState.AlphaBlend,
-                             rasterizerState: RasterizerState.CullNone,
-                             effect: spriteEffect);
+                        rasterizerState: RasterizerState.CullNone,
+                        transformMatrix: transformMatrix);
+
                 }
 
                 obj.Draw(sb, Camera);
-
                 lastParallaxValue = parallaxValue;
             }
 
             sb.End();
 
-            
+
 
             if (Settings.DrawColliders)
             {
@@ -123,6 +120,33 @@ namespace PeridotEngine.Engine.World
             
 
             OnDraw?.Invoke(this, sb);
+        }
+
+        public void DrawGlowMap(SpriteBatch sb)
+        {
+            float lastParallaxValue = float.NaN;
+            foreach (IWorldObject obj in WorldObjects)
+            {
+                float parallaxValue = (obj is IParallaxable pObj) ? pObj.ParallaxMultiplier : 1.0f;
+
+                if (parallaxValue != lastParallaxValue)
+                {
+                    // if it isn't the first time we begin a new SpriteBatch we'll first have to end the old one
+                    if (!float.IsNaN(lastParallaxValue)) sb.End();
+
+                    Matrix transformMatrix = parallaxValue != 1.0f ? Camera.GetMatrix(parallaxValue) : Camera.GetMatrix();
+
+                    sb.Begin(blendState: BlendState.AlphaBlend,
+                        rasterizerState: RasterizerState.CullNone,
+                        transformMatrix: transformMatrix);
+
+                }
+
+                obj.DrawGlowMap(sb, Camera);
+                lastParallaxValue = parallaxValue;
+            }
+
+            sb.End();
         }
 
         /// <summary>

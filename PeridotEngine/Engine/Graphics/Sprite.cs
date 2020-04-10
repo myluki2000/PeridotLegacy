@@ -108,6 +108,24 @@ namespace PeridotEngine.Engine.Graphics
             }
         }
 
+        public void DrawGlowMap(SpriteBatch sb)
+        {
+            if (Texture?.GlowMap != null)
+            {
+                int frameWidth = Texture.GlowMap.Width / (Texture is AnimatedTextureData animatedTexture
+                                     ? animatedTexture.FrameCount
+                                     : 1);
+                sb.Draw(Texture.GlowMap,
+                    new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y),
+                    new Rectangle(currentFrameIndex * frameWidth, 0, frameWidth, Texture.Texture.Height),
+                    Color.White * Opacity,
+                    0,
+                    Vector2.Zero,
+                    SpriteEffects.None,
+                    ZIndex.Map(-128, 127, 0, 1));
+            }
+        }
+
         /// <summary>
         /// Rotates the sprite randomly in 90° steps if Texture.HasRandomTextureRotation == true.
         /// </summary>

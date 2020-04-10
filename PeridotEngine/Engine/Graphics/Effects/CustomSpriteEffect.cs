@@ -11,6 +11,7 @@ namespace PeridotEngine.Engine.Graphics.Effects
     class CustomSpriteEffect : Effect
     {
         private readonly EffectParameter matrixParam;
+        public readonly EffectParameter glowMapParam;
         private Viewport lastViewport;
         private Matrix projection;
 
@@ -20,6 +21,7 @@ namespace PeridotEngine.Engine.Graphics.Effects
         public CustomSpriteEffect() : base(Globals.Content.Load<Effect>("CustomSpriteEffect"))
         {
             matrixParam = Parameters["MatrixTransform"];
+            glowMapParam = Parameters["GlowMap"];
         }
 
         /// <inheritdoc />
@@ -33,7 +35,7 @@ namespace PeridotEngine.Engine.Graphics.Effects
                 // --> We get the correct matrix with near plane 0 and far plane -1.
                 Matrix.CreateOrthographicOffCenter(0, vp.Width, vp.Height, 0, 0, -1, out projection);
 
-            
+                // apply half pixel offset
                 projection.M41 += -0.5f * projection.M11;
                 projection.M42 += -0.5f * projection.M22;
                 

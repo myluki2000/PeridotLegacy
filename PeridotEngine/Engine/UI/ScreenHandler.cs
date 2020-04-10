@@ -2,6 +2,7 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using PeridotEngine.Engine.Graphics.Effects;
 
 namespace PeridotEngine.Engine.UI
@@ -39,23 +40,30 @@ namespace PeridotEngine.Engine.UI
 
         public static void Draw(SpriteBatch sb)
         {
-            Globals.Graphics.GraphicsDevice.SetRenderTargets(scene, glowMap);
-            Globals.Graphics.GraphicsDevice.Clear(Color.Transparent);
+            Globals.Graphics.GraphicsDevice.SetRenderTarget(scene);
+            Globals.Graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
             selectedScreen?.Draw(sb);
 
-            Globals.Graphics.GraphicsDevice.SetRenderTarget(null);
-            Globals.Graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+            Globals.Graphics.GraphicsDevice.SetRenderTarget(glowMap);
+            Globals.Graphics.GraphicsDevice.Clear(Color.Black);
 
-            blurEffect.Texture = scene;
+            selectedScreen?.DrawGlowMap(sb);
+
+            Globals.Graphics.GraphicsDevice.SetRenderTarget(null);
+
+            blurEffect.Texture = glowMap;
 
             sb.Begin(blendState: BlendState.AlphaBlend, sortMode: SpriteSortMode.Immediate);
             sb.Draw(scene, new Rectangle(0, 0, Globals.Graphics.PreferredBackBufferWidth, Globals.Graphics.PreferredBackBufferHeight), Color.White);
             sb.End();
-            sb.Begin(blendState: BlendState.Additive, sortMode: SpriteSortMode.Immediate, effect: blurEffect);
-            sb.Draw(glowMap, new Rectangle(0, 0, Globals.Graphics.PreferredBackBufferWidth, Globals.Graphics.PreferredBackBufferHeight), Color.White * 0.9f);
-            sb.End();
 
+            sb.Begin(blendState: BlendState.Additive, sortMode: SpriteSortMode.Immediate, effect: blurEffect);
+            sb.Draw(glowMap,
+                new Rectangle(0, 0, Globals.Graphics.PreferredBackBufferWidth,
+                    Globals.Graphics.PreferredBackBufferHeight), Color.White * 0.9f);
+            sb.End();
+            
             devConsole.Draw(sb);
         }
 

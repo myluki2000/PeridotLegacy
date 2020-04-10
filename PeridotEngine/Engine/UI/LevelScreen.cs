@@ -41,6 +41,12 @@ namespace PeridotEngine.Engine.UI
             base.DrawUI(sb);
         }
 
+        /// <inheritdoc />
+        public override void DrawGlowMap(SpriteBatch sb)
+        {
+            Level.DrawGlowMap(sb);
+        }
+
         public override void Update(GameTime gameTime)
         {
             Level.Update(gameTime);

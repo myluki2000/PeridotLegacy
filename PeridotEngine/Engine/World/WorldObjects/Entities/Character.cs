@@ -41,6 +41,9 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
         }
 
         /// <inheritdoc />
+        public virtual void DrawGlowMap(SpriteBatch sb, Camera camera) { }
+
+        /// <inheritdoc />
         public virtual void DrawOutline(SpriteBatch sb, Color color, Camera camera)
         {
             Utility.Utility.DrawRectangle(sb, BoundingRect, color);
