@@ -13,6 +13,7 @@ using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.Engine.Graphics;
+using PeridotEngine.Engine.Graphics.Effects;
 using PeridotEngine.Engine.Resources;
 using PeridotEngine.Engine.World.Physics;
 using PeridotEngine.Engine.World.Physics.Colliders;
@@ -54,6 +55,8 @@ namespace PeridotEngine.Engine.World
         public event EventHandler<GameTime>? OnUpdate;
         public event EventHandler<SpriteBatch>? OnDraw;
 
+        private CustomSpriteEffect spriteEffect = new CustomSpriteEffect();
+
         /// <summary>
         /// Create a new empty level.
         /// </summary>
@@ -87,13 +90,15 @@ namespace PeridotEngine.Engine.World
 
                 if (parallaxValue != lastParallaxValue)
                 {
+                    // if it isn't the first time we begin a new SpriteBatch we'll first have to end the old one
                     if(!float.IsNaN(lastParallaxValue)) sb.End();
 
                     Matrix transformMatrix = parallaxValue != 1.0f ? Camera.GetMatrix(parallaxValue) : Camera.GetMatrix();
 
-                    sb.Begin(transformMatrix: transformMatrix,
-                             blendState: BlendState.AlphaBlend,
-                             rasterizerState: RasterizerState.CullNone);
+                    spriteEffect.TransformMatrix = transformMatrix;
+                    sb.Begin(blendState: BlendState.AlphaBlend,
+                             rasterizerState: RasterizerState.CullNone,
+                             effect: spriteEffect);
                 }
 
                 obj.Draw(sb, Camera);
