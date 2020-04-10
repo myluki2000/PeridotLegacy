@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
@@ -27,7 +28,7 @@ namespace PeridotEngine.Engine.World
         /// <summary>
         /// Contains all WorldObjects placed in the level.
         /// </summary>
-        public ObservableRangeCollection<IWorldObject> WorldObjects { get; }
+        public ObservableRangeCollection<IWorldObject> WorldObjects { get; private set; }
         /// <summary>
         /// Contains all physics objects in the level.
         /// </summary>
@@ -79,35 +80,42 @@ namespace PeridotEngine.Engine.World
         /// <param name="sb">The SpriteBatch</param>
         public void Draw(SpriteBatch sb)
         {
-            sb.Begin(transformMatrix: Camera.GetMatrix(), blendState: BlendState.AlphaBlend, rasterizerState: RasterizerState.CullNone);
-
-            // TODO: Optimize this by first drawing all non-parallax objects, to improve batching
+            float lastParallaxValue = float.NaN;
             foreach (IWorldObject obj in WorldObjects)
             {
-                if (obj is IParallaxable parallaxObj && parallaxObj.ParallaxMultiplier != 1.0f)
+                float parallaxValue = (obj is IParallaxable pObj) ? pObj.ParallaxMultiplier : 1.0f;
+
+                if (parallaxValue != lastParallaxValue)
                 {
-                    sb.End();
-                    sb.Begin(transformMatrix: Camera.GetMatrix(parallaxObj.ParallaxMultiplier),
-                             blendState: BlendState.AlphaBlend);
-                    obj.Draw(sb, Camera);
-                    sb.End();
-                    sb.Begin(transformMatrix: Camera.GetMatrix(), blendState: BlendState.AlphaBlend, rasterizerState: RasterizerState.CullNone);
+                    if(!float.IsNaN(lastParallaxValue)) sb.End();
+
+                    Matrix transformMatrix = parallaxValue != 1.0f ? Camera.GetMatrix(parallaxValue) : Camera.GetMatrix();
+
+                    sb.Begin(transformMatrix: transformMatrix,
+                             blendState: BlendState.AlphaBlend,
+                             rasterizerState: RasterizerState.CullNone);
                 }
-                else
-                {
-                    obj.Draw(sb, Camera);
-                }
+
+                obj.Draw(sb, Camera);
+
+                lastParallaxValue = parallaxValue;
             }
+
+            sb.End();
+
+            
 
             if (Settings.DrawColliders)
             {
+                sb.Begin(transformMatrix: Camera.GetMatrix());
                 foreach (ICollider collider in Colliders)
                 {
                     collider.Draw(sb, Camera, Color.Green, false);
                 }
+                sb.End();
             }
 
-            sb.End();
+            
 
             OnDraw?.Invoke(this, sb);
         }
@@ -231,6 +239,12 @@ namespace PeridotEngine.Engine.World
 
         private void OnWorldObjectsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            // sort WorldObjects after their parallax multiplier, to later batch draw objects with the same multiplier
+            // this is a bit ugly, maybe try finding a better way of doing it
+            WorldObjects = new ObservableRangeCollection<IWorldObject>(WorldObjects.OrderBy(x => (x is IParallaxable p) ? p.ParallaxMultiplier : 1.0f));
+            WorldObjects.CollectionChanged += OnWorldObjectsChanged;
+
+            // update the PhysicsObjects list with all physics objects.
             PhysicsObjects.Clear();
             foreach (IWorldObject wObj in WorldObjects)
             {
