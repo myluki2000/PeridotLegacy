@@ -27,11 +27,7 @@ namespace PeridotEngine.Engine.World
         /// <summary>
         /// Contains all WorldObjects placed in the level.
         /// </summary>
-        public ObservableRangeCollection<ISolid> Solids { get; }
-        /// <summary>
-        /// Contains all entities in the level.
-        /// </summary>
-        public ObservableRangeCollection<IEntity> Entities { get; }
+        public ObservableRangeCollection<IWorldObject> WorldObjects { get; }
         /// <summary>
         /// Contains all physics objects in the level.
         /// </summary>
@@ -62,10 +58,8 @@ namespace PeridotEngine.Engine.World
         /// </summary>
         public Level()
         {
-            this.Solids = new ObservableRangeCollection<ISolid>();
-            this.Entities = new ObservableRangeCollection<IEntity>();
-            this.Solids.CollectionChanged += OnSolidsChanged;
-            this.Entities.CollectionChanged += OnEntitiesChanged;
+            this.WorldObjects = new ObservableRangeCollection<IWorldObject>();
+            this.WorldObjects.CollectionChanged += OnWorldObjectsChanged;
         }
 
         /// <summary>
@@ -73,11 +67,8 @@ namespace PeridotEngine.Engine.World
         /// </summary>
         public void Initialize()
         {
-            foreach (ISolid solid in Solids)
-                solid.Initialize(this);
-
-            foreach (IEntity entity in Entities)
-                entity.Initialize(this);
+            foreach (IWorldObject obj in WorldObjects)
+                obj.Initialize(this);
 
             Script?.RunAsync(globals: this);
         }
@@ -88,18 +79,10 @@ namespace PeridotEngine.Engine.World
         /// <param name="sb">The SpriteBatch</param>
         public void Draw(SpriteBatch sb)
         {
-            // TODO: Cache this
-            List<IWorldObject> combinedObjects = new List<IWorldObject>(Solids.Count + Entities.Count);
-            combinedObjects.AddRange(Solids);
-            combinedObjects.AddRange(Entities);
-
-            // TODO: Use z-index of draw call instead
-            combinedObjects.Sort((x, y) => x.ZIndex.CompareTo(y.ZIndex));
-
             sb.Begin(transformMatrix: Camera.GetMatrix(), blendState: BlendState.AlphaBlend, rasterizerState: RasterizerState.CullNone);
 
             // TODO: Optimize this by first drawing all non-parallax objects, to improve batching
-            foreach (IWorldObject obj in combinedObjects)
+            foreach (IWorldObject obj in WorldObjects)
             {
                 if (obj is IParallaxable parallaxObj && parallaxObj.ParallaxMultiplier != 1.0f)
                 {
@@ -135,12 +118,7 @@ namespace PeridotEngine.Engine.World
         /// <param name="gameTime">The current game time</param>
         public void Update(GameTime gameTime)
         {
-            foreach (ISolid obj in Solids)
-            {
-                obj.Update(gameTime);
-            }
-
-            foreach (IEntity obj in Entities)
+            foreach (IWorldObject obj in WorldObjects)
             {
                 obj.Update(gameTime);
 
@@ -196,7 +174,7 @@ namespace PeridotEngine.Engine.World
 
                 ISolid solid = (ISolid)solidType.GetMethod("FromXml").Invoke(null, new object[] { xEle, level.TextureDictionary });
 
-                level.Solids.Add(solid);
+                level.WorldObjects.Add(solid);
             }
             
             // do the same for entities
@@ -212,7 +190,7 @@ namespace PeridotEngine.Engine.World
 
                 IEntity entity = (IEntity)entityType.GetMethod("FromXml").Invoke(null, new object[] { xEle, level.TextureDictionary });
 
-                level.Entities.Add(entity);
+                level.WorldObjects.Add(entity);
             }
 
             // do the same for colliders
@@ -239,10 +217,10 @@ namespace PeridotEngine.Engine.World
             XElement root = new XElement("Level",
                 new XElement("TextureDirectory", TextureDirectory.Substring(TextureDirectory.IndexOf(@"\", StringComparison.InvariantCulture) + 1)), // remove the leading "world\" from the path
                 new XElement("Solids",
-                    from solid in Solids
+                    from solid in WorldObjects.Where(x => x is ISolid)
                     select solid.ToXml(TextureDictionary)),
                 new XElement("Entities",
-                    from entity in Entities
+                    from entity in WorldObjects.Where(x => x is IEntity)
                     select entity.ToXml(TextureDictionary)),
                 new XElement("Colliders",
                     from collider in Colliders
@@ -251,17 +229,12 @@ namespace PeridotEngine.Engine.World
             root.Save(path);
         }
 
-        private void OnSolidsChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-
-        }
-
-        private void OnEntitiesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnWorldObjectsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             PhysicsObjects.Clear();
-            foreach (IEntity entity in Entities)
+            foreach (IWorldObject wObj in WorldObjects)
             {
-                if (entity is IPhysicsObject physObj)
+                if (wObj is IPhysicsObject physObj)
                 {
                     PhysicsObjects.Add(physObj);
                 }

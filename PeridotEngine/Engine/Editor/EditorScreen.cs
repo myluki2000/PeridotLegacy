@@ -189,18 +189,13 @@ namespace PeridotEngine.Engine.Editor
             // check if any object is selected
             if (toolboxForm.SelectedObject == null) return;
 
-            if (toolboxForm.SelectedObject is ISolid solid)
-            {
-                solid.Initialize(Level);
-                solid.Position = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2());
-                Level.Solids.Add(solid);
-            }
-            else if (toolboxForm.SelectedObject is IEntity entity)
-            {
-                entity.Initialize(Level);
-                entity.Position = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2());
-                Level.Entities.Add(entity);
-            }
+            IWorldObject obj = toolboxForm.SelectedObject;
+            
+            obj.Initialize(Level);
+            obj.Position = Level.Camera.ScreenPosToWorldPos(mouseState.Position.ToVector2());
+            Level.WorldObjects.Add(obj);
+            
+           
         }
 
         private bool dragging = false;
@@ -243,21 +238,11 @@ namespace PeridotEngine.Engine.Editor
 
             Vector2 mousePosWorldSpace = Level.Camera.ScreenPosToWorldPos(Mouse.GetState().Position.ToVector2());
 
-            IEntity entity = Level.Entities.FirstOrDefault(x => x.Contains(mousePosWorldSpace.ToPoint()));
+            IWorldObject obj = Level.WorldObjects.FirstOrDefault(x => x.Contains(mousePosWorldSpace.ToPoint()));
 
-            if (entity != null)
+            if (obj != null)
             {
-                selectedObject = entity;
-                propertiesForm.SelectedObject = selectedObject;
-                PopulateValuesFromSelectedObject();
-                return;
-            }
-
-            ISolid solid = Level.Solids.FirstOrDefault(x => x.Contains(mousePosWorldSpace.ToPoint()));
-
-            if (solid != null)
-            {
-                selectedObject = solid;
+                selectedObject = obj;
                 propertiesForm.SelectedObject = selectedObject;
                 PopulateValuesFromSelectedObject();
                 return;
@@ -273,8 +258,7 @@ namespace PeridotEngine.Engine.Editor
             {
                 if (selectedObject != null)
                 {
-                    if (selectedObject is IEntity) Level.Entities.Remove((IEntity)selectedObject);
-                    if (selectedObject is ISolid) Level.Solids.Remove((ISolid)selectedObject);
+                    Level.WorldObjects.Remove(selectedObject);
                     selectedObject = null;
                 }
             }
