@@ -119,6 +119,8 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public void DrawGlowMap(SpriteBatch sb, Camera camera)
         {
+            if (Material.GlowMap == null) return;
+
             int frameWidth = Material.GlowMap.Texture.Width / (Material.GlowMap is AnimatedTextureData atd
                                  ? atd.Frames.Length
                                  : 1);
@@ -201,10 +203,10 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                 Material = materials[xEle.Element("TexturePath").Value],
                 Quad = Quad.FromXml(xEle.Element("Quad")),
                 ZIndex = sbyte.Parse(xEle.Element("Z-Index").Value),
-                ParallaxMultiplierTopLeft = float.Parse(xEle.Element("ParallaxTopLeft").Value),
-                ParallaxMultiplierTopRight = float.Parse(xEle.Element("ParallaxTopRight").Value),
-                ParallaxMultiplierBottomLeft = float.Parse(xEle.Element("ParallaxBottomLeft").Value),
-                ParallaxMultiplierBottomRight = float.Parse(xEle.Element("ParallaxBottomRight").Value)
+                ParallaxMultiplierTopLeft = float.Parse(xEle.Element("ParallaxTopLeft").Value, CultureInfo.InvariantCulture),
+                ParallaxMultiplierTopRight = float.Parse(xEle.Element("ParallaxTopRight").Value, CultureInfo.InvariantCulture),
+                ParallaxMultiplierBottomLeft = float.Parse(xEle.Element("ParallaxBottomLeft").Value, CultureInfo.InvariantCulture),
+                ParallaxMultiplierBottomRight = float.Parse(xEle.Element("ParallaxBottomRight").Value, CultureInfo.InvariantCulture)
             };
         }
 
