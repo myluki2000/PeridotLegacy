@@ -62,12 +62,13 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Engine\Editor\Forms\PropertiesForm.cs">
+    <Compile Include="Engine\Editor\Forms\PropertiesForm\PropertiesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Engine\Editor\Forms\PropertiesForm.Designer.cs">
+    <Compile Include="Engine\Editor\Forms\PropertiesForm\PropertiesForm.Designer.cs">
       <DependentUpon>PropertiesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\Editor\Forms\PropertiesForm\TextureEditor.cs" />
     <Compile Include="Engine\Editor\Forms\TextureSelectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -220,7 +221,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Engine\Editor\Forms\PropertiesForm.resx">
+    <EmbeddedResource Include="Engine\Editor\Forms\PropertiesForm\PropertiesForm.resx">
       <DependentUpon>PropertiesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Editor\Forms\TextureSelectionForm.resx">

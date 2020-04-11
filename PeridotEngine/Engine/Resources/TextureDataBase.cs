@@ -1,7 +1,11 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using System.ComponentModel;
+using System.Drawing.Design;
+using Microsoft.Xna.Framework.Graphics;
+using PeridotEngine.Engine.Editor.Forms.PropertiesForm;
 
 namespace PeridotEngine.Engine.Resources
 {
+    [Editor(typeof(TextureEditor), typeof(UITypeEditor))]
     public abstract class TextureDataBase
     {
         /// <summary>

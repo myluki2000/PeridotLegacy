@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PeridotEngine.Engine.Editor.Forms;
+using PeridotEngine.Engine.Editor.Forms.PropertiesForm;
 using PeridotEngine.Engine.UI;
 using PeridotEngine.Engine.Utility;
 using PeridotEngine.Engine.World;
@@ -24,7 +25,7 @@ namespace PeridotEngine.Engine.Editor
     {
         private readonly ToolbarForm toolbarForm = new ToolbarForm();
         private readonly ToolboxForm toolboxForm;
-        private readonly PropertiesForm propertiesForm = new PropertiesForm();
+        private readonly PropertiesForm propertiesForm;
 
         private readonly string levelPath;
 
@@ -77,6 +78,7 @@ namespace PeridotEngine.Engine.Editor
             level.Initialize();
 
             toolboxForm = new ToolboxForm(level.TextureDirectory);
+            propertiesForm = new PropertiesForm(level.TextureDirectory);
         }
 
         public override void Initialize()

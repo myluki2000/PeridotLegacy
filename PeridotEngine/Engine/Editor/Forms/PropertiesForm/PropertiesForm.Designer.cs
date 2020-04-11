@@ -1,4 +1,4 @@
-﻿namespace PeridotEngine.Engine.Editor.Forms
+﻿namespace PeridotEngine.Engine.Editor.Forms.PropertiesForm
 {
     partial class PropertiesForm
     {
