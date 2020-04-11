@@ -58,6 +58,12 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         private static readonly QuadEffect quadEffect;
         private Vector2 size = new Vector2(100, 100);
 
+        private int diffuseCurrentFrameIndex = 0;
+        private float diffuseTimeOnFrame;
+
+        private int glowCurrentFrameIndex = 0;
+        private float glowTimeOnFrame;
+
         static TexturedTransformableSolid()
         {
             quadEffect = new QuadEffect();
@@ -67,21 +73,60 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         public void Initialize(Level level) { }
 
         /// <inheritdoc />
-        public void Update(GameTime gameTime) { }
+        public void Update(GameTime gameTime)
+        {
+            if (Material != null)
+            {
+                // update diffuse animation
+                if (Material.Diffuse is AnimatedTextureData a1)
+                {
+                    diffuseTimeOnFrame += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                    if (diffuseTimeOnFrame >= a1.Frames[diffuseCurrentFrameIndex].Duration)
+                    {
+                        diffuseCurrentFrameIndex = ++diffuseCurrentFrameIndex % a1.Frames.Length;
+
+                        // set the start time to the random deviation time of the frame
+                        diffuseTimeOnFrame = Globals.Random.Next(-a1.Frames[diffuseCurrentFrameIndex].Deviation, a1.Frames[diffuseCurrentFrameIndex].Deviation);
+
+                    }
+                }
+
+                // update glow map animation
+                if (Material.GlowMap is AnimatedTextureData a2)
+                {
+                    glowTimeOnFrame += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                    if (glowTimeOnFrame >= a2.Frames[glowCurrentFrameIndex].Duration)
+                    {
+                        glowCurrentFrameIndex = ++glowCurrentFrameIndex % a2.Frames.Length;
+
+                        // set the start time to the random deviation time of the frame
+                        glowTimeOnFrame = Globals.Random.Next(-a2.Frames[glowCurrentFrameIndex].Deviation, a2.Frames[glowCurrentFrameIndex].Deviation);
+                    }
+                }
+            }
+        }
 
         /// <inheritdoc />
         public void Draw(SpriteBatch sb, Camera camera)
         {
-            Draw(sb, camera, Material.Diffuse.Texture);
+            int frameWidth = Material.Diffuse.Texture.Width / (Material.Diffuse is AnimatedTextureData atd
+                ? atd.Frames.Length
+                : 1);
+
+            Draw(sb, camera, Material.Diffuse.Texture, new Rectangle(frameWidth * diffuseCurrentFrameIndex, 0, frameWidth, Material.Diffuse.Texture.Height));
         }
 
         /// <inheritdoc />
         public void DrawGlowMap(SpriteBatch sb, Camera camera)
         {
-            Draw(sb, camera, Material.GlowMap.Texture);
+            int frameWidth = Material.GlowMap.Texture.Width / (Material.GlowMap is AnimatedTextureData atd
+                                 ? atd.Frames.Length
+                                 : 1);
+
+            Draw(sb, camera, Material.GlowMap.Texture, new Rectangle(frameWidth * glowCurrentFrameIndex, 0, frameWidth, Material.GlowMap.Texture.Height));
         }
 
-        public void Draw(SpriteBatch sb, Camera camera, Texture2D tex)
+        private void Draw(SpriteBatch sb, Camera camera, Texture2D tex, Rectangle srcRect)
         {
             // TODO: Make z-index work
 
@@ -106,12 +151,12 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
 
             VertexPositionTexture3D[] verts = new VertexPositionTexture3D[6]
             {
-                new VertexPositionTexture3D() {Position = new Vector3(p4, 0), TexCoord = new Vector3(0 * qs[3], 0 * qs[3], qs[3])},
-                new VertexPositionTexture3D() {Position = new Vector3(p3, 0), TexCoord = new Vector3(1 * qs[2], 0 * qs[2], qs[2])},
-                new VertexPositionTexture3D() {Position = new Vector3(p2, 0), TexCoord = new Vector3(1 * qs[1], 1 * qs[1], qs[1])},
-                new VertexPositionTexture3D() {Position = new Vector3(p4, 0), TexCoord = new Vector3(0 * qs[3], 0 * qs[3], qs[3])},
-                new VertexPositionTexture3D() {Position = new Vector3(p2, 0), TexCoord = new Vector3(1 * qs[1], 1 * qs[1], qs[1])},
-                new VertexPositionTexture3D() {Position = new Vector3(p1, 0), TexCoord = new Vector3(0 * qs[0], 1 * qs[0], qs[0])}
+                new VertexPositionTexture3D() {Position = new Vector3(p4, 0), TexCoord = new Vector3((float)srcRect.Left / tex.Width * qs[3], (float)srcRect.Top / tex.Height * qs[3], qs[3])},
+                new VertexPositionTexture3D() {Position = new Vector3(p3, 0), TexCoord = new Vector3((float)srcRect.Right / tex.Width * qs[2], (float)srcRect.Top / tex.Height * qs[2], qs[2])},
+                new VertexPositionTexture3D() {Position = new Vector3(p2, 0), TexCoord = new Vector3((float)srcRect.Right / tex.Width * qs[1], (float)srcRect.Bottom / tex.Height * qs[1], qs[1])},
+                new VertexPositionTexture3D() {Position = new Vector3(p4, 0), TexCoord = new Vector3((float)srcRect.Left / tex.Width * qs[3], (float)srcRect.Top / tex.Height * qs[3], qs[3])},
+                new VertexPositionTexture3D() {Position = new Vector3(p2, 0), TexCoord = new Vector3((float)srcRect.Right / tex.Width * qs[1], (float)srcRect.Bottom / tex.Height * qs[1], qs[1])},
+                new VertexPositionTexture3D() {Position = new Vector3(p1, 0), TexCoord = new Vector3((float)srcRect.Left / tex.Width * qs[0], (float)srcRect.Bottom / tex.Height * qs[0], qs[0])}
             };
 
             foreach (EffectPass pass in quadEffect.Techniques[0].Passes)
