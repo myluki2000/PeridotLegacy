@@ -32,9 +32,9 @@ namespace PeridotEngine.Engine.Graphics.Particles
         private int lifeTimeCounter = 0;
 
 
-        public Particle(TextureData texture, Vector2 position, Vector2 velocity, int lifeTime, int fadeTime)
+        public Particle(Material material, Vector2 position, Vector2 velocity, int lifeTime, int fadeTime)
         {
-            this.Texture = texture;
+            this.Material = material;
             this.Position = position;
             this.Velocity = velocity;
             this.LifeTime = lifeTime;

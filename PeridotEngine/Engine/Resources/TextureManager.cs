@@ -10,7 +10,7 @@ namespace PeridotEngine.Engine.Resources
     static class TextureManager
     {
         /// <summary>
-        /// Load a "raw" Texture2D without any metadata from the specified path.
+        /// Loads a "raw" Texture2D without any metadata from the specified path.
         /// </summary>
         /// <param name="contentPath">The relative or absolute path without a file extension</param>
         /// <returns>The Texture2D which has been loaded</returns>
@@ -26,21 +26,15 @@ namespace PeridotEngine.Engine.Resources
         /// <summary>
         /// Load a texture and its metadata from the specified path and return it.
         /// </summary>
-        /// <param name="contentPath">The relative or absolute path without a file extension</param>
-        /// <returns>A TextureData object containing the texture and its metadata</returns>
-        public static TextureDataBase LoadTexture(string contentPath)
+        /// <param name="contentPath">The relative or absolute path of the material file.</param>
+        /// <returns>A Material object containing the textures and its metadata</returns>
+        public static Material LoadMaterial(string contentPath)
         {
-            XElement rootEle = XElement.Load(contentPath + ".ptex");
+            if (!contentPath.EndsWith(".pmat"))
+                contentPath = contentPath + ".pmat";
+            XElement rootEle = XElement.Load(contentPath);
 
-            switch (rootEle.Name.LocalName)
-            {
-                case "Texture":
-                    return TextureData.FromXml(rootEle);
-                case "AnimatedTexture":
-                    return AnimatedTextureData.FromXml(rootEle);
-                default:
-                    throw new Exception("TextureData type mentioned in texture xml file " + contentPath + " not supported.");
-            }
+            return Material.FromXml(rootEle);
         }
     }
 }

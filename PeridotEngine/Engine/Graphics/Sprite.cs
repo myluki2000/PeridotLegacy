@@ -13,7 +13,7 @@ namespace PeridotEngine.Engine.Graphics
         /// <summary>
         /// The texture of this sprite. Gets drawn to the screen when Sprite.Draw() is called. If null a dummy outline is drawn.
         /// </summary>
-        public TextureDataBase? Texture { get; set; }
+        public Material? Material { get; set; }
         /// <summary>
         /// The position of the sprite in the current matrix.
         /// </summary>
@@ -35,8 +35,11 @@ namespace PeridotEngine.Engine.Graphics
         /// </summary>
         public float Opacity { get; set; } = 1.0f;
 
-        private int currentFrameIndex = 0;
-        private float timeOnFrame;
+        private int diffuseCurrentFrameIndex = 0;
+        private float diffuseTimeOnFrame;
+
+        private int glowCurrentFrameIndex = 0;
+        private float glowTimeOnFrame;
 
         /// <summary>
         /// Create a new empty sprite object.
@@ -49,17 +52,17 @@ namespace PeridotEngine.Engine.Graphics
         /// <summary>
         /// Create a new sprite with the specified parameters.
         /// </summary>
-        /// <param name="texture">The texture of the sprite</param>
+        /// <param name="material">The texture of the sprite</param>
         /// <param name="position">The position of the sprite</param>
         /// <param name="size">The size of the sprite.</param>
-        public Sprite(TextureDataBase texture, Vector2 position, Vector2? size = null)
+        public Sprite(Material material, Vector2 position, Vector2? size = null)
         {
-            this.Texture = texture;
+            this.Material = material;
             this.Position = position;
 
             if (size == null)
             {
-                this.Size = new Vector2(texture.Width, texture.Height);
+                this.Size = new Vector2(material.Width, material.Height);
             }
             else
             {
@@ -71,13 +74,33 @@ namespace PeridotEngine.Engine.Graphics
 
         public void Update(GameTime gameTime)
         {
-            if (Texture is AnimatedTextureData animatedTexture)
+            if (Material != null)
             {
-                timeOnFrame += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                if (timeOnFrame >= animatedTexture.FrameDurations[currentFrameIndex])
+                // update diffuse animation
+                if (Material.Diffuse is AnimatedTextureData a1)
                 {
-                    timeOnFrame = 0;
-                    currentFrameIndex = ++currentFrameIndex % animatedTexture.FrameCount;
+                    diffuseTimeOnFrame += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                    if (diffuseTimeOnFrame >= a1.Frames[diffuseCurrentFrameIndex].Duration)
+                    {
+                        diffuseCurrentFrameIndex = ++diffuseCurrentFrameIndex % a1.Frames.Length;
+
+                        // set the start time to the random deviation time of the frame
+                        diffuseTimeOnFrame = Globals.Random.Next(-a1.Frames[diffuseCurrentFrameIndex].Deviation, a1.Frames[diffuseCurrentFrameIndex].Deviation);
+                        
+                    }
+                }
+
+                // update glow map animation
+                if (Material.GlowMap is AnimatedTextureData a2)
+                {
+                    glowTimeOnFrame += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                    if (glowTimeOnFrame >= a2.Frames[glowCurrentFrameIndex].Duration)
+                    {
+                        glowCurrentFrameIndex = ++glowCurrentFrameIndex % a2.Frames.Length;
+
+                        // set the start time to the random deviation time of the frame
+                        glowTimeOnFrame = Globals.Random.Next(-a2.Frames[glowCurrentFrameIndex].Deviation, a2.Frames[glowCurrentFrameIndex].Deviation);
+                    }
                 }
             }
         }
@@ -88,14 +111,14 @@ namespace PeridotEngine.Engine.Graphics
         /// <param name="sb">The SpriteBatch which is used to draw the sprite</param>
         public void Draw(SpriteBatch sb)
         {
-            if (Texture != null)
+            if (Material != null)
             {
-                int frameWidth = Texture.Texture.Width / (Texture is AnimatedTextureData animatedTexture
-                    ? animatedTexture.FrameCount
+                int frameWidth = Material.Diffuse.Texture.Width / (Material.Diffuse is AnimatedTextureData animatedTexture
+                    ? animatedTexture.Frames.Length
                     : 1);
-                sb.Draw(Texture.Texture,
+                sb.Draw(Material.Diffuse.Texture,
                     new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y),
-                    new Rectangle(currentFrameIndex * frameWidth, 0, frameWidth, Texture.Texture.Height),
+                    new Rectangle(diffuseCurrentFrameIndex * frameWidth, 0, frameWidth, Material.Diffuse.Texture.Height),
                     Color.White * Opacity,
                     0,
                     Vector2.Zero,
@@ -110,14 +133,14 @@ namespace PeridotEngine.Engine.Graphics
 
         public void DrawGlowMap(SpriteBatch sb)
         {
-            if (Texture?.GlowMap != null)
+            if (Material?.GlowMap != null)
             {
-                int frameWidth = Texture.GlowMap.Width / (Texture is AnimatedTextureData animatedTexture
-                                     ? animatedTexture.FrameCount
+                int frameWidth = Material.GlowMap.Width / (Material.GlowMap is AnimatedTextureData animatedTexture
+                                     ? animatedTexture.Frames.Length
                                      : 1);
-                sb.Draw(Texture.GlowMap,
+                sb.Draw(Material.GlowMap.Texture,
                     new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y),
-                    new Rectangle(currentFrameIndex * frameWidth, 0, frameWidth, Texture.Texture.Height),
+                    new Rectangle(glowCurrentFrameIndex * frameWidth, 0, frameWidth, Material.GlowMap.Texture.Height),
                     Color.White * Opacity,
                     0,
                     Vector2.Zero,
@@ -131,9 +154,9 @@ namespace PeridotEngine.Engine.Graphics
         /// </summary>
         private void RotateRandomly()
         {
-            if (Texture != null)
+            if (Material != null)
             {
-                if (Texture.HasRandomTextureRotation)
+                if (Material.HasRandomTextureRotation)
                 {
                     Rotation = (float)(Globals.Random.Next(0, 4) * Math.PI / 2);
                 }

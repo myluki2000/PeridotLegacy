@@ -178,7 +178,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         }
 
         /// <inheritdoc />
-        public XElement ToXml(LazyLoadingTextureDictionary textureDictionary)
+        public XElement ToXml(LazyLoadingMaterialDictionary materialDictionary)
         {
             return new XElement("DynamicWater",
                 Position.ToXml("Position"),
@@ -187,7 +187,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
             );
         }
 
-        public static DynamicWater FromXml(XElement xEle, LazyLoadingTextureDictionary textures)
+        public static DynamicWater FromXml(XElement xEle, LazyLoadingMaterialDictionary materials)
         {
             return new DynamicWater()
             {

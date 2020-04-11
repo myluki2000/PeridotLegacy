@@ -18,12 +18,12 @@ namespace PeridotEngine.Engine.Editor.Forms.PropertiesForm
         /// <inheritdoc />
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
-            if (provider.GetService(typeof(IWindowsFormsEditorService)) is IWindowsFormsEditorService editorService && value is TextureDataBase tex)
+            if (provider.GetService(typeof(IWindowsFormsEditorService)) is IWindowsFormsEditorService editorService)
             {
                 using TextureSelectionForm form = new TextureSelectionForm(TextureDirectory);
                 if (editorService.ShowDialog(form) == DialogResult.OK)
                 {
-                    return form.SelectedTexture;
+                    return form.SelectedMaterial;
                 }
             }
 

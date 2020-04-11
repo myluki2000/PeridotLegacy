@@ -26,7 +26,7 @@ namespace PeridotEngine.Engine.Graphics.Particles
         /// <summary>
         /// This array holds all textures which can be applied to the particles.
         /// </summary>
-        public TextureData[] PossibleTextures { get; set; }
+        public Material[] PossibleTextures { get; set; }
         /// <summary>
         /// The lower bound for particle velocity when spawning.
         /// </summary>
@@ -58,7 +58,7 @@ namespace PeridotEngine.Engine.Graphics.Particles
         /// the position of the particle system.
         /// </summary>
         /// <param name="position">The position of the particle system</param>
-        public ParticleSystem(Vector2 position, TextureData[] possibleTextures)
+        public ParticleSystem(Vector2 position, Material[] possibleTextures)
         {
             this.Position = position;
             this.PossibleTextures = possibleTextures;
@@ -69,7 +69,7 @@ namespace PeridotEngine.Engine.Graphics.Particles
         /// </summary>
         /// <param name="position">The upper-left corner of the spawn area</param>
         /// <param name="size">The size of the spawn area</param>
-        public ParticleSystem(Vector2 position, Point size, TextureData[] possibleTextures)
+        public ParticleSystem(Vector2 position, Point size, Material[] possibleTextures)
         {
             this.Position = position;
             this.Size = size;

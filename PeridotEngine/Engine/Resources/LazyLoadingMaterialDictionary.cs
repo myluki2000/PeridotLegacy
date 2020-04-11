@@ -10,15 +10,15 @@ namespace PeridotEngine.Engine.Resources
     /// <summary>
     /// A dictionary for textures, which will automatically load a texture if it is not already in the dictionary.
     /// </summary>
-    public class LazyLoadingTextureDictionary : Dictionary<string, TextureDataBase>
+    public class LazyLoadingMaterialDictionary : Dictionary<string, Material>
     {
-        public new TextureDataBase this[string key]
+        public new Material this[string key]
         {
             get
             {
                 if (!base.ContainsKey(key))
                 {
-                    base.Add(key, TextureManager.LoadTexture(Path.Combine(TextureDirectory, key)));
+                    base.Add(key, TextureManager.LoadMaterial(Path.Combine(TextureDirectory, key)));
                 }
 
                 if(base.ContainsKey(key))
@@ -32,7 +32,7 @@ namespace PeridotEngine.Engine.Resources
             }
         }
 
-        public LazyLoadingTextureDictionary(string textureDirectory)
+        public LazyLoadingMaterialDictionary(string textureDirectory)
         {
             this.TextureDirectory = textureDirectory;
         }

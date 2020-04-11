@@ -93,6 +93,9 @@
     <Compile Include="Engine\Graphics\Effects\BlurEffect.cs" />
     <Compile Include="Engine\Graphics\Effects\CustomSpriteEffect.cs" />
     <Compile Include="Engine\Graphics\Effects\QuadEffect.cs" />
+    <Compile Include="Engine\Resources\AnimatedTextureData.cs" />
+    <Compile Include="Engine\Resources\TextureData.cs" />
+    <Compile Include="Engine\Resources\TextureDataBase.cs" />
     <Compile Include="Engine\Utility\Quad.cs" />
     <Compile Include="Engine\World\WorldObjects\Solids\ITextured.cs" />
     <Compile Include="Engine\Utility\ExtensionMethods.cs" />
@@ -110,13 +113,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Engine\Resources\AnimatedTextureData.cs" />
     <Compile Include="Engine\Resources\ConfigManager.cs" />
     <Compile Include="Engine\Resources\FontManager.cs" />
-    <Compile Include="Engine\Resources\TextureDataBase.cs" />
-    <Compile Include="Engine\Resources\LazyLoadingTextureDictionary.cs" />
+    <Compile Include="Engine\Resources\LazyLoadingMaterialDictionary.cs" />
     <Compile Include="Engine\Resources\TextureManager.cs" />
-    <Compile Include="Engine\Resources\TextureData.cs" />
+    <Compile Include="Engine\Resources\Material.cs" />
     <Compile Include="Engine\UI\DevConsole\Commands\Command.cs" />
     <Compile Include="Engine\UI\DevConsole\Commands\EditLvlCommand.cs" />
     <Compile Include="Engine\UI\DevConsole\Commands\FullscreenCommand.cs" />

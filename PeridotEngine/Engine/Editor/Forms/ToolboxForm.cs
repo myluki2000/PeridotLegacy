@@ -76,8 +76,8 @@ namespace PeridotEngine.Engine.Editor.Forms
 
                 if (obj is ITextured texturedObj)
                 {
-                    if (SelectedTexture == null) return null;
-                    texturedObj.Texture = SelectedTexture;
+                    if (SelectedMaterial == null) return null;
+                    texturedObj.Material = SelectedMaterial;
                 }
 
                 return obj;
@@ -101,17 +101,17 @@ namespace PeridotEngine.Engine.Editor.Forms
         /// <summary>
         /// The selected texture that will be used as the texture of newly placed (textured) objects.
         /// </summary>
-        public TextureDataBase? SelectedTexture
+        public Material? SelectedMaterial
         {
-            get => selectedTexture;
+            get => selectedMaterial;
             private set
             {
-                selectedTexture = value;
-                pbSelectedTexture.Image = selectedTexture?.Texture.ToImage(250, 250);
-                lblTexturePath.Text = selectedTexture?.Name;
+                selectedMaterial = value;
+                pbSelectedTexture.Image = selectedMaterial?.Diffuse.Texture.ToImage(250, 250);
+                lblTexturePath.Text = selectedMaterial?.Name;
             }
         }
-        private TextureDataBase? selectedTexture = null;
+        private Material? selectedMaterial = null;
 
         public event EventHandler<sbyte>? ObjectZIndexChanged;
         public event EventHandler<int>? ObjectWidthChanged;
@@ -214,12 +214,12 @@ namespace PeridotEngine.Engine.Editor.Forms
             DialogResult result = textureSelectionForm.ShowDialog();
             if (result == DialogResult.OK)
             {
-                SelectedTexture = textureSelectionForm.SelectedTexture;
+                SelectedMaterial = textureSelectionForm.SelectedMaterial;
 
-                if (SelectedTexture != null)
+                if (SelectedMaterial != null)
                 {
-                    ObjectWidth = SelectedTexture.Width;
-                    ObjectHeight = SelectedTexture.Height;
+                    ObjectWidth = SelectedMaterial.Width;
+                    ObjectHeight = SelectedMaterial.Height;
                 }
             }
         }

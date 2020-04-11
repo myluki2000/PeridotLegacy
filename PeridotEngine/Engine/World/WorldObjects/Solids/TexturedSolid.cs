@@ -41,9 +41,9 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         }
 
         /// <inheritdoc />
-        public XElement ToXml(LazyLoadingTextureDictionary textureDictionary)
+        public XElement ToXml(LazyLoadingMaterialDictionary materialDictionary)
         {
-            XElement? texPathXEle = Texture != null ? new XElement("TexturePath", textureDictionary.GetTexturePathByName(Texture.Name)) : null;
+            XElement? texPathXEle = Material != null ? new XElement("TexturePath", materialDictionary.GetTexturePathByName(Material.Name)) : null;
 
             return new XElement(this.GetType().Name,
                 Position.ToXml("Position"),
@@ -58,7 +58,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
 
         public void Initialize(Level level) { }
 
-        public static TexturedSolid FromXml(XElement xEle, LazyLoadingTextureDictionary textures)
+        public static TexturedSolid FromXml(XElement xEle, LazyLoadingMaterialDictionary materials)
         {
             TexturedSolid obj = new TexturedSolid();
 
@@ -72,7 +72,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
             obj.ZIndex = sbyte.Parse(xEle.Element("Z-Index").Value);
 
             // get texture from lazy loading dictionary provided by the LevelManager
-            obj.Texture = textures[xEle.Element("TexturePath").Value];
+            obj.Material = materials[xEle.Element("TexturePath").Value];
 
             // get rotation
             obj.Rotation = float.Parse(xEle.Element("Rotation").Value, CultureInfo.InvariantCulture.NumberFormat);

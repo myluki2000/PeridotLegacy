@@ -61,8 +61,8 @@ namespace PeridotEngine.Engine.World.WorldObjects
         /// <summary>
         /// Serializes this object to xml.
         /// </summary>
-        /// <param name="textureDictionary">Texture dictionary used for this object</param>
+        /// <param name="materialDictionary">Texture dictionary used for this object</param>
         /// <returns>XElement representing the object as xml</returns>
-        XElement ToXml(LazyLoadingTextureDictionary textureDictionary);
+        XElement ToXml(LazyLoadingMaterialDictionary materialDictionary);
     }
 }

@@ -17,6 +17,6 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <summary>
         /// The texture of the object.
         /// </summary>
-        TextureDataBase Texture { get; set; }
+        Material Material { get; set; }
     }
 }

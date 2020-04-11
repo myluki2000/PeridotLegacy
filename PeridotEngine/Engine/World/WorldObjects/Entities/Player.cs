@@ -70,9 +70,9 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
         }
 
         /// <inheritdoc />
-        public override XElement ToXml(LazyLoadingTextureDictionary textureDictionary)
+        public override XElement ToXml(LazyLoadingMaterialDictionary materialDictionary)
         {
-            XElement? texPathXEle = Texture != null ? new XElement("TexturePath", textureDictionary.GetTexturePathByName(Texture.Name)) : null;
+            XElement? texPathXEle = Material != null ? new XElement("TexturePath", materialDictionary.GetTexturePathByName(Material.Name)) : null;
 
             return new XElement(this.GetType().Name,
                 Position.ToXml("Position"),
@@ -84,13 +84,13 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
             );
         }
 
-        public static Player FromXml(XElement xEle, LazyLoadingTextureDictionary textures)
+        public static Player FromXml(XElement xEle, LazyLoadingMaterialDictionary materials)
         {
             return new Player()
             {
                 Position = new Vector2().FromXml(xEle.Element("Position")),
                 Size = new Vector2().FromXml(xEle.Element("Size")),
-                Texture = xEle.Element("TexturePath") != null ? textures[xEle.Element("TexturePath").Value] : null,
+                Material = xEle.Element("TexturePath") != null ? materials[xEle.Element("TexturePath").Value] : null,
                 ZIndex = sbyte.Parse(xEle.Element("Z-Index").Value),
                 Rotation = float.Parse(xEle.Element("Rotation").Value, CultureInfo.InvariantCulture.NumberFormat),
                 Opacity = float.Parse(xEle.Element("Opacity").Value, CultureInfo.InvariantCulture.NumberFormat),

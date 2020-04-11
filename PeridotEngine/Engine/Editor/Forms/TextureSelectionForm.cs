@@ -19,7 +19,7 @@ namespace PeridotEngine.Engine.Editor.Forms
     public partial class TextureSelectionForm : Form
     {
 
-        public TextureDataBase? SelectedTexture { get; private set; }
+        public Material? SelectedMaterial { get; private set; }
 
         public TextureSelectionForm(string directory)
         {
@@ -44,19 +44,17 @@ namespace PeridotEngine.Engine.Editor.Forms
 
             lvTextures.LargeImageList = il;
 
-            foreach (string filePath in Directory.GetFiles(directory, "*.ptex"))
+            foreach (string filePath in Directory.GetFiles(directory, "*.pmat"))
             {
-                XElement xEle = XElement.Load(filePath);
+                Material mat = TextureManager.LoadMaterial(filePath);
 
-                TextureDataBase tex = TextureManager.LoadTexture(xEle.Element("ImagePath").Value);
-
-                il.Images.Add(tex.Name, tex.Texture.ToImage(150, 150));
+                il.Images.Add(mat.Name, mat.Diffuse.Texture.ToImage(150, 150));
 
                 ListViewItem lvItem = new ListViewItem()
                 {
-                    Text = tex.Name,
-                    Tag = tex,
-                    ImageKey = tex.Name
+                    Text = mat.Name,
+                    Tag = mat,
+                    ImageKey = mat.Name
                 };
 
                 lvTextures.Items.Add(lvItem);
@@ -79,11 +77,11 @@ namespace PeridotEngine.Engine.Editor.Forms
         {
             if (lvTextures.SelectedItems.Count > 0)
             {
-                SelectedTexture = (TextureDataBase)lvTextures.SelectedItems[0].Tag;
+                SelectedMaterial = (Material)lvTextures.SelectedItems[0].Tag;
             }
             else
             {
-                SelectedTexture = null;
+                SelectedMaterial = null;
             }
         }
 

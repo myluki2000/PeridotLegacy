@@ -50,6 +50,6 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
         }
 
         /// <inheritdoc />
-        public abstract XElement ToXml(LazyLoadingTextureDictionary textureDictionary);
+        public abstract XElement ToXml(LazyLoadingMaterialDictionary materialDictionary);
     }
 }

@@ -41,7 +41,7 @@ namespace PeridotEngine.Engine.World
 
         public string TextureDirectory { get; set; } = null;
 
-        public LazyLoadingTextureDictionary? TextureDictionary { get; set; }
+        public LazyLoadingMaterialDictionary? TextureDictionary { get; set; }
 
         public bool IsPhysicsEnabled { get; set; } = true;
 
@@ -195,7 +195,7 @@ namespace PeridotEngine.Engine.World
 
             level.TextureDirectory = Path.Combine(Path.GetDirectoryName(path), rootEle.Element("TextureDirectory").Value);
 
-            level.TextureDictionary = new LazyLoadingTextureDictionary(level.TextureDirectory);
+            level.TextureDictionary = new LazyLoadingMaterialDictionary(level.TextureDirectory);
 
             // loop through all solids, find their type with reflection, create a new instance of that type
             // and let it initialize itself with the provided xml.

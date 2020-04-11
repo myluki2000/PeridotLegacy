@@ -53,7 +53,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         public float ParallaxMultiplierBottomRight { get; set; } = 1.0f;
 
         /// <inheritdoc />
-        public TextureDataBase Texture { get; set; }
+        public Material Material { get; set; }
 
         private static readonly QuadEffect quadEffect;
         private Vector2 size = new Vector2(100, 100);
@@ -72,13 +72,13 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public void Draw(SpriteBatch sb, Camera camera)
         {
-            Draw(sb, camera, Texture.Texture);
+            Draw(sb, camera, Material.Diffuse.Texture);
         }
 
         /// <inheritdoc />
         public void DrawGlowMap(SpriteBatch sb, Camera camera)
         {
-            Draw(sb, camera, Texture.GlowMap);
+            Draw(sb, camera, Material.GlowMap.Texture);
         }
 
         public void Draw(SpriteBatch sb, Camera camera, Texture2D tex)
@@ -134,9 +134,9 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         }
 
         /// <inheritdoc />
-        public XElement ToXml(LazyLoadingTextureDictionary textureDictionary)
+        public XElement ToXml(LazyLoadingMaterialDictionary materialDictionary)
         {
-            XElement texPathXEle = Texture != null ? new XElement("TexturePath", textureDictionary.GetTexturePathByName(Texture.Name)) : null;
+            XElement texPathXEle = Material != null ? new XElement("TexturePath", materialDictionary.GetTexturePathByName(Material.Name)) : null;
 
             return new XElement(this.GetType().Name,
                 Quad.ToXml("Quad"),
@@ -149,11 +149,11 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
             );
         }
 
-        public static TexturedTransformableSolid FromXml(XElement xEle, LazyLoadingTextureDictionary textures)
+        public static TexturedTransformableSolid FromXml(XElement xEle, LazyLoadingMaterialDictionary materials)
         {
             return new TexturedTransformableSolid()
             {
-                Texture = textures[xEle.Element("TexturePath").Value],
+                Material = materials[xEle.Element("TexturePath").Value],
                 Quad = Quad.FromXml(xEle.Element("Quad")),
                 ZIndex = sbyte.Parse(xEle.Element("Z-Index").Value),
                 ParallaxMultiplierTopLeft = float.Parse(xEle.Element("ParallaxTopLeft").Value),
