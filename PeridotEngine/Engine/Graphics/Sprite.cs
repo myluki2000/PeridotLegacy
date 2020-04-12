@@ -113,12 +113,12 @@ namespace PeridotEngine.Engine.Graphics
         {
             if (Material != null)
             {
-                int frameWidth = Material.Diffuse.Texture.Width / (Material.Diffuse is AnimatedTextureData animatedTexture
+                int frameWidth = Material.Diffuse.Width / (Material.Diffuse is AnimatedTextureData animatedTexture
                     ? animatedTexture.Frames.Length
                     : 1);
                 sb.Draw(Material.Diffuse.Texture,
                     new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y),
-                    new Rectangle(diffuseCurrentFrameIndex * frameWidth, 0, frameWidth, Material.Diffuse.Texture.Height),
+                    new Rectangle((Material.Diffuse.SourceRect?.X ?? 0) + diffuseCurrentFrameIndex * frameWidth, Material.Diffuse.SourceRect?.X ?? 0, frameWidth, Material.Diffuse.Height),
                     Color.White * Opacity,
                     0,
                     Vector2.Zero,
@@ -140,7 +140,7 @@ namespace PeridotEngine.Engine.Graphics
                                      : 1);
                 sb.Draw(Material.GlowMap.Texture,
                     new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y),
-                    new Rectangle(glowCurrentFrameIndex * frameWidth, 0, frameWidth, Material.GlowMap.Texture.Height),
+                    new Rectangle((Material.GlowMap.SourceRect?.X ?? 0) + glowCurrentFrameIndex * frameWidth, Material.GlowMap.SourceRect?.Y ?? 0, frameWidth, Material.GlowMap.Height),
                     Color.White * Opacity,
                     0,
                     Vector2.Zero,

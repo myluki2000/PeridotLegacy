@@ -269,6 +269,7 @@ namespace PeridotEngine.Engine.World
         private void OnWorldObjectsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             // sort WorldObjects after their parallax multiplier, then by their material to later batch draw objects with the same multiplier and texture
+            // TODO: Make this work with texture atlases
             // this is a bit ugly, maybe try finding a better way of doing it
             WorldObjects = new ObservableRangeCollection<IWorldObject>(
                 WorldObjects.OrderBy(x => (x is IParallaxable p) ? p.ParallaxMultiplier : 1.0f)

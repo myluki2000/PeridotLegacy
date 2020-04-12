@@ -109,11 +109,15 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public void Draw(SpriteBatch sb, Camera camera)
         {
-            int frameWidth = Material.Diffuse.Texture.Width / (Material.Diffuse is AnimatedTextureData atd
+            int frameWidth = Material.Diffuse.Width / (Material.Diffuse is AnimatedTextureData atd
                 ? atd.Frames.Length
                 : 1);
 
-            Draw(sb, camera, Material.Diffuse.Texture, new Rectangle(frameWidth * diffuseCurrentFrameIndex, 0, frameWidth, Material.Diffuse.Texture.Height));
+            Draw(sb, camera, Material.Diffuse.Texture,
+                new Rectangle((Material.Diffuse.SourceRect?.X ?? 0) + frameWidth * diffuseCurrentFrameIndex,
+                    Material.Diffuse.SourceRect?.Y ?? 0,
+                    frameWidth,
+                    Material.Diffuse.Height));
         }
 
         /// <inheritdoc />
@@ -121,11 +125,15 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         {
             if (Material.GlowMap == null) return;
 
-            int frameWidth = Material.GlowMap.Texture.Width / (Material.GlowMap is AnimatedTextureData atd
+            int frameWidth = Material.GlowMap.Width / (Material.GlowMap is AnimatedTextureData atd
                                  ? atd.Frames.Length
                                  : 1);
 
-            Draw(sb, camera, Material.GlowMap.Texture, new Rectangle(frameWidth * glowCurrentFrameIndex, 0, frameWidth, Material.GlowMap.Texture.Height));
+            Draw(sb, camera, Material.GlowMap.Texture,
+                new Rectangle((Material.GlowMap.SourceRect?.X ?? 0) + frameWidth * glowCurrentFrameIndex,
+                    Material.GlowMap.SourceRect?.Y ?? 0,
+                    frameWidth,
+                    Material.GlowMap.Height));
         }
 
         private void Draw(SpriteBatch sb, Camera camera, Texture2D tex, Rectangle srcRect)

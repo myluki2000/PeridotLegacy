@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace PeridotEngine.Engine.Resources
@@ -12,8 +13,10 @@ namespace PeridotEngine.Engine.Resources
     {
         public Texture2D Texture { get; set; }
 
-        public virtual int Width => Texture.Width;
+        public Rectangle? SourceRect { get; set; }
 
-        public virtual int Height => Texture.Height;
+        public virtual int Width => SourceRect?.Width ?? Texture.Width;
+
+        public virtual int Height => SourceRect?.Height ?? Texture.Height;
     }
 }
