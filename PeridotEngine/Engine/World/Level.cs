@@ -268,9 +268,11 @@ namespace PeridotEngine.Engine.World
 
         private void OnWorldObjectsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            // sort WorldObjects after their parallax multiplier, to later batch draw objects with the same multiplier
+            // sort WorldObjects after their parallax multiplier, then by their material to later batch draw objects with the same multiplier and texture
             // this is a bit ugly, maybe try finding a better way of doing it
-            WorldObjects = new ObservableRangeCollection<IWorldObject>(WorldObjects.OrderBy(x => (x is IParallaxable p) ? p.ParallaxMultiplier : 1.0f));
+            WorldObjects = new ObservableRangeCollection<IWorldObject>(
+                WorldObjects.OrderBy(x => (x is IParallaxable p) ? p.ParallaxMultiplier : 1.0f)
+                    .ThenBy(x => (x is ITextured t) ? t.Material.Name : null));
             WorldObjects.CollectionChanged += OnWorldObjectsChanged;
 
             // update the PhysicsObjects list with all physics objects.
