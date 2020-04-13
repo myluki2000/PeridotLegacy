@@ -183,7 +183,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         }
 
         /// <inheritdoc />
-        public bool Contains(Point point)
+        public bool ContainsPointOnScreen(Point point, Camera camera)
         {
             return Quad.Contains(point);
         }

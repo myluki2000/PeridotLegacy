@@ -172,7 +172,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         }
 
         /// <inheritdoc />
-        public bool Contains(Point point)
+        public bool ContainsPointOnScreen(Point point, Camera camera)
         {
             return new Rectangle(Position.ToPoint(), Size.ToPoint()).Contains(point);
         }

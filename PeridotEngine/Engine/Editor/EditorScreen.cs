@@ -101,10 +101,14 @@ namespace PeridotEngine.Engine.Editor
         {
             Level.Draw(sb);
 
-            sb.Begin(transformMatrix: Level.Camera.GetMatrix());
+            sb.Begin();
 
             DrawPreview(sb);
             DrawSelectionBox(sb);
+
+            sb.End();
+
+            sb.Begin(transformMatrix: Level.Camera.GetMatrix());
 
             if (toolbarForm.BtnEditCollidersChecked)
             {
@@ -210,7 +214,7 @@ namespace PeridotEngine.Engine.Editor
             {
                 // check if mouse pos is in selected object
                 Vector2 mouseWorldCoords = mouseState.Position.ToVector2().Transform(Level.Camera.GetMatrix().Invert());
-                if (selectedObject.Contains(mouseWorldCoords.ToPoint()))
+                if (selectedObject.ContainsPointOnScreen(mouseState.Position, Level.Camera))
                 {
                     // dragging starts
                     dragging = true;
@@ -240,7 +244,7 @@ namespace PeridotEngine.Engine.Editor
 
             Vector2 mousePosWorldSpace = Level.Camera.ScreenPosToWorldPos(Mouse.GetState().Position.ToVector2());
 
-            IWorldObject obj = Level.WorldObjects.FirstOrDefault(x => x.Contains(mousePosWorldSpace.ToPoint()));
+            IWorldObject obj = Level.WorldObjects.FirstOrDefault(x => x.ContainsPointOnScreen(mouseState.Position, Level.Camera));
 
             if (obj != null)
             {

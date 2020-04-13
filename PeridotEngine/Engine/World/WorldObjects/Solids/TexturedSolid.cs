@@ -31,13 +31,13 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public void DrawOutline(SpriteBatch sb, Color color, Camera camera)
         {
-            Utility.Utility.DrawOutline(sb, new Rectangle(Position.ToPoint(), Size.ToPoint()), color, 2);
+            Utility.Utility.DrawOutline(sb, new Rectangle(Position.ToPoint(), Size.ToPoint()).Transform(camera.GetMatrix(ParallaxMultiplier)), color, 2);
         }
 
         /// <inheritdoc />
-        public bool Contains(Point point)
+        public bool ContainsPointOnScreen(Point point, Camera camera)
         {
-            return new Rectangle(Position.ToPoint(), Size.ToPoint()).Contains(point);
+            return new Rectangle(Position.ToPoint(), Size.ToPoint()).Contains(point.Transform(camera.GetMatrix(ParallaxMultiplier).Invert()));
         }
 
         /// <inheritdoc />

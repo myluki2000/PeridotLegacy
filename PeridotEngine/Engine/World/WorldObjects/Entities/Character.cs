@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PeridotEngine.Engine.Graphics;
 using PeridotEngine.Engine.Resources;
+using PeridotEngine.Engine.Utility;
 using PeridotEngine.Engine.World.Physics;
 
 namespace PeridotEngine.Engine.World.WorldObjects.Entities
@@ -29,9 +30,9 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
         public abstract void Initialize(Level level);
         public new abstract void Update(GameTime gameTime);
 
-        public virtual bool Contains(Point point)
+        public virtual bool ContainsPointOnScreen(Point point, Camera camera)
         {
-            return BoundingRect.Contains(point);
+            return BoundingRect.Contains(point.Transform(camera.GetMatrix().Invert()));
         }
 
         /// <inheritdoc />
@@ -46,7 +47,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
         /// <inheritdoc />
         public virtual void DrawOutline(SpriteBatch sb, Color color, Camera camera)
         {
-            Utility.Utility.DrawRectangle(sb, BoundingRect, color);
+            Utility.Utility.DrawOutline(sb, BoundingRect.Transform(camera.GetMatrix()), color, 1);
         }
 
         /// <inheritdoc />

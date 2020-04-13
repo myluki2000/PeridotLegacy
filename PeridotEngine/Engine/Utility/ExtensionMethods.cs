@@ -125,5 +125,17 @@ namespace PeridotEngine.Engine.Utility
             value.SaveAsPng(ms, width, height);
             return Image.FromStream(ms);
         }
+
+        public static Rectangle Transform(this Rectangle value, Matrix matrix)
+        {
+            Vector2 topLeft = value.TopLeft().ToVector2().Transform(matrix);
+            Vector2 bottomRight = value.BottomRight().ToVector2().Transform(matrix);
+            return new Rectangle(topLeft.ToPoint(), (bottomRight - topLeft).ToPoint());
+        }
+
+        public static Point Transform(this Point value, Matrix matrix)
+        {
+            return value.ToVector2().Transform(matrix).ToPoint();
+        }
     }
 }

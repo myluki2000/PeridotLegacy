@@ -56,7 +56,7 @@ namespace PeridotEngine.Engine.World.WorldObjects
         /// <param name="camera">The camera of the level.</param>
         void DrawOutline(SpriteBatch sb, Color color, Camera camera);
 
-        bool Contains(Point point);
+        bool ContainsPointOnScreen(Point point, Camera camera);
 
         /// <summary>
         /// Serializes this object to xml.
