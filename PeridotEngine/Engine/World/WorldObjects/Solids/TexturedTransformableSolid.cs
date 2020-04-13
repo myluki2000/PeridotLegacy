@@ -179,13 +179,21 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public void DrawOutline(SpriteBatch sb, Color color, Camera camera)
         {
-            Quad.Draw(sb, color, camera);
+            Vector2 p1 = Quad.Point1.Transform(camera.GetMatrix(ParallaxMultiplierBottomLeft));
+            Vector2 p2 = Quad.Point2.Transform(camera.GetMatrix(ParallaxMultiplierBottomRight));
+            Vector2 p3 = Quad.Point3.Transform(camera.GetMatrix(ParallaxMultiplierTopRight));
+            Vector2 p4 = Quad.Point4.Transform(camera.GetMatrix(ParallaxMultiplierTopLeft));
+            new Quad(p1, p2, p3, p4).Draw(sb, color);
         }
 
         /// <inheritdoc />
         public bool ContainsPointOnScreen(Point point, Camera camera)
         {
-            return Quad.Contains(point);
+            Vector2 p1 = Quad.Point1.Transform(camera.GetMatrix(ParallaxMultiplierBottomLeft));
+            Vector2 p2 = Quad.Point2.Transform(camera.GetMatrix(ParallaxMultiplierBottomRight));
+            Vector2 p3 = Quad.Point3.Transform(camera.GetMatrix(ParallaxMultiplierTopRight));
+            Vector2 p4 = Quad.Point4.Transform(camera.GetMatrix(ParallaxMultiplierTopLeft));
+            return new Quad(p1, p2, p3, p4).Contains(point);
         }
 
         /// <inheritdoc />

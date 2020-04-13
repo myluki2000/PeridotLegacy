@@ -95,7 +95,9 @@ namespace PeridotEngine.Engine.Utility
             if (c < 0) neg++;
             if (c > 0) pos++;
 
-            return !(pos <= 0 && neg <= 0);
+            if (pos > 0 && neg > 0) return false;
+
+            return true;
         }
 
         public void Draw(SpriteBatch sb, Color color, Camera? camera = null)
