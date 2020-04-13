@@ -340,9 +340,8 @@ namespace PeridotEngine.Engine.Editor
             {
                 Utility.Utility.DrawOutline(
                     sb,
-                    new Rectangle((Point)colliderStart, Level.Camera.ScreenPosToWorldPos(Mouse.GetState().Position.ToVector2()).ToPoint() - (Point)colliderStart),
-                    Color.Red,
-                    2
+                    new Rectangle((Point)colliderStart, Level.Camera.ScreenPosToWorldPos(Mouse.GetState().Position.ToVector2()).ToPoint() - (Point)colliderStart).Transform(Level.Camera.GetMatrix()),
+                    Color.Red
                 );
             }
         }

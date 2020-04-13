@@ -50,24 +50,9 @@ namespace PeridotEngine.Engine.Utility
             sb.Draw(dummyTexture, rect, color);
         }
 
-        public static void DrawOutline(SpriteBatch sb, Rectangle rect, Color color, int thickness)
+        public static void DrawOutline(SpriteBatch sb, Rectangle rect, Color color)
         {
-            if (rect.Width < 0)
-            {
-                rect.Width = -rect.Width;
-                rect.X = rect.X - rect.Width;
-            }
-
-            if (rect.Height < 0)
-            {
-                rect.Height = -rect.Height;
-                rect.Y = rect.Y - rect.Height;
-            }
-
-            DrawRectangle(sb, new Rectangle(rect.X, rect.Y, rect.Width, thickness), color); // Outline Top
-            DrawRectangle(sb, new Rectangle(rect.X, rect.Y + rect.Height - thickness, rect.Width, thickness), color); // Outline Bottom
-            DrawRectangle(sb, new Rectangle(rect.X, rect.Y, thickness, rect.Height), color); // Outline Left
-            DrawRectangle(sb, new Rectangle(rect.X + rect.Width - thickness, rect.Y, thickness, rect.Height), color); // Outline Right
+            DrawLineStrip(sb, new [] {rect.TopLeft().ToVector2(), rect.TopRight().ToVector2(), rect.BottomRight().ToVector2(), rect.BottomLeft().ToVector2(), rect.TopLeft().ToVector2()}, color);
         }
 
         /// <summary>

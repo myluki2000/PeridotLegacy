@@ -125,10 +125,6 @@ namespace PeridotEngine.Engine.Graphics
                     SpriteEffects.None,
                     ZIndex.Map(-128, 127, 0, 1));
             }
-            else
-            {
-                Utility.Utility.DrawOutline(sb, new Rectangle(Position.ToPoint(), Size.ToPoint()), Color.Red, 2);
-            }
         }
 
         public void DrawGlowMap(SpriteBatch sb)

@@ -38,6 +38,8 @@ namespace PeridotEngine.Engine.Editor.Forms
             this.nudHeight = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.toolStrip1 = new PeridotEngine.Engine.Editor.UI.ToolStripEx();
+            this.btnCursor = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tpSolids = new System.Windows.Forms.TabPage();
@@ -49,19 +51,17 @@ namespace PeridotEngine.Engine.Editor.Forms
             this.btnSelectTexture = new System.Windows.Forms.Button();
             this.pbSelectedTexture = new System.Windows.Forms.PictureBox();
             this.lvColliders = new System.Windows.Forms.ListView();
-            this.toolStrip1 = new PeridotEngine.Engine.Editor.UI.ToolStripEx();
-            this.btnCursor = new System.Windows.Forms.ToolStripButton();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudZIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).BeginInit();
+            this.toolStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tpSolids.SuspendLayout();
             this.tpEntities.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSelectedTexture)).BeginInit();
-            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -182,6 +182,26 @@ namespace PeridotEngine.Engine.Editor.Forms
             this.label1.TabIndex = 4;
             this.label1.Text = "Height";
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnCursor});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(284, 25);
+            this.toolStrip1.TabIndex = 0;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // btnCursor
+            // 
+            this.btnCursor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnCursor.Image = ((System.Drawing.Image)(resources.GetObject("btnCursor.Image")));
+            this.btnCursor.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCursor.Name = "btnCursor";
+            this.btnCursor.Size = new System.Drawing.Size(46, 22);
+            this.btnCursor.Text = "Cursor";
+            this.btnCursor.Click += new System.EventHandler(this.BtnCursor_Click);
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.tabControl);
@@ -289,42 +309,22 @@ namespace PeridotEngine.Engine.Editor.Forms
             // 
             this.lvColliders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvColliders.HideSelection = false;
-            this.lvColliders.Location = new System.Drawing.Point(0, 0);
+            this.lvColliders.Location = new System.Drawing.Point(0, 24);
             this.lvColliders.Name = "lvColliders";
-            this.lvColliders.Size = new System.Drawing.Size(284, 682);
+            this.lvColliders.Size = new System.Drawing.Size(284, 658);
             this.lvColliders.TabIndex = 2;
             this.lvColliders.UseCompatibleStateImageBehavior = false;
             this.lvColliders.View = System.Windows.Forms.View.List;
             this.lvColliders.Visible = false;
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnCursor});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(284, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // btnCursor
-            // 
-            this.btnCursor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnCursor.Image = ((System.Drawing.Image)(resources.GetObject("btnCursor.Image")));
-            this.btnCursor.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCursor.Name = "btnCursor";
-            this.btnCursor.Size = new System.Drawing.Size(46, 22);
-            this.btnCursor.Text = "Cursor";
-            this.btnCursor.Click += new System.EventHandler(this.BtnCursor_Click);
             // 
             // ToolboxForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 682);
+            this.Controls.Add(this.lvColliders);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.lvColliders);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "ToolboxForm";
             this.Text = "ToolboxForm";
@@ -333,14 +333,14 @@ namespace PeridotEngine.Engine.Editor.Forms
             ((System.ComponentModel.ISupportInitialize)(this.nudZIndex)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).EndInit();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
             this.tpSolids.ResumeLayout(false);
             this.tpEntities.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbSelectedTexture)).EndInit();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }

@@ -38,7 +38,7 @@ namespace PeridotEngine.Engine.World.Physics.Colliders
         /// <inheritdoc />
         public void Draw(SpriteBatch sb, Camera camera, Color color, bool drawDragPoints)
         {
-            Utility.Utility.DrawOutline(sb, Rect, color, 2);
+            Utility.Utility.DrawOutline(sb, Rect.Transform(camera.GetMatrix()), color);
 
             if (drawDragPoints)
             {

@@ -38,7 +38,14 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
         /// <inheritdoc />
         public void Draw(SpriteBatch sb, Camera camera)
         {
-            base.Draw(sb);
+            if (Material != null)
+            {
+                base.Draw(sb);
+            }
+            else
+            {
+                DrawOutline(sb, Color.Red, camera);
+            }
         }
 
         /// <inheritdoc />
@@ -47,7 +54,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
         /// <inheritdoc />
         public virtual void DrawOutline(SpriteBatch sb, Color color, Camera camera)
         {
-            Utility.Utility.DrawOutline(sb, BoundingRect.Transform(camera.GetMatrix()), color, 1);
+            Utility.Utility.DrawOutline(sb, BoundingRect.Transform(camera.GetMatrix()), color);
         }
 
         /// <inheritdoc />
