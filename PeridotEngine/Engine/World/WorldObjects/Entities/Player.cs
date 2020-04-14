@@ -72,6 +72,8 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
         /// <inheritdoc />
         public override XElement ToXml(LazyLoadingMaterialDictionary materialDictionary)
         {
+            if (Material != null)
+                materialDictionary.LoadMaterial(Material.Path);
             XElement? texPathXEle = Material != null ? new XElement("TexturePath", materialDictionary.GetTexturePathByName(Material.Name)) : null;
 
             return new XElement(this.GetType().Name,

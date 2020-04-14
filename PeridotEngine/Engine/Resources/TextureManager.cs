@@ -32,9 +32,8 @@ namespace PeridotEngine.Engine.Resources
         {
             if (!contentPath.EndsWith(".pmat"))
                 contentPath = contentPath + ".pmat";
-            XElement rootEle = XElement.Load(contentPath);
 
-            return Material.FromXml(rootEle);
+            return Material.FromXml(contentPath);
         }
     }
 }

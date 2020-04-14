@@ -13,6 +13,10 @@ namespace PeridotEngine.Engine.Resources
         /// </summary>
         public string Name { get; private set; }
         /// <summary>
+        /// Path to the material file.
+        /// </summary>
+        public string Path { get; private set; }
+        /// <summary>
         /// The texture data of this TextureData object.
         /// </summary>
         public TextureDataBase Diffuse { get; private set; }
@@ -53,8 +57,9 @@ namespace PeridotEngine.Engine.Resources
             this.GlowMap = glowMap;
         }
 
-        public static Material FromXml(XElement xEle)
+        public static Material FromXml(string path)
         {
+            XElement xEle = XElement.Load(path);
             string randomTextureRotString = xEle.Element("RandomTextureRotation").Value.ToUpper();
             bool randomTextureRot;
 
@@ -115,6 +120,8 @@ namespace PeridotEngine.Engine.Resources
             {
                 mat.Height = int.Parse(xEleHeight.Value);
             }
+
+            mat.Path = path;
 
             return mat;
         }
