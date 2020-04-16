@@ -12,6 +12,10 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
 {
     class TexturedSolid : Sprite, ISolid, IParallaxable, ITextured
     {
+        /// <inheritdoc />
+        public string? Id { get; set; }
+        /// <inheritdoc />
+        public string? Classes { get; set; }
         /// <summary>
         /// The parallax multiplier of the object in the game world.
         /// </summary>

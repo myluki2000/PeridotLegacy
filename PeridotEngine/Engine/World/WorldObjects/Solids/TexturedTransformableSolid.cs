@@ -14,6 +14,10 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
     class TexturedTransformableSolid : ISolid, ITextured
     {
         /// <inheritdoc />
+        public string? Id { get; set; }
+        /// <inheritdoc />
+        public string? Classes { get; set; }
+        /// <inheritdoc />
         public Vector2 Position
         {
             get => Quad.Point4;

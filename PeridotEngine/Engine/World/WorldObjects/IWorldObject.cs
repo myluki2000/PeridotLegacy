@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using System;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,6 +11,14 @@ namespace PeridotEngine.Engine.World.WorldObjects
 {
     public interface IWorldObject
     {
+        /// <summary>
+        /// Unique id identifying a world object.
+        /// </summary>
+        string? Id { get; set; }
+        /// <summary>
+        /// Classes that this object has.
+        /// </summary>
+        string? Classes { get; set; }
         /// <summary>
         /// The position of the sprite in the current matrix.
         /// </summary>

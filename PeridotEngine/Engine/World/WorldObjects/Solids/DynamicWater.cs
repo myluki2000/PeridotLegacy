@@ -21,6 +21,10 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
     class DynamicWater : ISolid
     {
         /// <inheritdoc />
+        public string? Id { get; set; }
+        /// <inheritdoc />
+        public string? Classes { get; set; }
+        /// <inheritdoc />
         public Vector2 Position
         {
             get => position;
