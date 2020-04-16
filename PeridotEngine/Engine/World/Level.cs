@@ -173,6 +173,16 @@ namespace PeridotEngine.Engine.World
             OnUpdate?.Invoke(this, gameTime);
         }
 
+        public IWorldObject GetObjectById(string id)
+        {
+            return WorldObjects.FirstOrDefault(x => x.Id == id);
+        }
+
+        public IWorldObject[] GetObjectsByClass(string _class)
+        {
+            return WorldObjects.Where(x => x.Class != null && x.Class.Split(' ').Contains(_class)).ToArray();
+        }
+
         public static Level FromFile(string path)
         {
             Level level = new Level();

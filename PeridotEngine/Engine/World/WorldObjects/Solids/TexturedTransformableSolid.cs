@@ -16,7 +16,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public string? Id { get; set; }
         /// <inheritdoc />
-        public string? Classes { get; set; }
+        public string? Class { get; set; }
         /// <inheritdoc />
         public Vector2 Position
         {
@@ -207,7 +207,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                 materialDictionary.LoadMaterial(Material.Path);
             XElement texPathXEle = Material != null ? new XElement("TexturePath", materialDictionary.GetTexturePathByName(Material.Name)) : null;
 
-            return new XElement(this.GetType().Name,
+            XElement result = new XElement(this.GetType().Name,
                 Quad.ToXml("Quad"),
                 texPathXEle,
                 new XElement("Z-Index", ZIndex.ToString(CultureInfo.InvariantCulture)),
@@ -216,6 +216,12 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                 new XElement("ParallaxBottomLeft", ParallaxMultiplierBottomLeft.ToString(CultureInfo.InvariantCulture)),
                 new XElement("ParallaxBottomRight", ParallaxMultiplierBottomRight.ToString(CultureInfo.InvariantCulture))
             );
+
+            if (!string.IsNullOrEmpty(Id)) result.Add(new XAttribute("Id", Id));
+
+            if (!string.IsNullOrEmpty(Class)) result.Add(new XAttribute("Class", Class));
+
+            return result;
         }
 
         public static TexturedTransformableSolid FromXml(XElement xEle, LazyLoadingMaterialDictionary materials)

@@ -29,7 +29,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
         /// <inheritdoc />
         public string? Id { get; set; }
         /// <inheritdoc />
-        public string? Classes { get; set; }
+        public string? Class { get; set; }
         public abstract void Initialize(Level level);
         public new abstract void Update(GameTime gameTime);
 

@@ -18,7 +18,7 @@ namespace PeridotEngine.Engine.World.WorldObjects
         /// <summary>
         /// Classes that this object has.
         /// </summary>
-        string? Classes { get; set; }
+        string? Class { get; set; }
         /// <summary>
         /// The position of the sprite in the current matrix.
         /// </summary>

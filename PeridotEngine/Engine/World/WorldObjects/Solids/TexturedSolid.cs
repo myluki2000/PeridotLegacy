@@ -15,7 +15,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public string? Id { get; set; }
         /// <inheritdoc />
-        public string? Classes { get; set; }
+        public string? Class { get; set; }
         /// <summary>
         /// The parallax multiplier of the object in the game world.
         /// </summary>
@@ -51,7 +51,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                 materialDictionary.LoadMaterial(Material.Path);
             XElement? texPathXEle = Material != null ? new XElement("TexturePath", materialDictionary.GetTexturePathByName(Material.Name)) : null;
 
-            return new XElement(this.GetType().Name,
+            XElement result = new XElement(this.GetType().Name,
                 Position.ToXml("Position"),
                 Size.ToXml("Size"),
                 texPathXEle,
@@ -60,6 +60,12 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                 new XElement("Z-Index", ZIndex.ToString(CultureInfo.InvariantCulture)),
                 new XElement("Parallax", ParallaxMultiplier.ToString(CultureInfo.InvariantCulture))
             );
+
+            if (!string.IsNullOrEmpty(Id)) result.Add(new XAttribute("Id", Id));
+
+            if (!string.IsNullOrEmpty(Class)) result.Add(new XAttribute("Class", Class));
+
+            return result;
         }
 
         public void Initialize(Level level) { }

@@ -23,7 +23,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public string? Id { get; set; }
         /// <inheritdoc />
-        public string? Classes { get; set; }
+        public string? Class { get; set; }
         /// <inheritdoc />
         public Vector2 Position
         {
@@ -184,11 +184,17 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public XElement ToXml(LazyLoadingMaterialDictionary materialDictionary)
         {
-            return new XElement("DynamicWater",
+            XElement result = new XElement("DynamicWater",
                 Position.ToXml("Position"),
                 Size.ToXml("Size"),
                 new XElement("Z-Index", ZIndex)
             );
+
+            if (!string.IsNullOrEmpty(Id)) result.Add(new XAttribute("Id", Id));
+
+            if (!string.IsNullOrEmpty(Class)) result.Add(new XAttribute("Class", Class));
+
+            return result;
         }
 
         public static DynamicWater FromXml(XElement xEle, LazyLoadingMaterialDictionary materials)
