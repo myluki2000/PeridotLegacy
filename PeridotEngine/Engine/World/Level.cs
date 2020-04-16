@@ -278,10 +278,9 @@ namespace PeridotEngine.Engine.World
 
         private void OnWorldObjectsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            // sort WorldObjects after their parallax multiplier, then by their diffuse texture to later batch draw objects with the same multiplier and texture
-            // this is a bit ugly, hash collisions are possible but better than nothing
             WorldObjects = new ObservableRangeCollection<IWorldObject>(
-                WorldObjects.OrderBy(x => (x is IParallaxable p) ? p.ParallaxMultiplier : 1.0f)
+                WorldObjects.OrderBy(x => x.ZIndex)
+                    .ThenBy(x => (x is IParallaxable p) ? p.ParallaxMultiplier : 1.0f)
                     .ThenBy(x => (x is ITextured t) ? t.Material.Diffuse.Texture.GetHashCode() : 0));
             WorldObjects.CollectionChanged += OnWorldObjectsChanged;
 

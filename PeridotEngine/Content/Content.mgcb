@@ -25,6 +25,12 @@
 /processorParam:DebugMode=Auto
 /build:CustomSpriteEffect.fx
 
+#begin FogEffect.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:FogEffect.fx
+
 #begin Macros.fxh
 /copy:Macros.fxh
 

@@ -178,13 +178,13 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <inheritdoc />
         public bool ContainsPointOnScreen(Point point, Camera camera)
         {
-            return new Rectangle(Position.ToPoint(), Size.ToPoint()).Contains(point);
+            return new Rectangle(Position.ToPoint(), Size.ToPoint()).Contains(point.Transform(camera.GetMatrix().Invert()));
         }
 
         /// <inheritdoc />
         public XElement ToXml(LazyLoadingMaterialDictionary materialDictionary)
         {
-            XElement result = new XElement("DynamicWater",
+            XElement result = new XElement(this.GetType().Name,
                 Position.ToXml("Position"),
                 Size.ToXml("Size"),
                 new XElement("Z-Index", ZIndex)
@@ -201,6 +201,8 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         {
             return new DynamicWater()
             {
+                Id = xEle.Attribute("Id")?.Value,
+                Class = xEle.Attribute("Class")?.Value,
                 Position = new Vector2().FromXml(xEle.Element("Position")),
                 Size = new Vector2().FromXml(xEle.Element("Size")),
                 ZIndex = sbyte.Parse(xEle.Element("Z-Index").Value)
