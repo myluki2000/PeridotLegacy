@@ -97,6 +97,8 @@
     <Compile Include="Engine\Resources\TextureData.cs" />
     <Compile Include="Engine\Resources\TextureDataBase.cs" />
     <Compile Include="Engine\Utility\Quad.cs" />
+    <Compile Include="Engine\World\WorldObjects\Entities\SidescrollingPlayer.cs" />
+    <Compile Include="Engine\World\WorldObjects\Entities\TopDownPlayer.cs" />
     <Compile Include="Engine\World\WorldObjects\Solids\ITextured.cs" />
     <Compile Include="Engine\Utility\ExtensionMethods.cs" />
     <Compile Include="Engine\Globals.cs" />
