@@ -29,7 +29,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
 
         protected override void HandleMovement(KeyboardState keyboardState)
         {
-            Drag = 0.0f;
+            Acceleration = new Vector2(0, 0);
             if (keyboardState.IsKeyDown(Keys.A))
             {
                 if (Velocity.X > -350.0f)
@@ -52,9 +52,10 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
                     Acceleration = new Vector2(0, Acceleration.Y);
                 }
             }
-            else if (keyboardState.IsKeyDown(Keys.W))
+
+            if (keyboardState.IsKeyDown(Keys.W))
             {
-                if (Velocity.Y > 350.0f)
+                if (Velocity.Y > -350.0f)
                 {
                     Acceleration = new Vector2(Acceleration.X, -20.0f);
                 }
@@ -73,11 +74,6 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
                 {
                     Acceleration = new Vector2(Acceleration.X, 0);
                 }
-            }
-            else
-            {
-                Drag = 12.0f;
-                Acceleration = new Vector2(0, Acceleration.Y);
             }
         }
 
