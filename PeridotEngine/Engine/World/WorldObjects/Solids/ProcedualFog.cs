@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +32,12 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// The color of the fog.
         /// </summary>
         public Color Color { get; set; } = Color.BlueViolet;
+
+        public float EdgeFading
+        {
+            get => fogEffect.EdgeFading;
+            set => fogEffect.EdgeFading = value;
+        }
 
 
         private static readonly FogEffect fogEffect = new FogEffect();
@@ -100,7 +107,8 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
             XElement result = new XElement(this.GetType().Name,
                 Position.ToXml("Position"),
                 Size.ToXml("Size"),
-                new XElement("Z-Index", ZIndex)
+                new XElement("Z-Index", ZIndex),
+                new XElement("EdgeFading", EdgeFading.ToString(CultureInfo.InvariantCulture))
             );
 
             if (!string.IsNullOrEmpty(Id)) result.Add(new XAttribute("Id", Id));
@@ -118,7 +126,8 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                 Class = xEle.Attribute("Class")?.Value,
                 Position = new Vector2().FromXml(xEle.Element("Position")),
                 Size = new Vector2().FromXml(xEle.Element("Size")),
-                ZIndex = sbyte.Parse(xEle.Element("Z-Index").Value)
+                ZIndex = sbyte.Parse(xEle.Element("Z-Index").Value),
+                EdgeFading = float.Parse(xEle.Element("EdgeFading").Value, CultureInfo.InvariantCulture)
             };
         }
     }
