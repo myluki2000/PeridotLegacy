@@ -2,7 +2,9 @@
 
 matrix WorldViewProjection;
 float Time;
-float Threshold;
+float Threshold = 0.35f;
+float EdgeFading = 0.0f;
+
 
 struct VertexShaderInput
 {
@@ -30,9 +32,9 @@ float noise(float2 coord)
 	float2 f = frac(coord);
 	
 	float y1 = rand(i);
-	float y2 = rand(i + float2(1.0, 0));
-	float y3 = rand(i + float2(0, 1.0));
-	float y4 = rand(i + float2(1.0, 1.0));
+	float y2 = rand(i + float2(1.0f, 0));
+	float y3 = rand(i + float2(0, 1.0f));
+	float y4 = rand(i + float2(1.0f, 1.0f));
 	
 	float y = lerp(lerp(y1, y2, smoothstep(0, 1, f.x)), lerp(y3, y4, smoothstep(0, 1, f.x)), smoothstep(0, 1, f.y));
 	
@@ -43,14 +45,14 @@ float fbm(float2 coord)
 {
 	float y;
 	
-	float amplitude = 0.5;
-	float frequency = 1.0;
+	float amplitude = 0.5f;
+	float frequency = 1.0f;
 	
 	for(int i = 0; i < OCTAVES; i++)
 	{
 		y += amplitude * noise(frequency * coord);
-		frequency *= 2.0;
-		amplitude *= 0.5;
+		frequency *= 2.0f;
+		amplitude *= 0.5f;
 	}
 	
 	return y;
@@ -70,13 +72,33 @@ VertexShaderOutput MainVS(in VertexShaderInput input)
 
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
-	float2 coord = input.Position / 85.0;
+	float alpha = input.Color.a;
+
+	if (input.TexCoord.x < EdgeFading)
+	{
+		alpha *= input.TexCoord.x / EdgeFading;
+	}
+	else if (input.TexCoord.x > 1.0f - EdgeFading)
+	{
+		alpha *= (1.0f - input.TexCoord.x) / EdgeFading;
+	}
+
+	if (input.TexCoord.y < EdgeFading)
+	{
+		alpha *= input.TexCoord.y / EdgeFading;
+	}
+	else if (input.TexCoord.y > 1.0f - EdgeFading)
+	{
+		alpha *= (1.0f - input.TexCoord.y) / EdgeFading;
+	}
+
+	float2 coord = input.Position / 85.0f;
 	
-	float2 motion = fbm(coord + Time * 0.3);
+	float2 motion = fbm(coord + Time * 0.3f);
 	
 	float v = fbm(coord + motion);
 	
-	return float4(input.Color.rgb, lerp(0.0, input.Color.a, clamp(v - Threshold, 0.0, 1.0)));
+	return float4(input.Color.rgb, lerp(0.0f, alpha, clamp(v - Threshold, 0.0f, 1.0f)));
 }
 
 technique BasicColorDrawing
