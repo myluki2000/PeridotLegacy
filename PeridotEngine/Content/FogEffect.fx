@@ -21,6 +21,11 @@ struct VertexShaderOutput
 	float2 TexCoord : TEXCOORD;
 };
 
+float map(float minIn, float maxIn, float minOut, float maxOut, float x)
+{
+	return minOut + ((x - minIn) / (maxIn - minIn)) * (maxOut - minOut);
+}
+
 float rand(float2 coord)
 {
     return frac(sin(dot(coord, float2(12.9898, 78.233))) * 43758.5453);
@@ -98,7 +103,7 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	
 	float v = fbm(coord + motion);
 	
-	return float4(input.Color.rgb, lerp(0.0f, alpha, clamp(v - Threshold, 0.0f, 1.0f)));
+	return float4(input.Color.rgb, lerp(0.0f, alpha, map(0.0f, 1.0f - Threshold, 0.0f, 1.0f, clamp(v - Threshold, 0.0f, 1.0f))));
 }
 
 technique BasicColorDrawing
