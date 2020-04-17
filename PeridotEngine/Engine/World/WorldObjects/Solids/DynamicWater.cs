@@ -18,7 +18,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
     ///
     /// TODO: Make this object work with parallax scrolling.
     /// </summary>
-    class DynamicWater : ISolid
+    class DynamicWater : ISolid, IRenderedObject
     {
         /// <inheritdoc />
         public string? Id { get; set; }
@@ -58,6 +58,9 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                 GenerateWaterPoints();
             }
         }
+
+        /// <inheritdoc />
+        public bool DisableBatching => true;
 
         private const float SPRING_CONSTANT = 0.02f;
         private const float AMPLIFICATION = 2.0f;

@@ -13,7 +13,7 @@ using PeridotEngine.Engine.Utility;
 
 namespace PeridotEngine.Engine.World.WorldObjects.Solids
 {
-    class ProcedualFog : ISolid, IParallaxable
+    class ProcedualFog : ISolid, IParallaxable, IRenderedObject
     {
         /// <inheritdoc />
         public string Id { get; set; }
@@ -38,6 +38,9 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         {
             fogEffect.Time = (float)gameTime.TotalGameTime.TotalSeconds;
         }
+
+        /// <inheritdoc />
+        public bool DisableBatching => true;
 
         /// <inheritdoc />
         public void Draw(SpriteBatch sb, Camera camera)

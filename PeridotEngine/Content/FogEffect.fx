@@ -73,7 +73,7 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	
 	float v = fbm(coord + motion);
 	
-	return float4(0.0, 0.2, 0.75, lerp(0.0, 0.5, clamp(v - THRESHOLD, 0.0, 1.0)));
+	return float4(0.0, 0.2, 0.75, lerp(0.0, 0.75, clamp(v - THRESHOLD, 0.0, 1.0)));
 }
 
 technique BasicColorDrawing

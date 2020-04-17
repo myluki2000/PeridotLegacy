@@ -45,20 +45,6 @@ namespace PeridotEngine.Engine.World.WorldObjects
         void Update(GameTime gameTime);
 
         /// <summary>
-        /// Draws the object to the specified SpriteBatch.
-        /// </summary>
-        /// <param name="sb">The SpriteBatch.</param>
-        /// <param name="camera">The camera of the level.</param>
-        void Draw(SpriteBatch sb, Camera camera);
-
-        /// <summary>
-        /// Draws the object's glow map.
-        /// </summary>
-        /// <param name="sb">The SpriteBatch.</param>
-        /// <param name="camera">The camera of the level.</param>
-        void DrawGlowMap(SpriteBatch sb, Camera camera);
-
-        /// <summary>
         /// Draws an outline around the object.
         /// </summary>
         /// <param name="sb">The SpriteBatch.</param>

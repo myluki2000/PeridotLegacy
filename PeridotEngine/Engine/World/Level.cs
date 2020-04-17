@@ -84,9 +84,12 @@ namespace PeridotEngine.Engine.World
             float lastParallaxValue = float.NaN;
             foreach (IWorldObject obj in WorldObjects)
             {
+                // skip objects that don't have anything to draw
+                if (!(obj is IRenderedObject rObj)) continue;
+
                 float parallaxValue = (obj is IParallaxable pObj) ? pObj.ParallaxMultiplier : 1.0f;
 
-                if (parallaxValue != lastParallaxValue)
+                if (parallaxValue != lastParallaxValue || rObj.DisableBatching)
                 {
                     // if it isn't the first time we begin a new SpriteBatch we'll first have to end the old one
                     if (!float.IsNaN(lastParallaxValue)) sb.End();
@@ -99,12 +102,12 @@ namespace PeridotEngine.Engine.World
 
                 }
 
-                obj.Draw(sb, Camera);
+                rObj.Draw(sb, Camera);
                 lastParallaxValue = parallaxValue;
             }
 
             sb.End();
-
+            
 
 
             if (Settings.DrawColliders)
@@ -127,9 +130,11 @@ namespace PeridotEngine.Engine.World
             float lastParallaxValue = float.NaN;
             foreach (IWorldObject obj in WorldObjects)
             {
+                if (!(obj is IRenderedObject rObj)) continue;
+
                 float parallaxValue = (obj is IParallaxable pObj) ? pObj.ParallaxMultiplier : 1.0f;
 
-                if (parallaxValue != lastParallaxValue)
+                if (parallaxValue != lastParallaxValue || rObj.DisableBatching)
                 {
                     // if it isn't the first time we begin a new SpriteBatch we'll first have to end the old one
                     if (!float.IsNaN(lastParallaxValue)) sb.End();
@@ -142,7 +147,7 @@ namespace PeridotEngine.Engine.World
 
                 }
 
-                obj.DrawGlowMap(sb, Camera);
+                rObj.DrawGlowMap(sb, Camera);
                 lastParallaxValue = parallaxValue;
             }
 

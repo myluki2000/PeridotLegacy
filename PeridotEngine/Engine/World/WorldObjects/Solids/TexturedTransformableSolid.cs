@@ -11,7 +11,7 @@ using PeridotEngine.Engine.Utility;
 
 namespace PeridotEngine.Engine.World.WorldObjects.Solids
 {
-    class TexturedTransformableSolid : ISolid, ITextured
+    class TexturedTransformableSolid : ISolid, ITextured, IRenderedObject
     {
         /// <inheritdoc />
         public string? Id { get; set; }
@@ -58,6 +58,9 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
 
         /// <inheritdoc />
         public Material Material { get; set; }
+
+        /// <inheritdoc />
+        public bool DisableBatching => true;
 
         private static readonly QuadEffect quadEffect;
         private Vector2 size = new Vector2(100, 100);

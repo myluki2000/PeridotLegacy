@@ -10,7 +10,7 @@ using PeridotEngine.Engine.World.Physics;
 
 namespace PeridotEngine.Engine.World.WorldObjects.Entities
 {
-    abstract class Character : Sprite, IEntity, IPhysicsObject
+    abstract class Character : Sprite, IEntity, IPhysicsObject, IRenderedObject
     {
         public abstract string Name { get; set; }
         public abstract Level? Level { get; set; }
@@ -37,6 +37,9 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
         {
             return BoundingRect.Contains(point.Transform(camera.GetMatrix().Invert()));
         }
+
+        /// <inheritdoc />
+        public bool DisableBatching => false;
 
         /// <inheritdoc />
         public void Draw(SpriteBatch sb, Camera camera)
