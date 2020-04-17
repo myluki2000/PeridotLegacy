@@ -13,6 +13,7 @@ namespace PeridotEngine.Engine.Graphics.Effects
 
         private readonly EffectParameter matrixParameter;
         private readonly EffectParameter timeParameter;
+        private readonly EffectParameter thresholdParameter;
 
         public Matrix WorldViewProjection
         {
@@ -26,11 +27,21 @@ namespace PeridotEngine.Engine.Graphics.Effects
             set => timeParameter.SetValue(value);
         }
 
+        public float Threshold
+        {
+            get => thresholdParameter.GetValueSingle();
+            set => thresholdParameter.SetValue(value);
+        }
+
         /// <inheritdoc />
         public FogEffect() : base(Globals.Content.Load<Effect>("FogEffect"))
         {
             matrixParameter = Parameters["WorldViewProjection"];
             timeParameter = Parameters["Time"];
+            thresholdParameter = Parameters["Threshold"];
+
+            // init with default values
+            Threshold = 0.35f;
         }
     }
 }

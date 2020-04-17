@@ -27,6 +27,11 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         public sbyte ZIndex { get; set; }
         /// <inheritdoc />
         public float ParallaxMultiplier { get; set; } = 1.0f;
+        /// <summary>
+        /// The color of the fog.
+        /// </summary>
+        public Color Color { get; set; } = Color.BlueViolet;
+
 
         private static readonly FogEffect fogEffect = new FogEffect();
 
@@ -56,15 +61,15 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                     1.0f);
                 
 
-            VertexPositionTexture[] verts =
+            VertexPositionColorTexture[] verts =
             {
-                new VertexPositionTexture(new Vector3(Position.X + Size.X, Position.Y, 0), new Vector2(1, 0)), // top right
-                new VertexPositionTexture(new Vector3(Position.X + Size.X, Position.Y + Size.Y, 0), new Vector2(1, 1)), // bottom right
-                new VertexPositionTexture(new Vector3(Position.X, Position.Y + Size.Y, 0), new Vector2(0, 1)), // bottom left
+                new VertexPositionColorTexture(new Vector3(Position.X + Size.X, Position.Y, 0), Color, new Vector2(1, 0)), // top right
+                new VertexPositionColorTexture(new Vector3(Position.X + Size.X, Position.Y + Size.Y, 0), Color, new Vector2(1, 1)), // bottom right
+                new VertexPositionColorTexture(new Vector3(Position.X, Position.Y + Size.Y, 0), Color, new Vector2(0, 1)), // bottom left
 
-                new VertexPositionTexture(new Vector3(Position.X, Position.Y, 0), new Vector2(0, 0)), // top left
-                new VertexPositionTexture(new Vector3(Position.X + Size.X, Position.Y, 0), new Vector2(1, 0)), // top right
-                new VertexPositionTexture(new Vector3(Position.X, Position.Y + Size.Y, 0), new Vector2(0, 1)), // bottom left
+                new VertexPositionColorTexture(new Vector3(Position.X, Position.Y, 0), Color, new Vector2(0, 0)), // top left
+                new VertexPositionColorTexture(new Vector3(Position.X + Size.X, Position.Y, 0), Color, new Vector2(1, 0)), // top right
+                new VertexPositionColorTexture(new Vector3(Position.X, Position.Y + Size.Y, 0), Color, new Vector2(0, 1)), // bottom left
             };
 
             foreach (EffectPass pass in fogEffect.CurrentTechnique.Passes)

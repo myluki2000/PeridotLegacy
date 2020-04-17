@@ -1,19 +1,21 @@
-﻿#define THRESHOLD 0.35
-#define OCTAVES 4
+﻿#define OCTAVES 4
 
 matrix WorldViewProjection;
 float Time;
+float Threshold;
 
 struct VertexShaderInput
 {
-	float4 Position : POSITION0;
+	float4 Position : POSITION;
+	float4 Color : COLOR;
 	float2 TexCoord : TEXCOORD;
 };
 
 struct VertexShaderOutput
 {
-	float4 PositionPS : SV_POSITION;
+	float4 PositionPS : POSITION0;
 	float4 Position : POSITION1;
+	float4 Color : COLOR;
 	float2 TexCoord : TEXCOORD;
 };
 
@@ -60,6 +62,7 @@ VertexShaderOutput MainVS(in VertexShaderInput input)
 
 	output.PositionPS = mul(input.Position, WorldViewProjection);
 	output.Position = input.Position;
+	output.Color = input.Color;
 	output.TexCoord = input.TexCoord;
 
 	return output;
@@ -73,7 +76,7 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	
 	float v = fbm(coord + motion);
 	
-	return float4(0.0, 0.2, 0.75, lerp(0.0, 0.75, clamp(v - THRESHOLD, 0.0, 1.0)));
+	return float4(input.Color.rgb, lerp(0.0, input.Color.a, clamp(v - Threshold, 0.0, 1.0)));
 }
 
 technique BasicColorDrawing
