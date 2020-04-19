@@ -31,12 +31,27 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         /// <summary>
         /// The color of the fog.
         /// </summary>
-        public Color Color { get; set; } = Color.BlueViolet;
+        public Color Color { get; set; } = new Color(138, 43, 226, (int)(0.75f * 255));
 
+        /// <summary>
+        /// How much the fog effect moves per second.
+        /// </summary>
+        public Vector2 Motion
+        {
+            get => fogEffect.Motion;
+            set => fogEffect.Motion = value;
+        }
+        
         public float EdgeFading
         {
             get => fogEffect.EdgeFading;
             set => fogEffect.EdgeFading = value;
+        }
+
+        public float Density
+        {
+            get => fogEffect.Threshold;
+            set => fogEffect.Threshold = value;
         }
 
 

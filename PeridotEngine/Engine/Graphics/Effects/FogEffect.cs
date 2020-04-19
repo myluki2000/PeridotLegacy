@@ -15,6 +15,7 @@ namespace PeridotEngine.Engine.Graphics.Effects
         private readonly EffectParameter timeParameter;
         private readonly EffectParameter thresholdParameter;
         private readonly EffectParameter edgeFadingParameter;
+        private readonly EffectParameter motionParameter;
 
         public Matrix WorldViewProjection
         {
@@ -40,6 +41,12 @@ namespace PeridotEngine.Engine.Graphics.Effects
             set => edgeFadingParameter.SetValue(value);
         }
 
+        public Vector2 Motion
+        {
+            get => motionParameter.GetValueVector2();
+            set => motionParameter.SetValue(value);
+        }
+
         /// <inheritdoc />
         public FogEffect() : base(Globals.Content.Load<Effect>("FogEffect"))
         {
@@ -47,6 +54,7 @@ namespace PeridotEngine.Engine.Graphics.Effects
             timeParameter = Parameters["Time"];
             thresholdParameter = Parameters["Threshold"];
             edgeFadingParameter = Parameters["EdgeFading"];
+            motionParameter = Parameters["Motion"];
         }
     }
 }

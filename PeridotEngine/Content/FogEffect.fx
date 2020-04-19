@@ -4,6 +4,7 @@ matrix WorldViewProjection;
 float Time;
 float Threshold = 0.35f;
 float EdgeFading = 0.0f;
+float2 Motion = float2(0, 0);
 
 
 struct VertexShaderInput
@@ -98,8 +99,10 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	}
 
 	float2 coord = input.Position / 85.0f;
-	
+
 	float2 motion = fbm(coord + Time * 0.3f);
+
+	motion += Time * Motion;
 	
 	float v = fbm(coord + motion);
 	
