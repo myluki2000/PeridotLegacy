@@ -14,7 +14,7 @@ using PeridotEngine.Engine.Utility;
 
 namespace PeridotEngine.Engine.World.WorldObjects.Solids
 {
-    class ProcedualFog : ISolid, IParallaxable, IRenderedObject
+    public class ProcedualFog : ISolid, IParallaxable, IRenderedObject
     {
         /// <inheritdoc />
         public string Id { get; set; }
@@ -123,7 +123,9 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                 Position.ToXml("Position"),
                 Size.ToXml("Size"),
                 new XElement("Z-Index", ZIndex),
-                new XElement("EdgeFading", EdgeFading.ToString(CultureInfo.InvariantCulture))
+                new XElement("EdgeFading", EdgeFading.ToString(CultureInfo.InvariantCulture)),
+                new XElement("Density", Density.ToString(CultureInfo.InvariantCulture)),
+                Motion.ToXml("Motion")
             );
 
             if (!string.IsNullOrEmpty(Id)) result.Add(new XAttribute("Id", Id));
@@ -142,7 +144,9 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
                 Position = new Vector2().FromXml(xEle.Element("Position")),
                 Size = new Vector2().FromXml(xEle.Element("Size")),
                 ZIndex = sbyte.Parse(xEle.Element("Z-Index").Value),
-                EdgeFading = float.Parse(xEle.Element("EdgeFading").Value, CultureInfo.InvariantCulture)
+                EdgeFading = float.Parse(xEle.Element("EdgeFading").Value, CultureInfo.InvariantCulture),
+                Density = float.Parse(xEle.Element("Density").Value, CultureInfo.InvariantCulture),
+                Motion = new Vector2().FromXml(xEle.Element("Motion"))
             };
         }
     }

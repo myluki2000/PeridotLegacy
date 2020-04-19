@@ -107,7 +107,7 @@ namespace PeridotEngine.Engine.World
             }
 
             sb.End();
-            
+
 
 
             if (Settings.DrawColliders)
@@ -120,7 +120,7 @@ namespace PeridotEngine.Engine.World
                 sb.End();
             }
 
-            
+
 
             OnDraw?.Invoke(this, sb);
         }
@@ -228,7 +228,7 @@ namespace PeridotEngine.Engine.World
 
                 level.WorldObjects.Add(solid);
             }
-            
+
             // do the same for entities
             foreach (XElement xEle in rootEle.Element("Entities").Elements())
             {
