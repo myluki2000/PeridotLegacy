@@ -41,7 +41,7 @@ namespace PeridotEngine.Engine.UI
         public static void Draw(SpriteBatch sb)
         {
             Globals.Graphics.GraphicsDevice.SetRenderTarget(scene);
-            Globals.Graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+            Globals.Graphics.GraphicsDevice.Clear(selectedScreen?.BackgroundColor ?? Color.CornflowerBlue);
 
             selectedScreen?.Draw(sb);
 

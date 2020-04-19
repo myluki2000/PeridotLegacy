@@ -8,26 +8,29 @@ namespace PeridotEngine.Engine.UI
 {
     class LevelScreen : Screen
     {
-        private Level _level;
+        private Level level;
         /// <summary>
         /// The level the screen is drawing.
         /// </summary>
         public Level Level
         {
-            get => _level;
+            get => level;
 
             set
             {
-                _level = value;
-                _level.Initialize();
+                level = value;
+                level.Initialize();
             }
         }
 
         public LevelScreen(Level level)
         {
-            this._level = level;
-            _level.Initialize();
+            this.level = level;
+            level.Initialize();
         }
+
+        /// <inheritdoc />
+        public override Color BackgroundColor => Level.BackgroundColor;
 
         public override void Initialize()
         {

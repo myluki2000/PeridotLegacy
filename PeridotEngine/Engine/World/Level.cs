@@ -49,6 +49,7 @@ namespace PeridotEngine.Engine.World
 
         public Camera Camera { get; set; } = new Camera();
         public bool CameraShouldFollowPlayer { get; set; } = true;
+        public Color BackgroundColor { get; set; } = Color.CornflowerBlue;
 
         public Script? Script { get; set; }
 
@@ -209,8 +210,10 @@ namespace PeridotEngine.Engine.World
             XElement rootEle = XElement.Load(path);
 
             level.TextureDirectory = Path.Combine(Path.GetDirectoryName(path), rootEle.Element("TextureDirectory").Value);
-
             level.TextureDictionary = new LazyLoadingMaterialDictionary(level.TextureDirectory);
+
+            if(rootEle.Element("BackgroundColor") != null)
+                level.BackgroundColor = new Color().FromXml(rootEle.Element("BackgroundColor"));
 
             // loop through all solids, find their type with reflection, create a new instance of that type
             // and let it initialize itself with the provided xml.
@@ -268,6 +271,7 @@ namespace PeridotEngine.Engine.World
         {
             XElement root = new XElement("Level",
                 new XElement("TextureDirectory", TextureDirectory.Substring(TextureDirectory.IndexOf(@"\", StringComparison.InvariantCulture) + 1)), // remove the leading "world\" from the path
+                BackgroundColor.ToXml("BackgroundColor"),
                 new XElement("Solids",
                     from solid in WorldObjects.Where(x => x is ISolid)
                     select solid.ToXml(TextureDictionary)),

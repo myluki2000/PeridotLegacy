@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Color = System.Drawing.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
@@ -136,6 +137,25 @@ namespace PeridotEngine.Engine.Utility
         public static Point Transform(this Point value, Matrix matrix)
         {
             return value.ToVector2().Transform(matrix).ToPoint();
+        }
+
+        public static XElement ToXml(this Microsoft.Xna.Framework.Color value, string name)
+        {
+            return new XElement(name,
+                new XAttribute("A", value.A),
+                new XAttribute("R", value.R),
+                new XAttribute("G", value.G),
+                new XAttribute("B", value.B));
+        }
+
+        public static Microsoft.Xna.Framework.Color FromXml(this Microsoft.Xna.Framework.Color value, XElement xEle)
+        {
+            return new Microsoft.Xna.Framework.Color(
+                byte.Parse(xEle.Attribute("A").Value, CultureInfo.InvariantCulture),
+                byte.Parse(xEle.Attribute("R").Value, CultureInfo.InvariantCulture),
+                byte.Parse(xEle.Attribute("G").Value, CultureInfo.InvariantCulture),
+                byte.Parse(xEle.Attribute("B").Value, CultureInfo.InvariantCulture)
+            );
         }
     }
 }

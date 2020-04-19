@@ -12,6 +12,8 @@ namespace PeridotEngine.Engine.UI
     {
         public HashSet<UIElement> UIElements { get; set; } = new HashSet<UIElement>();
 
+        public abstract Color BackgroundColor { get; }
+
         public abstract void Initialize();
 
         public abstract void Update(GameTime gameTime);

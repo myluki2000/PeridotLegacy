@@ -23,6 +23,9 @@ namespace PeridotEngine.Engine.Editor
 {
     class EditorScreen : Screen
     {
+        /// <inheritdoc />
+        public override Color BackgroundColor => Level.BackgroundColor;
+
         private readonly ToolbarForm toolbarForm = new ToolbarForm();
         private readonly ToolboxForm toolboxForm;
         private readonly PropertiesForm propertiesForm;
