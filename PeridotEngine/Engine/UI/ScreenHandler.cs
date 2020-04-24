@@ -9,61 +9,41 @@ namespace PeridotEngine.Engine.UI
 {
     static class ScreenHandler
     {
-        private static Screen? selectedScreen;
-        private static readonly DevConsole.DevConsole devConsole = new DevConsole.DevConsole();
-
-        private static RenderTarget2D? scene = null;
-        private static RenderTarget2D? glowMap = null;
-
-        private static BlurEffect blurEffect;
-
-        internal static Screen? SelectedScreen
+        public static Screen? SelectedScreen
         {
             get => selectedScreen;
 
             set
             {
                 selectedScreen = value;
-                
+
                 // init screen
                 selectedScreen?.Initialize();
             }
         }
 
+        public static PostProcessingEffect? PostProcessingEffect { get; set; } = new GlowEffect();
+
+        private static Screen? selectedScreen;
+        private static readonly DevConsole.DevConsole devConsole = new DevConsole.DevConsole();
+
+        private static RenderTarget2D? scene = null;
+
+
         public static void Initialize()
         {
             scene = new RenderTarget2D(Globals.Graphics.GraphicsDevice, Globals.Graphics.PreferredBackBufferWidth, Globals.Graphics.PreferredBackBufferHeight);
-            glowMap = new RenderTarget2D(Globals.Graphics.GraphicsDevice, Globals.Graphics.PreferredBackBufferWidth, Globals.Graphics.PreferredBackBufferHeight);
-
-            blurEffect = new BlurEffect();
         }
 
         public static void Draw(SpriteBatch sb)
         {
-            Globals.Graphics.GraphicsDevice.SetRenderTarget(scene);
+            Globals.Graphics.GraphicsDevice.SetRenderTarget(PostProcessingEffect != null ? scene : null);
             Globals.Graphics.GraphicsDevice.Clear(selectedScreen?.BackgroundColor ?? Color.CornflowerBlue);
 
             selectedScreen?.Draw(sb);
 
-            Globals.Graphics.GraphicsDevice.SetRenderTarget(glowMap);
-            Globals.Graphics.GraphicsDevice.Clear(Color.Black);
+            PostProcessingEffect?.Apply(sb, scene, selectedScreen);
 
-            selectedScreen?.DrawGlowMap(sb);
-
-            Globals.Graphics.GraphicsDevice.SetRenderTarget(null);
-
-            blurEffect.Texture = glowMap;
-
-            sb.Begin(blendState: BlendState.AlphaBlend, sortMode: SpriteSortMode.Immediate);
-            sb.Draw(scene, new Rectangle(0, 0, Globals.Graphics.PreferredBackBufferWidth, Globals.Graphics.PreferredBackBufferHeight), Color.White);
-            sb.End();
-
-            sb.Begin(blendState: BlendState.Additive, sortMode: SpriteSortMode.Immediate, effect: blurEffect);
-            sb.Draw(glowMap,
-                new Rectangle(0, 0, Globals.Graphics.PreferredBackBufferWidth,
-                    Globals.Graphics.PreferredBackBufferHeight), Color.White * 0.9f);
-            sb.End();
-            
             devConsole.Draw(sb);
         }
 

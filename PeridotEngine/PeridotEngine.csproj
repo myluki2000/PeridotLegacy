@@ -93,6 +93,8 @@
     <Compile Include="Engine\Graphics\Effects\BlurEffect.cs" />
     <Compile Include="Engine\Graphics\Effects\CustomSpriteEffect.cs" />
     <Compile Include="Engine\Graphics\Effects\FogEffect.cs" />
+    <Compile Include="Engine\Graphics\Effects\GlowEffect.cs" />
+    <Compile Include="Engine\Graphics\Effects\PostProcessingEffect.cs" />
     <Compile Include="Engine\Graphics\Effects\QuadEffect.cs" />
     <Compile Include="Engine\Resources\AnimatedTextureData.cs" />
     <Compile Include="Engine\Resources\TextureData.cs" />
