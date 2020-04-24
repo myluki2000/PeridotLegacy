@@ -107,7 +107,7 @@ namespace PeridotEngine.Engine.Editor.Forms
             private set
             {
                 selectedMaterial = value;
-                pbSelectedTexture.Image = selectedMaterial?.Diffuse.Texture.ToImage(250, 250);
+                pbSelectedTexture.Image = selectedMaterial?.Textures[(int)Material.TextureType.Diffuse].Texture.ToImage(250, 250);
                 lblTexturePath.Text = selectedMaterial?.Name;
             }
         }

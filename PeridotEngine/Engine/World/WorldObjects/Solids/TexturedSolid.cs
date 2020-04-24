@@ -25,14 +25,9 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         public bool DisableBatching => false;
 
         /// <inheritdoc />
-        public void Draw(SpriteBatch sb, Camera camera)
+        public void Draw(SpriteBatch sb, Camera camera, Material.TextureType texType = Material.TextureType.Diffuse)
         {
-            base.Draw(sb);
-        }
-
-        public void DrawGlowMap(SpriteBatch sb, Camera camera)
-        {
-            base.DrawGlowMap(sb);
+            base.Draw(sb, texType);
         }
 
         /// <inheritdoc />

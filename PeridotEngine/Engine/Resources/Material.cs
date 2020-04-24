@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using System;
+using System.Linq;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -17,13 +18,9 @@ namespace PeridotEngine.Engine.Resources
         /// </summary>
         public string Path { get; private set; }
         /// <summary>
-        /// The texture data of this TextureData object.
+        /// The textures of this material.
         /// </summary>
-        public TextureDataBase Diffuse { get; private set; }
-        /// <summary>
-        /// The glow map of the texture. NULL if material does not have a glow map.
-        /// </summary>
-        public TextureDataBase? GlowMap { get; private set; }
+        public TextureDataBase[] Textures { get; private set; }
         /// <summary>
         /// If set to true the material will be randomly rotated for each sprite it is used on.
         /// </summary>
@@ -33,7 +30,7 @@ namespace PeridotEngine.Engine.Resources
         /// </summary>
         public int Width
         {
-            get => width ?? Diffuse.Width;
+            get => width ?? Textures[(int)TextureType.Diffuse].Width;
             set => width = value;
         }
         /// <summary>
@@ -41,20 +38,19 @@ namespace PeridotEngine.Engine.Resources
         /// </summary>
         public int Height
         {
-            get => height ?? Diffuse.Height;
+            get => height ?? Textures[(int)TextureType.Diffuse].Height;
             set => height = value;
         }
 
         private int? width = null;
         private int? height = null;
 
-        public Material(string name, bool hasRandomTextureRotation, TextureDataBase diffuse, TextureDataBase? glowMap = null)
+        public Material(string name, bool hasRandomTextureRotation, TextureDataBase[] textures)
         {
             this.Name = name;
             this.HasRandomTextureRotation = hasRandomTextureRotation;
 
-            this.Diffuse = diffuse;
-            this.GlowMap = glowMap;
+            this.Textures = textures;
         }
 
         public static Material FromXml(string path)
@@ -76,7 +72,7 @@ namespace PeridotEngine.Engine.Resources
                     throw new System.Exception("Error while parsing texture data: Invalid xml value for random texture rotation for texture " + xEle.Element("Name").Value);
             }
 
-            TextureDataBase? diffuse = null, glowMap = null;
+            TextureDataBase[] textures = new TextureDataBase[GetHighestTextureTypeValue() + 1];
             // load textures of the material
             foreach (XElement texEle in xEle.Element("Textures").Elements())
             {
@@ -84,27 +80,23 @@ namespace PeridotEngine.Engine.Resources
                     ? (TextureDataBase)AnimatedTextureData.FromXml(texEle)
                     : (TextureDataBase)TextureData.FromXml(texEle);
 
-                switch (texEle.Name.LocalName)
+
+                if (!Enum.TryParse(texEle.Name.LocalName, out TextureType texType))
                 {
-                    case "Diffuse":
-                        diffuse = tex;
-                        break;
-                    case "Glow":
-                        glowMap = tex;
-                        break;
-                    default:
-                        throw new Exception("Error while parsing material file: Unknown texture type.");
+                    throw new Exception("Error while parsing material file: Unknown texture type.");
                 }
+
+                textures[(int)texType] = tex;
             }
 
-            if(diffuse == null)
+            // each material has to have at least a diffuse texture
+            if (textures[(int)TextureType.Diffuse] == null)
                 throw new Exception("Error while parsing material file: Diffuse texture missing.");
 
             Material mat = new Material(
                 xEle.Element("Name").Value,
                 randomTextureRot,
-                diffuse,
-                glowMap
+                textures
             );
 
 
@@ -124,6 +116,18 @@ namespace PeridotEngine.Engine.Resources
             mat.Path = path;
 
             return mat;
+        }
+
+
+        public static int GetHighestTextureTypeValue()
+        {
+            return Enum.GetValues(typeof(TextureType)).Cast<int>().Max();
+        }
+
+        public enum TextureType
+        {
+            Diffuse,
+            Glow
         }
     }
 }

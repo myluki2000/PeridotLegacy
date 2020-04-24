@@ -13,7 +13,17 @@ namespace PeridotEngine.Engine.Graphics
         /// <summary>
         /// The texture of this sprite. Gets drawn to the screen when Sprite.Draw() is called. If null a dummy outline is drawn.
         /// </summary>
-        public Material? Material { get; set; }
+        public Material? Material
+        {
+            get => material;
+            set
+            {
+                material = value;
+                currentFrameIndices = new int[Material.GetHighestTextureTypeValue() + 1];
+                timeOnFrames = new float[Material.GetHighestTextureTypeValue() + 1];
+            }
+        }
+
         /// <summary>
         /// The position of the sprite in the current matrix.
         /// </summary>
@@ -35,11 +45,9 @@ namespace PeridotEngine.Engine.Graphics
         /// </summary>
         public float Opacity { get; set; } = 1.0f;
 
-        private int diffuseCurrentFrameIndex = 0;
-        private float diffuseTimeOnFrame;
-
-        private int glowCurrentFrameIndex = 0;
-        private float glowTimeOnFrame;
+        private int[] currentFrameIndices;
+        private float[] timeOnFrames;
+        private Material material;
 
         /// <summary>
         /// Create a new empty sprite object.
@@ -76,31 +84,21 @@ namespace PeridotEngine.Engine.Graphics
         {
             if (Material != null)
             {
-                // update diffuse animation
-                if (Material.Diffuse is AnimatedTextureData a1)
+                // update times for animated textures
+                for (int texType = 0; texType < Material.Textures.Length; texType++)
                 {
-                    diffuseTimeOnFrame += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    if (diffuseTimeOnFrame >= a1.Frames[diffuseCurrentFrameIndex].Duration)
+                    if (Material.Textures[texType] is AnimatedTextureData aTex)
                     {
-                        diffuseCurrentFrameIndex = ++diffuseCurrentFrameIndex % a1.Frames.Length;
+                        timeOnFrames[texType] += (float) gameTime.ElapsedGameTime.TotalMilliseconds;
+                        if (timeOnFrames[texType] > aTex.Frames[currentFrameIndices[texType]].Duration)
+                        {
+                            currentFrameIndices[texType] = ++currentFrameIndices[texType] % aTex.Frames.Length;
 
-                        // set the start time to the random deviation time of the frame
-                        diffuseTimeOnFrame = Globals.Random.Next(-a1.Frames[diffuseCurrentFrameIndex].Deviation, a1.Frames[diffuseCurrentFrameIndex].Deviation);
-                        
-                    }
-                }
-
-                // update glow map animation
-                if (Material.GlowMap is AnimatedTextureData a2)
-                {
-                    glowTimeOnFrame += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    if (glowTimeOnFrame >= a2.Frames[glowCurrentFrameIndex].Duration)
-                    {
-                        glowCurrentFrameIndex = ++glowCurrentFrameIndex % a2.Frames.Length;
-
-                        // set the start time to the random deviation time of the frame
-                        glowTimeOnFrame = Globals.Random.Next(-a2.Frames[glowCurrentFrameIndex].Deviation, a2.Frames[glowCurrentFrameIndex].Deviation);
-                    }
+                            // set the start time to the random deviation time of the frame
+                            int deviation = aTex.Frames[currentFrameIndices[texType]].Deviation;
+                            timeOnFrames[texType] = Globals.Random.Next(-deviation, deviation);
+                        }
+                    }    
                 }
             }
         }
@@ -109,40 +107,24 @@ namespace PeridotEngine.Engine.Graphics
         /// Draw the sprite to the screen.
         /// </summary>
         /// <param name="sb">The SpriteBatch which is used to draw the sprite</param>
-        public void Draw(SpriteBatch sb)
+        public void Draw(SpriteBatch sb, Material.TextureType texType = Material.TextureType.Diffuse)
         {
-            if (Material != null)
-            {
-                int frameWidth = Material.Diffuse.Width / (Material.Diffuse is AnimatedTextureData animatedTexture
-                    ? animatedTexture.Frames.Length
-                    : 1);
-                sb.Draw(Material.Diffuse.Texture,
-                    new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y),
-                    new Rectangle((Material.Diffuse.SourceRect?.X ?? 0) + diffuseCurrentFrameIndex * frameWidth, Material.Diffuse.SourceRect?.X ?? 0, frameWidth, Material.Diffuse.Height),
-                    Color.White * Opacity,
-                    0,
-                    Vector2.Zero,
-                    SpriteEffects.None,
-                    ZIndex.Map(-128, 127, 0, 1));
-            }
-        }
+            if (Material?.Textures[(int) texType] == null) return;
 
-        public void DrawGlowMap(SpriteBatch sb)
-        {
-            if (Material?.GlowMap != null)
-            {
-                int frameWidth = Material.GlowMap.Width / (Material.GlowMap is AnimatedTextureData animatedTexture
-                                     ? animatedTexture.Frames.Length
-                                     : 1);
-                sb.Draw(Material.GlowMap.Texture,
-                    new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y),
-                    new Rectangle((Material.GlowMap.SourceRect?.X ?? 0) + glowCurrentFrameIndex * frameWidth, Material.GlowMap.SourceRect?.Y ?? 0, frameWidth, Material.GlowMap.Height),
-                    Color.White * Opacity,
-                    0,
-                    Vector2.Zero,
-                    SpriteEffects.None,
-                    ZIndex.Map(-128, 127, 0, 1));
-            }
+            int frameWidth = Material.Textures[(int)texType].Width / (Material.Textures[(int)texType] is AnimatedTextureData animatedTexture
+                                 ? animatedTexture.Frames.Length
+                                 : 1);
+            sb.Draw(Material.Textures[(int)texType].Texture,
+                new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y),
+                new Rectangle((Material.Textures[(int)texType].SourceRect?.X ?? 0) + currentFrameIndices[(int)texType] * frameWidth,
+                    Material.Textures[(int)texType].SourceRect?.X ?? 0,
+                    frameWidth,
+                    Material.Textures[(int)texType].Height),
+                Color.White * Opacity,
+                0,
+                Vector2.Zero,
+                SpriteEffects.None,
+                ZIndex.Map(-128, 127, 0, 1));
         }
 
         /// <summary>

@@ -1,10 +1,13 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PeridotEngine.Engine.Resources;
 using Color = System.Drawing.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -53,14 +56,14 @@ namespace PeridotEngine.Engine.Utility
         public static XElement ToXml(this Vector2 value, string name)
         {
             return new XElement(name,
-                new XAttribute("X", value.X.ToString(System.Globalization.CultureInfo.InvariantCulture)),
-                new XAttribute("Y", value.Y.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+                new XAttribute("X", value.X.ToString(CultureInfo.InvariantCulture)),
+                new XAttribute("Y", value.Y.ToString(CultureInfo.InvariantCulture)));
         }
 
         public static Vector2 FromXml(this Vector2 value, XElement xEle)
         {
-            value.X = float.Parse(xEle.Attribute("X").Value, CultureInfo.InvariantCulture.NumberFormat);
-            value.Y = float.Parse(xEle.Attribute("Y").Value, CultureInfo.InvariantCulture.NumberFormat);
+            value.X = Single.Parse(xEle.Attribute("X").Value, CultureInfo.InvariantCulture.NumberFormat);
+            value.Y = Single.Parse(xEle.Attribute("Y").Value, CultureInfo.InvariantCulture.NumberFormat);
 
             return value;
         }
@@ -68,18 +71,18 @@ namespace PeridotEngine.Engine.Utility
         public static XElement ToXml(this Rectangle value, string name)
         {
             return new XElement(name,
-                new XAttribute("X", value.X.ToString(System.Globalization.CultureInfo.InvariantCulture)),
-                new XAttribute("Y", value.Y.ToString(System.Globalization.CultureInfo.InvariantCulture)),
-                new XAttribute("W", value.Width.ToString(System.Globalization.CultureInfo.InvariantCulture)),
-                new XAttribute("H", value.Height.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+                new XAttribute("X", value.X.ToString(CultureInfo.InvariantCulture)),
+                new XAttribute("Y", value.Y.ToString(CultureInfo.InvariantCulture)),
+                new XAttribute("W", value.Width.ToString(CultureInfo.InvariantCulture)),
+                new XAttribute("H", value.Height.ToString(CultureInfo.InvariantCulture)));
         }
 
         public static Rectangle FromXml(this Rectangle value, XElement xEle)
         {
-            value.X = int.Parse(xEle.Attribute("X").Value, CultureInfo.InvariantCulture.NumberFormat);
-            value.Y = int.Parse(xEle.Attribute("Y").Value, CultureInfo.InvariantCulture.NumberFormat);
-            value.Width = int.Parse(xEle.Attribute("W").Value, CultureInfo.InvariantCulture.NumberFormat);
-            value.Height = int.Parse(xEle.Attribute("H").Value, CultureInfo.InvariantCulture.NumberFormat);
+            value.X = Int32.Parse(xEle.Attribute("X").Value, CultureInfo.InvariantCulture.NumberFormat);
+            value.Y = Int32.Parse(xEle.Attribute("Y").Value, CultureInfo.InvariantCulture.NumberFormat);
+            value.Width = Int32.Parse(xEle.Attribute("W").Value, CultureInfo.InvariantCulture.NumberFormat);
+            value.Height = Int32.Parse(xEle.Attribute("H").Value, CultureInfo.InvariantCulture.NumberFormat);
 
             return value;
         }
@@ -151,10 +154,10 @@ namespace PeridotEngine.Engine.Utility
         public static Microsoft.Xna.Framework.Color FromXml(this Microsoft.Xna.Framework.Color value, XElement xEle)
         {
             return new Microsoft.Xna.Framework.Color(
-                byte.Parse(xEle.Attribute("A").Value, CultureInfo.InvariantCulture),
-                byte.Parse(xEle.Attribute("R").Value, CultureInfo.InvariantCulture),
-                byte.Parse(xEle.Attribute("G").Value, CultureInfo.InvariantCulture),
-                byte.Parse(xEle.Attribute("B").Value, CultureInfo.InvariantCulture)
+                Byte.Parse(xEle.Attribute("A").Value, CultureInfo.InvariantCulture),
+                Byte.Parse(xEle.Attribute("R").Value, CultureInfo.InvariantCulture),
+                Byte.Parse(xEle.Attribute("G").Value, CultureInfo.InvariantCulture),
+                Byte.Parse(xEle.Attribute("B").Value, CultureInfo.InvariantCulture)
             );
         }
     }

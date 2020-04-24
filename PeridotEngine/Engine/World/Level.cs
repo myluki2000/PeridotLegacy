@@ -148,7 +148,7 @@ namespace PeridotEngine.Engine.World
 
                 }
 
-                rObj.DrawGlowMap(sb, Camera);
+                rObj.Draw(sb, Camera, Material.TextureType.Glow);
                 lastParallaxValue = parallaxValue;
             }
 
@@ -290,7 +290,7 @@ namespace PeridotEngine.Engine.World
             WorldObjects = new ObservableRangeCollection<IWorldObject>(
                 WorldObjects.OrderBy(x => x.ZIndex)
                     .ThenBy(x => (x is IParallaxable p) ? p.ParallaxMultiplier : 1.0f)
-                    .ThenBy(x => (x is ITextured t) ? t.Material.Diffuse.Texture.GetHashCode() : 0));
+                    .ThenBy(x => (x is ITextured t) ? t.Material.Textures[(int)Material.TextureType.Diffuse].Texture.GetHashCode() : 0));
             WorldObjects.CollectionChanged += OnWorldObjectsChanged;
 
             // update the PhysicsObjects list with all physics objects.

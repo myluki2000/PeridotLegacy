@@ -57,7 +57,16 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         public float ParallaxMultiplierBottomRight { get; set; } = 1.0f;
 
         /// <inheritdoc />
-        public Material Material { get; set; }
+        public Material Material
+        {
+            get => material;
+            set
+            {
+                material = value;
+                currentFrameIndices = new int[Material.GetHighestTextureTypeValue() + 1];
+                timeOnFrames = new float[Material.GetHighestTextureTypeValue() + 1];
+            }
+        }
 
         /// <inheritdoc />
         public bool DisableBatching => true;
@@ -65,11 +74,9 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         private static readonly QuadEffect quadEffect;
         private Vector2 size = new Vector2(100, 100);
 
-        private int diffuseCurrentFrameIndex = 0;
-        private float diffuseTimeOnFrame;
-
-        private int glowCurrentFrameIndex = 0;
-        private float glowTimeOnFrame;
+        private int[] currentFrameIndices;
+        private float[] timeOnFrames;
+        private Material material;
 
         static TexturedTransformableSolid()
         {
@@ -84,63 +91,39 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
         {
             if (Material != null)
             {
-                // update diffuse animation
-                if (Material.Diffuse is AnimatedTextureData a1)
+                // update times for animated textures
+                for (int texType = 0; texType < Material.Textures.Length; texType++)
                 {
-                    diffuseTimeOnFrame += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    if (diffuseTimeOnFrame >= a1.Frames[diffuseCurrentFrameIndex].Duration)
+                    if (Material.Textures[texType] is AnimatedTextureData aTex)
                     {
-                        diffuseCurrentFrameIndex = ++diffuseCurrentFrameIndex % a1.Frames.Length;
+                        timeOnFrames[texType] += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                        if (timeOnFrames[texType] > aTex.Frames[currentFrameIndices[texType]].Duration)
+                        {
+                            currentFrameIndices[texType] = ++currentFrameIndices[texType] % aTex.Frames.Length;
 
-                        // set the start time to the random deviation time of the frame
-                        diffuseTimeOnFrame = Globals.Random.Next(-a1.Frames[diffuseCurrentFrameIndex].Deviation, a1.Frames[diffuseCurrentFrameIndex].Deviation);
-
-                    }
-                }
-
-                // update glow map animation
-                if (Material.GlowMap is AnimatedTextureData a2)
-                {
-                    glowTimeOnFrame += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    if (glowTimeOnFrame >= a2.Frames[glowCurrentFrameIndex].Duration)
-                    {
-                        glowCurrentFrameIndex = ++glowCurrentFrameIndex % a2.Frames.Length;
-
-                        // set the start time to the random deviation time of the frame
-                        glowTimeOnFrame = Globals.Random.Next(-a2.Frames[glowCurrentFrameIndex].Deviation, a2.Frames[glowCurrentFrameIndex].Deviation);
+                            // set the start time to the random deviation time of the frame
+                            int deviation = aTex.Frames[currentFrameIndices[texType]].Deviation;
+                            timeOnFrames[texType] = Globals.Random.Next(-deviation, deviation);
+                        }
                     }
                 }
             }
         }
 
         /// <inheritdoc />
-        public void Draw(SpriteBatch sb, Camera camera)
+        public void Draw(SpriteBatch sb, Camera camera, Material.TextureType texType = Material.TextureType.Diffuse)
         {
-            int frameWidth = Material.Diffuse.Width / (Material.Diffuse is AnimatedTextureData atd
+            if (Material?.Textures[(int) texType] == null) return;
+
+            int frameWidth = Material.Textures[(int)texType].Width / (Material.Textures[(int)texType] is AnimatedTextureData atd
                 ? atd.Frames.Length
                 : 1);
 
-            Draw(sb, camera, Material.Diffuse.Texture,
-                new Rectangle((Material.Diffuse.SourceRect?.X ?? 0) + frameWidth * diffuseCurrentFrameIndex,
-                    Material.Diffuse.SourceRect?.Y ?? 0,
+            Draw(sb, camera, Material.Textures[(int)texType].Texture,
+                new Rectangle((Material.Textures[(int)texType].SourceRect?.X ?? 0) + frameWidth * currentFrameIndices[(int)texType],
+                    Material.Textures[(int)texType].SourceRect?.Y ?? 0,
                     frameWidth,
-                    Material.Diffuse.Height));
-        }
-
-        /// <inheritdoc />
-        public void DrawGlowMap(SpriteBatch sb, Camera camera)
-        {
-            if (Material.GlowMap == null) return;
-
-            int frameWidth = Material.GlowMap.Width / (Material.GlowMap is AnimatedTextureData atd
-                                 ? atd.Frames.Length
-                                 : 1);
-
-            Draw(sb, camera, Material.GlowMap.Texture,
-                new Rectangle((Material.GlowMap.SourceRect?.X ?? 0) + frameWidth * glowCurrentFrameIndex,
-                    Material.GlowMap.SourceRect?.Y ?? 0,
-                    frameWidth,
-                    Material.GlowMap.Height));
+                    Material.Textures[(int)texType].Height));
         }
 
         private void Draw(SpriteBatch sb, Camera camera, Texture2D tex, Rectangle srcRect)
@@ -243,7 +226,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
 
         private float[] CalcQn(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3)
         {
-            float[] result = {1.0f, 1.0f, 1.0f, 1.0f};
+            float[] result = { 1.0f, 1.0f, 1.0f, 1.0f };
 
             float ax = p2.X - p0.X;
             float ay = p2.Y - p0.Y;
@@ -265,7 +248,7 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
 
                     if (t > 0 && t < 1)
                     {
-                        
+
                         result[0] = 1 / (1 - t);
                         result[1] = 1 / (1 - s);
                         result[2] = 1 / t;

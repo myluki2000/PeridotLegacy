@@ -97,8 +97,10 @@ namespace PeridotEngine.Engine.World.WorldObjects.Solids
             }
         }
 
-        public void Draw(SpriteBatch sb, Camera camera)
+        public void Draw(SpriteBatch sb, Camera camera, Material.TextureType texType = Material.TextureType.Diffuse)
         {
+            if (texType != Material.TextureType.Diffuse) return;
+
             sb.GraphicsDevice.BlendState = BlendState.AlphaBlend;
             sb.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
             basicEffect.Projection = Matrix.CreateOrthographicOffCenter(0.0f,

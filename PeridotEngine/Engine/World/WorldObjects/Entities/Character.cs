@@ -42,20 +42,17 @@ namespace PeridotEngine.Engine.World.WorldObjects.Entities
         public bool DisableBatching => false;
 
         /// <inheritdoc />
-        public void Draw(SpriteBatch sb, Camera camera)
+        public void Draw(SpriteBatch sb, Camera camera, Material.TextureType texType = Material.TextureType.Diffuse)
         {
             if (Material != null)
             {
-                base.Draw(sb);
+                base.Draw(sb, texType);
             }
-            else
+            else if(texType == Material.TextureType.Diffuse)
             {
                 DrawOutline(sb, Color.Red, camera);
             }
         }
-
-        /// <inheritdoc />
-        public virtual void DrawGlowMap(SpriteBatch sb, Camera camera) { }
 
         /// <inheritdoc />
         public virtual void DrawOutline(SpriteBatch sb, Color color, Camera camera)

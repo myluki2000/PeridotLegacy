@@ -48,7 +48,7 @@ namespace PeridotEngine.Engine.Editor.Forms
             {
                 Material mat = TextureManager.LoadMaterial(filePath);
 
-                il.Images.Add(mat.Name, mat.Diffuse.Texture.ToImage(150, 150));
+                il.Images.Add(mat.Name, mat.Textures[(int)Material.TextureType.Diffuse].Texture.ToImage(150, 150));
 
                 ListViewItem lvItem = new ListViewItem()
                 {
