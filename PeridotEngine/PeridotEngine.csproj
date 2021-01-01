@@ -1,279 +1,53 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.CodeAnalysis.Analyzers.3.0.0-beta2.20059.3\build\Microsoft.CodeAnalysis.Analyzers.props" Condition="Exists('..\packages\Microsoft.CodeAnalysis.Analyzers.3.0.0-beta2.20059.3\build\Microsoft.CodeAnalysis.Analyzers.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{995F8FD6-1964-43CB-BEF2-CB2501BD8FD9}</ProjectGuid>
+    <StartupObject>PeridotEngine.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PeridotEngine</RootNamespace>
-    <AssemblyName>PeridotEngine</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-    <MonoGamePlatform>Windows</MonoGamePlatform>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\$(MonoGamePlatform)\$(Platform)\$(Configuration)\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <LangVersion>preview</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\$(MonoGamePlatform)\$(Platform)\$(Configuration)\</OutputPath>
-    <DefineConstants>TRACE;WINDOWS</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <LangVersion>preview</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <TieredCompilation>false</TieredCompilation>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Engine\Editor\Forms\PropertiesForm\PropertiesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Engine\Editor\Forms\PropertiesForm\PropertiesForm.Designer.cs">
-      <DependentUpon>PropertiesForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Engine\Editor\Forms\PropertiesForm\TextureEditor.cs" />
-    <Compile Include="Engine\Editor\Forms\TextureSelectionForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Engine\Editor\Forms\TextureSelectionForm.Designer.cs">
-      <DependentUpon>TextureSelectionForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Engine\Editor\Forms\ToolbarForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Engine\Editor\Forms\ToolbarForm.Designer.cs">
-      <DependentUpon>ToolbarForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Engine\Editor\Forms\ToolboxForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Engine\Editor\Forms\ToolboxForm.Designer.cs">
-      <DependentUpon>ToolboxForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Engine\Editor\UI\ToolStripEx.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Engine\Graphics\Effects\BlurEffect.cs" />
-    <Compile Include="Engine\Graphics\Effects\CustomSpriteEffect.cs" />
-    <Compile Include="Engine\Graphics\Effects\FogEffect.cs" />
-    <Compile Include="Engine\Graphics\Effects\GlowEffect.cs" />
-    <Compile Include="Engine\Graphics\Effects\PostProcessingEffect.cs" />
-    <Compile Include="Engine\Graphics\Effects\QuadEffect.cs" />
-    <Compile Include="Engine\Resources\AnimatedTextureData.cs" />
-    <Compile Include="Engine\Resources\TextureData.cs" />
-    <Compile Include="Engine\Resources\TextureDataBase.cs" />
-    <Compile Include="Engine\Utility\Quad.cs" />
-    <Compile Include="Engine\World\WorldObjects\Entities\SidescrollingPlayer.cs" />
-    <Compile Include="Engine\World\WorldObjects\Entities\TopDownPlayer.cs" />
-    <Compile Include="Engine\World\WorldObjects\IRenderedObject.cs" />
-    <Compile Include="Engine\World\WorldObjects\Solids\ITextured.cs" />
-    <Compile Include="Engine\Utility\ExtensionMethods.cs" />
-    <Compile Include="Engine\Globals.cs" />
-    <Compile Include="Engine\Graphics\Camera.cs" />
-    <Compile Include="Engine\Graphics\Particles\Particle.cs" />
-    <Compile Include="Engine\Graphics\Particles\ParticleSystem.cs" />
-    <Compile Include="Engine\Graphics\Sprite.cs" />
-    <Compile Include="Engine\Utility\Utility.cs" />
-    <Compile Include="Engine\World\WorldObjects\Solids\ProcedualFog.cs" />
-    <Compile Include="Main.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Engine\Resources\ConfigManager.cs" />
-    <Compile Include="Engine\Resources\FontManager.cs" />
-    <Compile Include="Engine\Resources\LazyLoadingMaterialDictionary.cs" />
-    <Compile Include="Engine\Resources\TextureManager.cs" />
-    <Compile Include="Engine\Resources\Material.cs" />
-    <Compile Include="Engine\UI\DevConsole\Commands\Command.cs" />
-    <Compile Include="Engine\UI\DevConsole\Commands\EditLvlCommand.cs" />
-    <Compile Include="Engine\UI\DevConsole\Commands\FullscreenCommand.cs" />
-    <Compile Include="Engine\UI\DevConsole\Commands\PhysGravityEnabledCommand.cs" />
-    <Compile Include="Engine\UI\DevConsole\DevConsole.cs" />
-    <Compile Include="Engine\UI\DevConsole\KeyboardInput.cs" />
-    <Compile Include="Engine\UI\DevConsole\Commands\PhysShowCollidersCommand.cs" />
-    <Compile Include="Engine\Editor\EditorScreen.cs" />
-    <Compile Include="Engine\UI\LevelScreen.cs" />
-    <Compile Include="Engine\UI\UIElements\UIElement.cs" />
-    <Compile Include="Engine\UI\Screen.cs" />
-    <Compile Include="Engine\UI\ScreenHandler.cs" />
-    <Compile Include="Engine\Utility\ObservableRangeCollection.cs" />
-    <Compile Include="Engine\World\Physics\Colliders\QuadCollider.cs" />
-    <Compile Include="Engine\World\WorldObjects\Entities\Character.cs" />
-    <Compile Include="Engine\World\WorldObjects\Entities\IEntity.cs" />
-    <Compile Include="Engine\World\WorldObjects\Entities\Player.cs" />
-    <Compile Include="Engine\World\Physics\Colliders\RectCollider.cs" />
-    <Compile Include="Engine\World\Physics\Colliders\ICollider.cs" />
-    <Compile Include="Engine\World\Physics\IPhysicsObject.cs" />
-    <Compile Include="Engine\World\Physics\PhysicsManager.cs" />
-    <Compile Include="Engine\World\Level.cs" />
-    <Compile Include="Engine\World\WorldObjects\Solids\DynamicWater.cs" />
-    <Compile Include="Engine\World\WorldObjects\Solids\IParallaxable.cs" />
-    <Compile Include="Engine\World\WorldObjects\Solids\ISolid.cs" />
-    <Compile Include="Engine\World\WorldObjects\Solids\TexturedSolid.cs" />
-    <Compile Include="Engine\World\WorldObjects\IWorldObject.cs" />
-    <Compile Include="Engine\World\WorldObjects\Solids\TexturedTransformableSolid.cs" />
+    <Compile Remove="Content\bin\**" />
+    <Compile Remove="Content\obj\**" />
+    <EmbeddedResource Remove="Content\bin\**" />
+    <EmbeddedResource Remove="Content\obj\**" />
+    <None Remove="Content\bin\**" />
+    <None Remove="Content\obj\**" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CodeAnalysis, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.Common.3.6.0-2.final\lib\netstandard2.0\Microsoft.CodeAnalysis.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.CSharp, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.3.6.0-2.final\lib\netstandard2.0\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.CSharp.Scripting, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.Scripting.3.6.0-2.final\lib\netstandard2.0\Microsoft.CodeAnalysis.CSharp.Scripting.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.Scripting, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.Scripting.Common.3.6.0-2.final\lib\netstandard2.0\Microsoft.CodeAnalysis.Scripting.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MonoGame.Framework">
-      <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reflection.Metadata, Version=1.4.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.Metadata.1.6.0\lib\netstandard2.0\System.Reflection.Metadata.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Text.Encoding.CodePages, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encoding.CodePages.4.5.1\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Encodings.Web, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encodings.Web.4.7.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.3\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
+    <None Remove="Content\BlurEffect.fx" />
+    <None Remove="Content\CustomSpriteEffect.fx" />
+    <None Remove="Content\FogEffect.fx" />
+    <None Remove="Content\Macros.fxh" />
+    <None Remove="Content\QuadEffect.fx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Icon.ico" />
+    <TrimmerRootAssembly Include="Microsoft.Xna.Framework.Content.ContentTypeReader" Visible="false" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="3.8.0-4.final" />
+    <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.0.1641" />
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
-    <None Include="app.config" />
-    <None Include="app.manifest" />
-    <None Include="Content\Fonts\ChakraPetch\ChakraPetch-ExtraLarge.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Content\Fonts\ChakraPetch\ChakraPetch-Large.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Content\Fonts\ChakraPetch\ChakraPetch-Normal.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
+    <None Update="Content\Fonts\ChakraPetch\ChakraPetch-ExtraLarge.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\Fonts\ChakraPetch\ChakraPetch-Large.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\Fonts\ChakraPetch\ChakraPetch-Normal.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Engine\Editor\Forms\PropertiesForm\PropertiesForm.resx">
-      <DependentUpon>PropertiesForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Engine\Editor\Forms\TextureSelectionForm.resx">
-      <DependentUpon>TextureSelectionForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Engine\Editor\Forms\ToolbarForm.resx">
-      <DependentUpon>ToolbarForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Engine\Editor\Forms\ToolboxForm.resx">
-      <DependentUpon>ToolboxForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.3.0.0-beta2.20059.3\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
-    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.3.0.0-beta2.20059.3\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>Dieses Projekt verweist auf mindestens ein NuGet-Paket, das auf diesem Computer fehlt. Verwenden Sie die Wiederherstellung von NuGet-Paketen, um die fehlenden Dateien herunterzuladen. Weitere Informationen finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=322105". Die fehlende Datei ist "{0}".</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.Analyzers.3.0.0-beta2.20059.3\build\Microsoft.CodeAnalysis.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.Analyzers.3.0.0-beta2.20059.3\build\Microsoft.CodeAnalysis.Analyzers.props'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

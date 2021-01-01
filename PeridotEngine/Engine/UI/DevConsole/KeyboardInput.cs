@@ -142,7 +142,7 @@ namespace PeridotEngine.Engine.UI.DevConsole
         static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+        static extern int SetWindowLong(IntPtr hWnd, int nIndex, long dwNewLong);
 
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace PeridotEngine.Engine.UI.DevConsole
 
             hookProcDelegate = new WndProc(HookProc);
             prevWndProc = (IntPtr)SetWindowLong(window.Handle, GWL_WNDPROC,
-                (int)Marshal.GetFunctionPointerForDelegate(hookProcDelegate));
+                (long)Marshal.GetFunctionPointerForDelegate(hookProcDelegate));
 
             hIMC = ImmGetContext(window.Handle);
             initialized = true;
