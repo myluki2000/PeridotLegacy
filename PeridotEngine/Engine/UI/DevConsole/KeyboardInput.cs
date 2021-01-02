@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -142,7 +143,7 @@ namespace PeridotEngine.Engine.UI.DevConsole
         static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        static extern int SetWindowLong(IntPtr hWnd, int nIndex, long dwNewLong);
+        static extern int SetWindowLongPtrA(IntPtr hWnd, int nIndex, long dwNewLong);
 
 
         /// <summary>
@@ -155,7 +156,7 @@ namespace PeridotEngine.Engine.UI.DevConsole
                 throw new InvalidOperationException("TextInput.Initialize can only be called once!");
 
             hookProcDelegate = new WndProc(HookProc);
-            prevWndProc = (IntPtr)SetWindowLong(window.Handle, GWL_WNDPROC,
+            prevWndProc = (IntPtr)SetWindowLongPtrA(window.Handle, GWL_WNDPROC,
                 (long)Marshal.GetFunctionPointerForDelegate(hookProcDelegate));
 
             hIMC = ImmGetContext(window.Handle);
@@ -173,18 +174,15 @@ namespace PeridotEngine.Engine.UI.DevConsole
                     break;
 
                 case WM_KEYDOWN:
-                    if (KeyDown != null)
-                        KeyDown(null, new KeyEventArgs((Keys)wParam));
+                    KeyDown?.Invoke(null, new KeyEventArgs((Keys)wParam));
                     break;
 
                 case WM_KEYUP:
-                    if (KeyUp != null)
-                        KeyUp(null, new KeyEventArgs((Keys)wParam));
+                    KeyUp?.Invoke(null, new KeyEventArgs((Keys)wParam));
                     break;
 
                 case WM_CHAR:
-                    if (CharEntered != null)
-                        CharEntered(null, new CharacterEventArgs((char)wParam, lParam.ToInt32()));
+                    CharEntered?.Invoke(null, new CharacterEventArgs((char)wParam, lParam.ToInt32()));
                     break;
 
                 case WM_IME_SETCONTEXT:

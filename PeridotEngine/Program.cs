@@ -2,7 +2,7 @@
 
 namespace PeridotEngine
 {
-#if WINDOWS || LINUX
+#if NETCOREAPP3_1
     /// <summary>
     /// The main class.
     /// </summary>
